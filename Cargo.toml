@@ -1,8 +1,19 @@
 [package]
 name = "cli-table"
 version = "0.1.0"
-authors = ["Devashish Dixit <devashish@crypto.com>"]
+authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
+license = "MIT/Apache-2.0"
+description = "A crate for printing tables on command line"
+homepage = "https://github.com/devashishdxt/cli-table"
+repository = "https://github.com/devashishdxt/cli-table"
+categories = ["command-line-interface"]
+keywords = ["table", "cli", "format"]
+readme = "README.md"
 edition = "2018"
+
+[lib]
+name = "cli_table"
+path = "src/lib.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

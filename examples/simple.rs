@@ -1,19 +1,27 @@
 use std::io::Result;
 
-use cli_table::{Align, Cell, CellFormat, Row, Table};
+use cli_table::{Cell, CellFormat, Justify, Row, Table};
 
 fn main() -> Result<()> {
-    let format = CellFormat::builder().align(Align::Center).build();
+    let justify_right = CellFormat::builder().justify(Justify::Right).build();
+    let bold = CellFormat::builder().bold(true).build();
 
     let table = Table::new(vec![
         Row::new(vec![
-            Cell::new(&format!("Hello\nmy\nname"), format),
-            Cell::new("my", format),
+            Cell::new(&format!("Name"), bold),
+            Cell::new("Age (in years)", bold),
         ]),
-        Row::new(vec![Cell::new("name", format), Cell::new("is", format)]),
         Row::new(vec![
-            Cell::new("Devashish", format),
-            Cell::new("Dixit", format),
+            Cell::new("Tom", Default::default()),
+            Cell::new("10", justify_right),
+        ]),
+        Row::new(vec![
+            Cell::new("Jerry", Default::default()),
+            Cell::new("15", justify_right),
+        ]),
+        Row::new(vec![
+            Cell::new("Scooby Doo", Default::default()),
+            Cell::new("25", justify_right),
         ]),
     ]);
 

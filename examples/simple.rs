@@ -3,9 +3,7 @@ use std::io::Result;
 use cli_table::{Align, Cell, CellFormat, Row, Table};
 
 fn main() -> Result<()> {
-    let mut format_builder = CellFormat::builder();
-    format_builder.align(Align::Center);
-    let format = format_builder.build();
+    let format = CellFormat::builder().align(Align::Center).build();
 
     let table = Table::new(vec![
         Row::new(vec![

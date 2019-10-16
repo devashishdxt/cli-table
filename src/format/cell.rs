@@ -35,37 +35,37 @@ pub struct CellFormatBuilder(CellFormat);
 
 impl CellFormatBuilder {
     #[inline]
-    pub fn justify(&mut self, justify: Justify) -> &mut Self {
+    pub fn justify(mut self, justify: Justify) -> Self {
         self.0.justify = justify;
         self
     }
 
     #[inline]
-    pub fn align(&mut self, align: Align) -> &mut Self {
+    pub fn align(mut self, align: Align) -> Self {
         self.0.align = align;
         self
     }
 
     #[inline]
-    pub fn foreground_color(&mut self, foreground_color: Option<Color>) -> &mut Self {
+    pub fn foreground_color(mut self, foreground_color: Option<Color>) -> Self {
         self.0.foreground_color = foreground_color;
         self
     }
 
     #[inline]
-    pub fn background_color(&mut self, background_color: Option<Color>) -> &mut Self {
+    pub fn background_color(mut self, background_color: Option<Color>) -> Self {
         self.0.background_color = background_color;
         self
     }
 
     #[inline]
-    pub fn bold(&mut self, bold: bool) -> &mut Self {
+    pub fn bold(mut self, bold: bool) -> Self {
         self.0.bold = bold;
         self
     }
 
     #[inline]
-    pub fn underline(&mut self, underline: bool) -> &mut Self {
+    pub fn underline(mut self, underline: bool) -> Self {
         self.0.underline = underline;
         self
     }

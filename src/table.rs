@@ -2,24 +2,19 @@ use std::io::{Result, Write};
 
 use termcolor::{BufferWriter, ColorChoice, WriteColor};
 
-use crate::{Row, TableFormat};
+use crate::Row;
 
 pub struct Table {
     rows: Vec<Row>,
-    format: TableFormat,
     widths: Vec<usize>,
 }
 
 impl Table {
-    pub fn new(rows: Vec<Row>, format: TableFormat) -> Table {
+    pub fn new(rows: Vec<Row>) -> Table {
         validate_equal_columns(&rows);
         let widths = get_widths(&rows);
 
-        Table {
-            rows,
-            format,
-            widths,
-        }
+        Table { rows, widths }
     }
 
     pub fn print_std(&self) -> Result<()> {
@@ -83,8 +78,8 @@ fn validate_equal_columns(rows: &[Row]) {
     }
     let columns = rows[0].columns();
 
-    for i in 1..rows.len() {
-        if columns != rows[i].columns() {
+    for row in rows.iter().skip(1) {
+        if columns != row.columns() {
             panic!("Mismatch column numbers in different rows");
         }
     }
@@ -97,8 +92,8 @@ fn get_widths(rows: &[Row]) -> Vec<usize> {
 
     let mut widths = rows[0].widths();
 
-    for i in 1..rows.len() {
-        let new_widths = rows[i].widths();
+    for row in rows.iter().skip(1) {
+        let new_widths = row.widths();
 
         for (width, new_width) in widths.iter_mut().zip(new_widths.into_iter()) {
             *width = std::cmp::max(new_width, *width);

@@ -51,9 +51,9 @@ impl Row {
         for i in 0..self.height {
             let mut line = Vec::with_capacity(columns);
 
-            for j in 0..columns {
+            for buffer_line in buffers.iter_mut() {
                 let mut buffer = None;
-                std::mem::swap(&mut buffer, &mut buffers[j][i]);
+                std::mem::swap(&mut buffer, &mut buffer_line[i]);
                 line.push(
                     buffer.expect("Expected a buffer at given height and column. This is a bug!"),
                 );

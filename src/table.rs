@@ -4,12 +4,14 @@ use termcolor::{BufferWriter, ColorChoice, WriteColor};
 
 use crate::Row;
 
+/// Struct for building a `Table` on command line
 pub struct Table {
     rows: Vec<Row>,
     widths: Vec<usize>,
 }
 
 impl Table {
+    /// Creates a new [`Table`](struct.Table.html)
     pub fn new(rows: Vec<Row>) -> Table {
         validate_equal_columns(&rows);
         let widths = get_widths(&rows);
@@ -17,6 +19,7 @@ impl Table {
         Table { rows, widths }
     }
 
+    /// Prints current [`Table`](struct.Table.html) to `stdout`
     pub fn print_std(&self) -> Result<()> {
         let writer = BufferWriter::stdout(ColorChoice::Always);
 

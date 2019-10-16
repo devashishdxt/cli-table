@@ -4,12 +4,14 @@ use termcolor::{Buffer, BufferWriter};
 
 use crate::Cell;
 
+/// A `Row` in a [`Table`](struct.Table.html)
 pub struct Row {
     pub(crate) cells: Vec<Cell>,
     pub(crate) height: usize,
 }
 
 impl Row {
+    /// Creates a new [`Row`](struct.Row.html)
     pub fn new(cells: Vec<Cell>) -> Self {
         let height = cells
             .iter()

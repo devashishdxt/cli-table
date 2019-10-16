@@ -8,6 +8,7 @@ use unicode_width::UnicodeWidthStr;
 
 use crate::{Align, CellFormat, Justify};
 
+/// A `Cell` in a [`Table`](struct.Table.html)
 #[derive(Debug)]
 pub struct Cell {
     pub(crate) data: Vec<String>,
@@ -17,6 +18,7 @@ pub struct Cell {
 }
 
 impl Cell {
+    /// Creates a new [`Cell`](struct.Cell.html)
     pub fn new<T: Display + ?Sized>(data: &T, format: CellFormat) -> Self {
         let data: Vec<String> = data.to_string().lines().map(ToString::to_string).collect();
         let height = data.len();

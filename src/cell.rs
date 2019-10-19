@@ -6,7 +6,7 @@ use std::{
 use termcolor::{Buffer, BufferWriter, ColorSpec, WriteColor};
 use unicode_width::UnicodeWidthStr;
 
-use crate::{Align, CellFormat, Justify};
+use crate::format::{Align, CellFormat, Justify};
 
 /// A `Cell` in a [`Table`](struct.Table.html)
 #[derive(Debug)]

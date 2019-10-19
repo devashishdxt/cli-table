@@ -2,43 +2,130 @@ use std::io::{Result, Write};
 
 use termcolor::{BufferWriter, ColorChoice, WriteColor};
 
-use crate::Row;
+use crate::{
+    format::{HorizontalLine, TableFormat, VerticalLine},
+    Row,
+};
 
 /// Struct for building a `Table` on command line
 pub struct Table {
     rows: Vec<Row>,
+    format: TableFormat,
     widths: Vec<usize>,
 }
 
 impl Table {
     /// Creates a new [`Table`](struct.Table.html)
-    pub fn new(rows: Vec<Row>) -> Table {
+    pub fn new(rows: Vec<Row>, format: TableFormat) -> Table {
         validate_equal_columns(&rows);
         let widths = get_widths(&rows);
 
-        Table { rows, widths }
+        Table {
+            rows,
+            format,
+            widths,
+        }
     }
 
     /// Prints current [`Table`](struct.Table.html) to `stdout`
-    pub fn print_std(&self) -> Result<()> {
-        let writer = BufferWriter::stdout(ColorChoice::Always);
+    pub fn print_stdout(&self) -> Result<()> {
+        self.print_writer(BufferWriter::stdout(ColorChoice::Always))
+    }
 
-        print_horizontal_separator(&writer, &self.widths)?;
+    /// Prints current [`Table`](struct.Table.html) to `stderr`
+    pub fn print_stderr(&self) -> Result<()> {
+        self.print_writer(BufferWriter::stderr(ColorChoice::Always))
+    }
 
-        for row in self.rows.iter() {
+    fn print_writer(&self, writer: BufferWriter) -> Result<()> {
+        self.print_horizontal_line(&writer, self.format.border.top.as_ref())?;
+
+        let mut rows = self.rows.iter().peekable();
+
+        let mut first = true;
+
+        while let Some(row) = rows.next() {
             let buffers = row.buffers(&writer, &self.widths)?;
 
             for line in buffers.into_iter() {
-                print_str(&writer, "|")?;
-                for buffer in line.into_iter() {
-                    print_str(&writer, " ")?;
+                self.print_vertical_line(&writer, self.format.border.left.as_ref())?;
+
+                let mut line_buffers = line.into_iter().peekable();
+
+                while let Some(buffer) = line_buffers.next() {
+                    print_char(&writer, ' ')?;
                     writer.print(&buffer)?;
-                    print_str(&writer, " |")?;
+                    print_char(&writer, ' ')?;
+
+                    match line_buffers.peek() {
+                        Some(_) => self
+                            .print_vertical_line(&writer, self.format.separator.column.as_ref())?,
+                        None => {
+                            self.print_vertical_line(&writer, self.format.border.right.as_ref())?
+                        }
+                    }
                 }
+
                 println_str(&writer, "")?;
             }
 
-            print_horizontal_separator(&writer, &self.widths)?;
+            match rows.peek() {
+                Some(_) => {
+                    if first {
+                        if self.format.separator.title.is_some() {
+                            self.print_horizontal_line(
+                                &writer,
+                                self.format.separator.title.as_ref(),
+                            )?
+                        } else {
+                            self.print_horizontal_line(&writer, self.format.separator.row.as_ref())?
+                        }
+                    } else {
+                        self.print_horizontal_line(&writer, self.format.separator.row.as_ref())?
+                    }
+
+                    first = false;
+                }
+                None => self.print_horizontal_line(&writer, self.format.border.bottom.as_ref())?,
+            }
+        }
+
+        Ok(())
+    }
+
+    fn print_horizontal_line(
+        &self,
+        writer: &BufferWriter,
+        line: Option<&HorizontalLine>,
+    ) -> Result<()> {
+        if let Some(line) = line {
+            print_char(writer, line.left_end)?;
+
+            let mut widths = self.widths.iter().peekable();
+
+            while let Some(width) = widths.next() {
+                let s = std::iter::repeat(line.filler)
+                    .take(width + 2)
+                    .collect::<String>();
+                print_str(writer, &s)?;
+
+                match widths.peek() {
+                    Some(_) => print_char(writer, line.junction)?,
+                    None => println_char(writer, line.right_end)?,
+                }
+            }
+        }
+
+        Ok(())
+    }
+
+    fn print_vertical_line(
+        &self,
+        writer: &BufferWriter,
+        line: Option<&VerticalLine>,
+    ) -> Result<()> {
+        if let Some(line) = line {
+            print_char(writer, line.filler)?;
         }
 
         Ok(())
@@ -61,17 +148,19 @@ fn println_str(writer: &BufferWriter, s: &str) -> Result<()> {
     Ok(())
 }
 
-fn print_horizontal_separator(writer: &BufferWriter, widths: &[usize]) -> Result<()> {
-    print_str(writer, "+")?;
+fn print_char(writer: &BufferWriter, c: char) -> Result<()> {
+    let mut buffer = writer.buffer();
+    buffer.reset()?;
+    write!(&mut buffer, "{}", c)?;
+    writer.print(&buffer)?;
+    Ok(())
+}
 
-    for width in widths.iter() {
-        let s = std::iter::repeat('-').take(width + 2).collect::<String>();
-        print_str(writer, &s)?;
-        print_str(writer, "+")?;
-    }
-
-    println_str(writer, "")?;
-
+fn println_char(writer: &BufferWriter, c: char) -> Result<()> {
+    let mut buffer = writer.buffer();
+    buffer.reset()?;
+    writeln!(&mut buffer, "{}", c)?;
+    writer.print(&buffer)?;
     Ok(())
 }
 

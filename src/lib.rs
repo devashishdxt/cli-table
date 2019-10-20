@@ -6,14 +6,14 @@
 //!
 //! Add `cli-table` in your `Cargo.toms`'s `dependencies` section
 //!
-//! ```toml
+//! ```ignore
 //! [dependencies]
 //! cli-table = "0.2"
 //! ```
 //!
 //! Each cell in a [`Table`] can be formatted using [`CellFormat`]. [`CellFormat`] can be easily created like this:
 //!
-//! ```rust
+//! ```ignore
 //! // Justifies contents of a cell to right
 //! let justify_right = CellFormat::builder().justify(Justify::Right).build();
 //!
@@ -34,7 +34,7 @@
 //!
 //! To create a table, you can use [`Table::new()`] like this:
 //!
-//! ```rust
+//! ```ignore
 //! let table = Table::new(
 //!     vec![
 //!         Row::new(vec![
@@ -62,7 +62,7 @@
 //!
 //! Below is the output of the table we created just now:
 //!
-//! ```
+//! ```ignore
 //! +------------+----------------+
 //! | Name       | Age (in years) |  <-- This row will appear in bold
 //! +------------+----------------+

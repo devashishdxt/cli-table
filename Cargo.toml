@@ -1,6 +1,6 @@
 [package]
 name = "cli-table"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A crate for printing tables on command line"
@@ -9,6 +9,7 @@ repository = "https://github.com/devashishdxt/cli-table"
 categories = ["command-line-interface"]
 keywords = ["table", "cli", "format"]
 readme = "README.md"
+include = ["Cargo.toml", "src/**/*.rs", "README.md"]
 edition = "2018"
 
 [lib]

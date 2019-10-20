@@ -7,7 +7,7 @@ use crate::{
     Row,
 };
 
-/// Struct for building a `Table` on command line
+/// Struct for building a [`Table`](struct.Table.html) on command line
 pub struct Table {
     rows: Vec<Row>,
     format: TableFormat,
@@ -99,7 +99,9 @@ impl Table {
         line: Option<&HorizontalLine>,
     ) -> Result<()> {
         if let Some(line) = line {
-            print_char(writer, line.left_end)?;
+            if self.format.border.left.is_some() {
+                print_char(writer, line.left_end)?;
+            }
 
             let mut widths = self.widths.iter().peekable();
 
@@ -110,8 +112,18 @@ impl Table {
                 print_str(writer, &s)?;
 
                 match widths.peek() {
-                    Some(_) => print_char(writer, line.junction)?,
-                    None => println_char(writer, line.right_end)?,
+                    Some(_) => {
+                        if self.format.separator.column.is_some() {
+                            print_char(writer, line.junction)?
+                        }
+                    }
+                    None => {
+                        if self.format.border.right.is_some() {
+                            println_char(writer, line.right_end)?;
+                        } else {
+                            println_str(writer, "")?;
+                        }
+                    }
                 }
             }
         }

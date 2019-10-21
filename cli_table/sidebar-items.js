@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["format","Utilities for formatting of a `Table`"]],"struct":[["Cell","A `Cell` in a `Table`"],["Row","A `Row` in a `Table`"],["Table","Struct for building a `Table` on command line"]]});

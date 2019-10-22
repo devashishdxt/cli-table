@@ -10,7 +10,7 @@ pub use self::table::{
 /// Format with borders, column separators and row separators (calling `Default::default()` on [`TableFormat`](struct.TableFormat.html)
 /// also returns this format)
 ///
-/// ```ignore
+/// ```markdown
 /// +------------+----------------+
 /// | Name       | Age (in years) |
 /// +------------+----------------+
@@ -52,7 +52,7 @@ pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
 
 /// Format with borders, column separators and title separator (without row separators)
 ///
-/// ```ignore
+/// ```markdown
 /// +------------+----------------+
 /// | Name       | Age (in years) |
 /// +------------+----------------+
@@ -92,7 +92,7 @@ pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 
 /// Format with borders and column separators (without row separators)
 ///
-/// ```ignore
+/// ```markdown
 /// +------------+----------------+
 /// | Name       | Age (in years) |
 /// | Tom        |             10 |
@@ -126,7 +126,7 @@ pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
 
 /// Format with no borders, column separators and title separator (without row separators)
 ///
-/// ```ignore
+/// ```markdown
 ///  Name       | Age (in years)
 /// ------------+----------------
 ///  Tom        |             10
@@ -154,7 +154,7 @@ pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 
 /// Format with no borders, column separators and row separators
 ///
-/// ```ignore
+/// ```markdown
 ///  Name       | Age (in years)
 /// ------------+----------------
 ///  Tom        |             10
@@ -184,7 +184,7 @@ pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
 
 /// Format with borders and row separators (without column separators)
 ///
-/// ```ignore
+/// ```markdown
 /// +----------------------------+
 /// | Name        Age (in years) |
 /// +----------------------------+

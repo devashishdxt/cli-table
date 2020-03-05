@@ -22,7 +22,7 @@ impl VerticalLine {
     }
 }
 
-/// Builder for [`HorizontalLine`](struct.Border.html)
+/// Builder for [`VerticalLine`](struct.Border.html)
 #[derive(Debug)]
 pub struct VerticalLineBuilder(VerticalLine);
 

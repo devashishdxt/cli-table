@@ -47,6 +47,38 @@ impl HorizontalLine {
             filler,
         }
     }
+
+    /// Creates a new builder for [`HorizontalLine`](struct.HorizontalLine.html)
+    pub fn builder() -> HorizontalLineBuilder {
+        HorizontalLineBuilder(HorizontalLine::default())
+    }
+}
+
+/// Builder for [`HorizontalLine`](struct.Border.html)
+#[derive(Debug)]
+pub struct HorizontalLineBuilder(HorizontalLine);
+
+impl HorizontalLineBuilder {
+    pub fn build(self) -> HorizontalLine {
+        self.0
+    }
+
+    pub fn left_end(mut self, value: char) -> Self {
+        self.0.left_end = value;
+        self
+    }
+    pub fn right_end(mut self, value: char) -> Self {
+        self.0.right_end = value;
+        self
+    }
+    pub fn junction(mut self, value: char) -> Self {
+        self.0.junction = value;
+        self
+    }
+    pub fn filler(mut self, value: char) -> Self {
+        self.0.filler = value;
+        self
+    }
 }
 
 /// Borders of a [`Table`](struct.Table.html)

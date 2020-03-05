@@ -22,7 +22,6 @@ impl VerticalLine {
     }
 }
 
-
 /// Builder for [`HorizontalLine`](struct.Border.html)
 #[derive(Debug)]
 pub struct VerticalLineBuilder(VerticalLine);
@@ -37,7 +36,6 @@ impl VerticalLineBuilder {
         self
     }
 }
-
 
 /// A horizontal line in a [`Table`](struct.Table.html) (border or row separator)
 #[derive(Debug)]

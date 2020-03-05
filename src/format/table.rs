@@ -136,26 +136,26 @@ pub struct BorderBuilder(Border);
 
 impl BorderBuilder {
     /// Set top border of a [`Table`](struct.Table.html)
-    pub fn top(mut self, top: Option<HorizontalLine>) -> Self {
-        self.0.top = top;
+    pub fn top(mut self, top: HorizontalLine) -> Self {
+        self.0.top = Some(top);
         self
     }
 
     /// Set bottom border of a [`Table`](struct.Table.html)
-    pub fn bottom(mut self, bottom: Option<HorizontalLine>) -> Self {
-        self.0.bottom = bottom;
+    pub fn bottom(mut self, bottom: HorizontalLine) -> Self {
+        self.0.bottom = Some(bottom);
         self
     }
 
     /// Set left border of a [`Table`](struct.Table.html)
-    pub fn left(mut self, left: Option<VerticalLine>) -> Self {
-        self.0.left = left;
+    pub fn left(mut self, left: VerticalLine) -> Self {
+        self.0.left = Some(left);
         self
     }
 
     /// Set right border of a [`Table`](struct.Table.html)
-    pub fn right(mut self, right: Option<VerticalLine>) -> Self {
-        self.0.right = right;
+    pub fn right(mut self, right: VerticalLine) -> Self {
+        self.0.right = Some(right);
         self
     }
 

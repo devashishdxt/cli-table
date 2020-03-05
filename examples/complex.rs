@@ -48,10 +48,10 @@ fn main() -> Result<(), Box<dyn Error>> {
   let column_separator = build_column_separator();
 
   let border = Border::builder()
-    .top(Some(top))
-    .bottom(Some(bottom))
-    .right(Some(column_separator.clone()))
-    .left(Some(column_separator.clone()))
+    .top(top)
+    .bottom(bottom)
+    .right(column_separator.clone())
+    .left(column_separator.clone())
     .build();
 
   let separator = Separator::builder()
@@ -85,4 +85,3 @@ fn main() -> Result<(), Box<dyn Error>> {
   table.print_stdout()?;
   Ok(())
 }
-

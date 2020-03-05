@@ -58,8 +58,9 @@ impl Table {
                     print_char(&writer, ' ')?;
 
                     match line_buffers.peek() {
-                        Some(_) => self
-                            .print_vertical_line(&writer, self.format.separator.column.as_ref())?,
+                        Some(_) => {
+                            self.print_vertical_line(&writer, self.format.separator.column.as_ref())?
+                        },
                         None => {
                             self.print_vertical_line(&writer, self.format.border.right.as_ref())?
                         }
@@ -139,7 +140,6 @@ impl Table {
         if let Some(line) = line {
             print_char(writer, line.filler)?;
         }
-
         Ok(())
     }
 }

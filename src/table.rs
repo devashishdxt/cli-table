@@ -139,7 +139,6 @@ impl Table {
         if let Some(line) = line {
             print_char(writer, line.filler)?;
         }
-
         Ok(())
     }
 }

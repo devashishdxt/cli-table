@@ -2,11 +2,11 @@ use std::io::{Result, Write};
 
 use termcolor::{BufferWriter, ColorChoice, WriteColor};
 
+use crate::errors::TableSizeError;
 use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},
     Row,
 };
-use crate::errors::TableSizeError;
 use std::error::Error;
 
 /// Struct for building a [`Table`](struct.Table.html) on command line
@@ -24,7 +24,7 @@ impl Table {
         validate_equal_columns(&rows)?;
         let widths = get_widths(&rows);
 
-        Ok( Table {
+        Ok(Table {
             rows,
             format,
             widths,
@@ -37,7 +37,11 @@ impl Table {
     }
 
     /// Prints table with an offset in Row number
-    pub fn print_stdout_with_offset(&self, row_offset: usize, number_to_print: usize) -> Result<()> {
+    pub fn print_stdout_with_offset(
+        &self,
+        row_offset: usize,
+        number_to_print: usize,
+    ) -> Result<()> {
         let relevant_rows = self.rows.iter().skip(row_offset).take(number_to_print);
         self.print_writer(relevant_rows, BufferWriter::stdout(ColorChoice::Always))
     }
@@ -47,7 +51,11 @@ impl Table {
         self.print_writer(self.rows.iter(), BufferWriter::stderr(ColorChoice::Always))
     }
 
-    fn print_writer<'a, I: std::iter::Iterator<Item = &'a Row>>(&self, rows_it: I, writer: BufferWriter) -> Result<()> {
+    fn print_writer<'a, I: std::iter::Iterator<Item = &'a Row>>(
+        &self,
+        rows_it: I,
+        writer: BufferWriter,
+    ) -> Result<()> {
         self.print_horizontal_line(&writer, self.format.border.top.as_ref())?;
 
         let mut rows = rows_it.peekable();
@@ -185,7 +193,7 @@ fn println_char(writer: &BufferWriter, c: char) -> Result<()> {
     Ok(())
 }
 
-fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error>>{
+fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error>> {
     if rows.len() <= 1 {
         return Ok(());
     }
@@ -193,7 +201,9 @@ fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error
 
     for row in rows.iter().skip(1) {
         if columns != row.columns() {
-            return Err(Box::new(TableSizeError::new("Mismatch column numbers in different rows")));
+            return Err(Box::new(TableSizeError::new(
+                "Mismatch column numbers in different rows",
+            )));
         }
     }
     Ok(())

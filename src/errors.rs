@@ -10,7 +10,7 @@ impl fmt::Display for TableSizeError {
     }
 }
 
-impl Error for TableSizeError { }
+impl Error for TableSizeError {}
 
 impl TableSizeError {
     pub fn new(message: &'static str) -> TableSizeError {

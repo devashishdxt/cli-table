@@ -92,9 +92,9 @@
 //! [`NO_BORDER_COLUMN_ROW`]: format/constant.NO_BORDER_COLUMN_ROW.html
 //! [`NO_BORDER_COLUMN_TITLE`]: format/constant.NO_BORDER_COLUMN_TITLE.html
 mod cell;
+mod errors;
 mod row;
 mod table;
-mod errors;
 
 pub mod format;
 

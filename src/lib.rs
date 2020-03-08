@@ -94,6 +94,7 @@
 mod cell;
 mod row;
 mod table;
+mod errors;
 
 pub mod format;
 

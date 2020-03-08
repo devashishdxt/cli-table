@@ -6,41 +6,51 @@ use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},
     Row,
 };
+use crate::errors::TableSizeError;
+use std::error::Error;
 
 /// Struct for building a [`Table`](struct.Table.html) on command line
+#[allow(missing_docs)]
 pub struct Table {
-    rows: Vec<Row>,
-    format: TableFormat,
-    widths: Vec<usize>,
+    pub rows: Vec<Row>,
+    pub format: TableFormat,
+    /// The maximum widths of each of the columns in the table
+    pub widths: Vec<usize>,
 }
 
 impl Table {
     /// Creates a new [`Table`](struct.Table.html)
-    pub fn new(rows: Vec<Row>, format: TableFormat) -> Table {
-        validate_equal_columns(&rows);
+    pub fn new(rows: Vec<Row>, format: TableFormat) -> std::result::Result<Table, Box<dyn Error>> {
+        validate_equal_columns(&rows)?;
         let widths = get_widths(&rows);
 
-        Table {
+        Ok( Table {
             rows,
             format,
             widths,
-        }
+        })
     }
 
     /// Prints current [`Table`](struct.Table.html) to `stdout`
     pub fn print_stdout(&self) -> Result<()> {
-        self.print_writer(BufferWriter::stdout(ColorChoice::Always))
+        self.print_writer(self.rows.iter(), BufferWriter::stdout(ColorChoice::Always))
+    }
+
+    /// Prints table with an offset in Row number
+    pub fn print_stdout_with_offset(&self, row_offset: usize, number_to_print: usize) -> Result<()> {
+        let relevant_rows = self.rows.iter().skip(row_offset).take(number_to_print);
+        self.print_writer(relevant_rows, BufferWriter::stdout(ColorChoice::Always))
     }
 
     /// Prints current [`Table`](struct.Table.html) to `stderr`
     pub fn print_stderr(&self) -> Result<()> {
-        self.print_writer(BufferWriter::stderr(ColorChoice::Always))
+        self.print_writer(self.rows.iter(), BufferWriter::stderr(ColorChoice::Always))
     }
 
-    fn print_writer(&self, writer: BufferWriter) -> Result<()> {
+    fn print_writer<'a, I: std::iter::Iterator<Item = &'a Row>>(&self, rows_it: I, writer: BufferWriter) -> Result<()> {
         self.print_horizontal_line(&writer, self.format.border.top.as_ref())?;
 
-        let mut rows = self.rows.iter().peekable();
+        let mut rows = rows_it.peekable();
 
         let mut first = true;
 
@@ -175,19 +185,21 @@ fn println_char(writer: &BufferWriter, c: char) -> Result<()> {
     Ok(())
 }
 
-fn validate_equal_columns(rows: &[Row]) {
+fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error>>{
     if rows.len() <= 1 {
-        return;
+        return Ok(());
     }
     let columns = rows[0].columns();
 
     for row in rows.iter().skip(1) {
         if columns != row.columns() {
-            panic!("Mismatch column numbers in different rows");
+            return Err(Box::new(TableSizeError::new("Mismatch column numbers in different rows")));
         }
     }
+    Ok(())
 }
 
+/// Determine the max widths for each row in the table.
 fn get_widths(rows: &[Row]) -> Vec<usize> {
     if rows.is_empty() {
         return Vec::new();

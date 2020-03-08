@@ -1,11 +1,10 @@
-use std::io::Result;
-
 use cli_table::{
     format::{CellFormat, Justify},
     Cell, Row, Table,
 };
+use std::error::Error;
 
-fn main() -> Result<()> {
+fn main() -> std::result::Result<(), Box<dyn Error>> {
     let justify_right = CellFormat::builder().justify(Justify::Right).build();
     let bold = CellFormat::builder().bold(true).build();
 
@@ -29,7 +28,9 @@ fn main() -> Result<()> {
             ]),
         ],
         Default::default(),
-    );
+    )?;
 
-    table.print_stdout()
+    table.print_stdout()?;
+
+    Ok(())
 }

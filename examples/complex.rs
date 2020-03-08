@@ -81,7 +81,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             ]),
         ],
         table_format,
-    );
+    )?;
     table.print_stdout()?;
     Ok(())
 }

@@ -8,7 +8,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! cli-table = "0.2"
+//! cli-table = "0.3"
 //! ```
 //!
 //! Each cell in a [`Table`] can be formatted using [`CellFormat`]. [`CellFormat`] can be easily created like this:

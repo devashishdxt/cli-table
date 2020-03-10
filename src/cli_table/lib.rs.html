@@ -101,6 +101,8 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>, <span class="ident">unstable_features</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -164,7 +166,8 @@
 <span class="doccomment">//!         ]),</span>
 <span class="doccomment">//!     ],</span>
 <span class="doccomment">//!     Default::default(),</span>
-<span class="doccomment">//! );</span>
+<span class="doccomment">//! )</span>
+<span class="doccomment">//! .unwrap();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! To print this table on `stdout`, you can call [`table.print_stdout()`].</span>
@@ -196,13 +199,14 @@
 <span class="doccomment">//! [`NO_BORDER_COLUMN_ROW`]: format/constant.NO_BORDER_COLUMN_ROW.html</span>
 <span class="doccomment">//! [`NO_BORDER_COLUMN_TITLE`]: format/constant.NO_BORDER_COLUMN_TITLE.html</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
-<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">row</span>;
 <span class="kw">mod</span> <span class="ident">table</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">format</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cell</span>::<span class="ident">Cell</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">row</span>::<span class="ident">Row</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">table</span>::<span class="ident">Table</span>;
 </pre></div>

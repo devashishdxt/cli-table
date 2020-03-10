@@ -1,7 +1,7 @@
 use std::fmt;
 
 /// Errors returned by functions in this crate
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug)]
 pub enum Error {
     /// Returned when there is a mismatch in number of columns in different rows of a table
     MismatchedColumns,

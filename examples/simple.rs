@@ -4,7 +4,7 @@ use cli_table::{
 };
 use std::error::Error;
 
-fn main() -> std::result::Result<(), Box<dyn Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let justify_right = CellFormat::builder().justify(Justify::Right).build();
     let bold = CellFormat::builder().bold(true).build();
 

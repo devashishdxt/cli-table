@@ -1,4 +1,4 @@
-use std::io::Result;
+use std::io;
 
 use termcolor::{Buffer, BufferWriter};
 
@@ -36,13 +36,13 @@ impl Row {
         &self,
         writer: &BufferWriter,
         widths: &[usize],
-    ) -> Result<Vec<Vec<Buffer>>> {
+    ) -> io::Result<Vec<Vec<Buffer>>> {
         let buffers = self
             .cells
             .iter()
             .zip(widths.iter())
             .map(|(cell, width)| cell.buffers(writer, self.height, *width))
-            .collect::<Result<Vec<Vec<Option<Buffer>>>>>()?;
+            .collect::<io::Result<Vec<Vec<Option<Buffer>>>>>()?;
         Ok(self.zip_buffers(buffers))
     }
 

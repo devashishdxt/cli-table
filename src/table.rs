@@ -1,26 +1,25 @@
-use std::io::{Result, Write};
+use std::io::{self, Write};
 
 use termcolor::{BufferWriter, ColorChoice, WriteColor};
 
-use crate::errors::TableSizeError;
 use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},
-    Row,
+    Error, Row,
 };
-use std::error::Error;
 
 /// Struct for building a [`Table`](struct.Table.html) on command line
-#[allow(missing_docs)]
 pub struct Table {
-    pub rows: Vec<Row>,
-    pub format: TableFormat,
+    /// Rows in the table
+    rows: Vec<Row>,
+    /// Format of the table
+    format: TableFormat,
     /// The maximum widths of each of the columns in the table
-    pub widths: Vec<usize>,
+    widths: Vec<usize>,
 }
 
 impl Table {
     /// Creates a new [`Table`](struct.Table.html)
-    pub fn new(rows: Vec<Row>, format: TableFormat) -> std::result::Result<Table, Box<dyn Error>> {
+    pub fn new(rows: Vec<Row>, format: TableFormat) -> Result<Table, Error> {
         validate_equal_columns(&rows)?;
         let widths = get_widths(&rows);
 
@@ -32,33 +31,19 @@ impl Table {
     }
 
     /// Prints current [`Table`](struct.Table.html) to `stdout`
-    pub fn print_stdout(&self) -> Result<()> {
-        self.print_writer(self.rows.iter(), BufferWriter::stdout(ColorChoice::Always))
-    }
-
-    /// Prints table with an offset in Row number
-    pub fn print_stdout_with_offset(
-        &self,
-        row_offset: usize,
-        number_to_print: usize,
-    ) -> Result<()> {
-        let relevant_rows = self.rows.iter().skip(row_offset).take(number_to_print);
-        self.print_writer(relevant_rows, BufferWriter::stdout(ColorChoice::Always))
+    pub fn print_stdout(&self) -> io::Result<()> {
+        self.print_writer(BufferWriter::stdout(ColorChoice::Always))
     }
 
     /// Prints current [`Table`](struct.Table.html) to `stderr`
-    pub fn print_stderr(&self) -> Result<()> {
-        self.print_writer(self.rows.iter(), BufferWriter::stderr(ColorChoice::Always))
+    pub fn print_stderr(&self) -> io::Result<()> {
+        self.print_writer(BufferWriter::stderr(ColorChoice::Always))
     }
 
-    fn print_writer<'a, I: std::iter::Iterator<Item = &'a Row>>(
-        &self,
-        rows_it: I,
-        writer: BufferWriter,
-    ) -> Result<()> {
+    fn print_writer(&self, writer: BufferWriter) -> io::Result<()> {
         self.print_horizontal_line(&writer, self.format.border.top.as_ref())?;
 
-        let mut rows = rows_it.peekable();
+        let mut rows = self.rows.iter().peekable();
 
         let mut first = true;
 
@@ -115,7 +100,7 @@ impl Table {
         &self,
         writer: &BufferWriter,
         line: Option<&HorizontalLine>,
-    ) -> Result<()> {
+    ) -> io::Result<()> {
         if let Some(line) = line {
             if self.format.border.left.is_some() {
                 print_char(writer, line.left_end)?;
@@ -153,7 +138,7 @@ impl Table {
         &self,
         writer: &BufferWriter,
         line: Option<&VerticalLine>,
-    ) -> Result<()> {
+    ) -> io::Result<()> {
         if let Some(line) = line {
             print_char(writer, line.filler)?;
         }
@@ -161,7 +146,7 @@ impl Table {
     }
 }
 
-fn print_str(writer: &BufferWriter, s: &str) -> Result<()> {
+fn print_str(writer: &BufferWriter, s: &str) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
     write!(&mut buffer, "{}", s)?;
@@ -169,7 +154,7 @@ fn print_str(writer: &BufferWriter, s: &str) -> Result<()> {
     Ok(())
 }
 
-fn println_str(writer: &BufferWriter, s: &str) -> Result<()> {
+fn println_str(writer: &BufferWriter, s: &str) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
     writeln!(&mut buffer, "{}", s)?;
@@ -177,7 +162,7 @@ fn println_str(writer: &BufferWriter, s: &str) -> Result<()> {
     Ok(())
 }
 
-fn print_char(writer: &BufferWriter, c: char) -> Result<()> {
+fn print_char(writer: &BufferWriter, c: char) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
     write!(&mut buffer, "{}", c)?;
@@ -185,7 +170,7 @@ fn print_char(writer: &BufferWriter, c: char) -> Result<()> {
     Ok(())
 }
 
-fn println_char(writer: &BufferWriter, c: char) -> Result<()> {
+fn println_char(writer: &BufferWriter, c: char) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
     writeln!(&mut buffer, "{}", c)?;
@@ -193,7 +178,7 @@ fn println_char(writer: &BufferWriter, c: char) -> Result<()> {
     Ok(())
 }
 
-fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error>> {
+fn validate_equal_columns(rows: &[Row]) -> Result<(), Error> {
     if rows.len() <= 1 {
         return Ok(());
     }
@@ -201,9 +186,7 @@ fn validate_equal_columns(rows: &[Row]) -> std::result::Result<(), Box<dyn Error
 
     for row in rows.iter().skip(1) {
         if columns != row.columns() {
-            return Err(Box::new(TableSizeError::new(
-                "Mismatch column numbers in different rows",
-            )));
+            return Err(Error::MismatchedColumns);
         }
     }
     Ok(())

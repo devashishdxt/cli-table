@@ -6,33 +6,19 @@ use std::error::Error;
 
 fn build_top_and_bottom_border_lines() -> (HorizontalLine, HorizontalLine) {
     // Generates a horizontal line as described that we will use for the top of the table
-    let top_horizontal_line = HorizontalLine::builder()
-        .left_end('┌')
-        .right_end('┐')
-        .junction('┬')
-        .filler('─')
-        .build();
+    let top_horizontal_line = HorizontalLine::new('┌', '┐', '┬', '─');
     // Generates a horizontal line as described that we will use for the bottom of the table
-    let bottom_horizontal_line = HorizontalLine::builder()
-        .left_end('└')
-        .right_end('┘')
-        .junction('┴')
-        .filler('─')
-        .build();
+    let bottom_horizontal_line = HorizontalLine::new('└', '┘', '┴', '─');
+
     (top_horizontal_line, bottom_horizontal_line)
 }
 
 fn build_row_separator() -> HorizontalLine {
-    HorizontalLine::builder()
-        .left_end('├')
-        .right_end('┤')
-        .junction('┼')
-        .filler('─')
-        .build()
+    HorizontalLine::new('├', '┤', '┼', '─')
 }
 
 fn build_column_separator() -> VerticalLine {
-    VerticalLine::builder().filler('│').build()
+    VerticalLine::new('│')
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -65,7 +51,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         vec![
             Row::new(vec![
                 Cell::new(&format!("Name"), bold),
-                Cell::new("Age (car years)", bold),
+                Cell::new("Age (in years)", bold),
             ]),
             Row::new(vec![
                 Cell::new("Tom", Default::default()),

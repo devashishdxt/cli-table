@@ -55,7 +55,7 @@ let table = Table::new(
         ]),
     ],
     Default::default(),
-);
+)?;
 ```
 
 To print this table on `stdout`, you can call `table.print_stdout()`.

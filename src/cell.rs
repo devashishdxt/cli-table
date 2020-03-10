@@ -1,6 +1,6 @@
 use std::{
     fmt::Display,
-    io::{Result, Write},
+    io::{self, Write},
 };
 
 use termcolor::{Buffer, BufferWriter, ColorSpec, WriteColor};
@@ -37,7 +37,7 @@ impl Cell {
         writer: &BufferWriter,
         height: usize,
         width: usize,
-    ) -> Result<Vec<Option<Buffer>>> {
+    ) -> io::Result<Vec<Option<Buffer>>> {
         assert!(
             height >= self.height,
             "Provided height is less than that required by cell"
@@ -107,7 +107,7 @@ fn get_buffer(
     width: usize,
     justify: Justify,
     color_spec: &ColorSpec,
-) -> Result<Buffer> {
+) -> io::Result<Buffer> {
     let mut buffer = writer.buffer();
     buffer.set_color(&color_spec)?;
 

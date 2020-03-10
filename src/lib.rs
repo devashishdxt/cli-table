@@ -60,7 +60,8 @@
 //!         ]),
 //!     ],
 //!     Default::default(),
-//! );
+//! )
+//! .unwrap();
 //! ```
 //!
 //! To print this table on `stdout`, you can call [`table.print_stdout()`].
@@ -92,12 +93,13 @@
 //! [`NO_BORDER_COLUMN_ROW`]: format/constant.NO_BORDER_COLUMN_ROW.html
 //! [`NO_BORDER_COLUMN_TITLE`]: format/constant.NO_BORDER_COLUMN_TITLE.html
 mod cell;
-mod errors;
+mod error;
 mod row;
 mod table;
 
 pub mod format;
 
 pub use self::cell::Cell;
+pub use self::error::Error;
 pub use self::row::Row;
 pub use self::table::Table;

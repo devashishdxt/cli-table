@@ -1,5 +1,5 @@
 /// A vertical line in a [`Table`](struct.Table.html) (border or column separator)
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct VerticalLine {
     pub(crate) filler: char,
 }
@@ -15,30 +15,10 @@ impl VerticalLine {
     pub fn new(filler: char) -> Self {
         Self { filler }
     }
-
-    /// Creates a new builder for [`VerticalLine`](struct.VerticalLine.html)
-    pub fn builder() -> VerticalLineBuilder {
-        VerticalLineBuilder(VerticalLine::default())
-    }
-}
-
-/// Builder for [`VerticalLine`](struct.Border.html)
-#[derive(Debug)]
-pub struct VerticalLineBuilder(VerticalLine);
-
-impl VerticalLineBuilder {
-    pub fn build(self) -> VerticalLine {
-        self.0
-    }
-
-    pub fn filler(mut self, value: char) -> Self {
-        self.0.filler = value;
-        self
-    }
 }
 
 /// A horizontal line in a [`Table`](struct.Table.html) (border or row separator)
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct HorizontalLine {
     pub(crate) left_end: char,
     pub(crate) right_end: char,
@@ -67,42 +47,10 @@ impl HorizontalLine {
             filler,
         }
     }
-
-    /// Creates a new builder for [`HorizontalLine`](struct.HorizontalLine.html)
-    pub fn builder() -> HorizontalLineBuilder {
-        HorizontalLineBuilder(HorizontalLine::default())
-    }
-}
-
-/// Builder for [`HorizontalLine`](struct.Border.html)
-#[derive(Debug)]
-pub struct HorizontalLineBuilder(HorizontalLine);
-
-impl HorizontalLineBuilder {
-    pub fn build(self) -> HorizontalLine {
-        self.0
-    }
-
-    pub fn left_end(mut self, value: char) -> Self {
-        self.0.left_end = value;
-        self
-    }
-    pub fn right_end(mut self, value: char) -> Self {
-        self.0.right_end = value;
-        self
-    }
-    pub fn junction(mut self, value: char) -> Self {
-        self.0.junction = value;
-        self
-    }
-    pub fn filler(mut self, value: char) -> Self {
-        self.0.filler = value;
-        self
-    }
 }
 
 /// Borders of a [`Table`](struct.Table.html)
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Border {
     pub(crate) top: Option<HorizontalLine>,
     pub(crate) bottom: Option<HorizontalLine>,
@@ -113,7 +61,12 @@ pub struct Border {
 impl Border {
     /// Creates a new builder for [`Border`](struct.Border.html)
     pub fn builder() -> BorderBuilder {
-        BorderBuilder(Border::default())
+        BorderBuilder(Border {
+            top: None,
+            bottom: None,
+            left: None,
+            right: None,
+        })
     }
 }
 
@@ -129,7 +82,7 @@ impl Default for Border {
 }
 
 /// Builder for [`Border`](struct.Border.html)
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BorderBuilder(Border);
 
 impl BorderBuilder {
@@ -164,7 +117,7 @@ impl BorderBuilder {
 }
 
 /// Inner (column/row) separators of a [`Table`](struct.Table.html)
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Separator {
     pub(crate) column: Option<VerticalLine>,
     pub(crate) row: Option<HorizontalLine>,
@@ -174,7 +127,11 @@ pub struct Separator {
 impl Separator {
     /// Creates a new builder for [`Separator`](struct.Separator.html)
     pub fn builder() -> SeparatorBuilder {
-        SeparatorBuilder(Default::default())
+        SeparatorBuilder(Separator {
+            column: None,
+            row: None,
+            title: None,
+        })
     }
 }
 

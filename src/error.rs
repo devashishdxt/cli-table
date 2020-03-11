@@ -3,7 +3,7 @@ use std::fmt;
 /// Errors returned by functions in this crate
 #[derive(Debug)]
 pub enum Error {
-    /// Returned when there is a mismatch in number of columns in different rows of a table
+    /// Returned when there is a mismatch in number of columns in different rows of a [`Table`](struct.Table.html)
     MismatchedColumns,
 }
 

@@ -2,7 +2,9 @@
 mod cell;
 mod table;
 
-pub use self::cell::{Align, CellFormat, CellFormatBuilder, Color, Justify};
+pub use self::cell::{
+    Align, CellFormat, CellFormatBuilder, Color, Justify, Padding, PaddingBuilder,
+};
 pub use self::table::{
     Border, BorderBuilder, HorizontalLine, Separator, SeparatorBuilder, TableFormat, VerticalLine,
 };

@@ -1,27 +1,15 @@
 pub use termcolor::Color;
 
 /// Struct for configuring a [`Cell`](struct.Cell.html)'s format
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct CellFormat {
     pub(crate) justify: Justify,
     pub(crate) align: Align,
+    pub(crate) padding: Padding,
     pub(crate) foreground_color: Option<Color>,
     pub(crate) background_color: Option<Color>,
     pub(crate) bold: bool,
     pub(crate) underline: bool,
-}
-
-impl Default for CellFormat {
-    fn default() -> Self {
-        Self {
-            justify: Default::default(),
-            align: Default::default(),
-            foreground_color: None,
-            background_color: None,
-            bold: false,
-            underline: false,
-        }
-    }
 }
 
 impl CellFormat {
@@ -48,6 +36,13 @@ impl CellFormatBuilder {
     #[inline]
     pub fn align(mut self, align: Align) -> Self {
         self.0.align = align;
+        self
+    }
+
+    /// Sets padding of a [`Cell`](struct.Cell.html)
+    #[inline]
+    pub fn padding(mut self, padding: Padding) -> Self {
+        self.0.padding = padding;
         self
     }
 
@@ -119,5 +114,65 @@ impl Default for Align {
     #[inline]
     fn default() -> Self {
         Self::Top
+    }
+}
+
+/// Used to add padding to the contents of a [`Cell`](struct.Cell.html)
+#[derive(Debug, Clone, Copy, Default)]
+pub struct Padding {
+    /// Left padding
+    pub(crate) left: usize,
+    /// Right padding
+    pub(crate) right: usize,
+    /// Top padding
+    pub(crate) top: usize,
+    /// Bottom padding
+    pub(crate) bottom: usize,
+}
+
+impl Padding {
+    /// Creates a new builder for [`Padding`](struct.Padding.html)
+    pub fn builder() -> PaddingBuilder {
+        Default::default()
+    }
+}
+
+/// Builder for [`Padding`](struct.Padding.html)
+#[derive(Debug, Default)]
+pub struct PaddingBuilder(Padding);
+
+impl PaddingBuilder {
+    /// Sets left padding of a [`Cell`](struct.Cell.html)
+    #[inline]
+    pub fn left(mut self, left_padding: usize) -> Self {
+        self.0.left = left_padding;
+        self
+    }
+
+    /// Sets right padding of a [`Cell`](struct.Cell.html)
+    #[inline]
+    pub fn right(mut self, right_padding: usize) -> Self {
+        self.0.right = right_padding;
+        self
+    }
+
+    /// Sets top padding of a [`Cell`](struct.Cell.html)
+    #[inline]
+    pub fn top(mut self, top_padding: usize) -> Self {
+        self.0.top = top_padding;
+        self
+    }
+
+    /// Sets bottom padding of a [`Cell`](struct.Cell.html)
+    #[inline]
+    pub fn bottom(mut self, bottom_padding: usize) -> Self {
+        self.0.bottom = bottom_padding;
+        self
+    }
+
+    /// Build [`Padding`](struct.Padding.html)
+    #[inline]
+    pub fn build(self) -> Padding {
+        self.0
     }
 }

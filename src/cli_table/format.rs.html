@@ -223,12 +223,16 @@
 <span id="223">223</span>
 <span id="224">224</span>
 <span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Utilities for formatting of a [`Table`](struct.Table.html)</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
 <span class="kw">mod</span> <span class="ident">table</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cell</span>::{<span class="ident">Align</span>, <span class="ident">CellFormat</span>, <span class="ident">CellFormatBuilder</span>, <span class="ident">Color</span>, <span class="ident">Justify</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cell</span>::{
+    <span class="ident">Align</span>, <span class="ident">CellFormat</span>, <span class="ident">CellFormatBuilder</span>, <span class="ident">Color</span>, <span class="ident">Justify</span>, <span class="ident">Padding</span>, <span class="ident">PaddingBuilder</span>,
+};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">table</span>::{
     <span class="ident">Border</span>, <span class="ident">BorderBuilder</span>, <span class="ident">HorizontalLine</span>, <span class="ident">Separator</span>, <span class="ident">SeparatorBuilder</span>, <span class="ident">TableFormat</span>, <span class="ident">VerticalLine</span>,
 };

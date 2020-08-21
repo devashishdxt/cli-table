@@ -194,7 +194,7 @@ impl TableFormat {
         Self {
             border,
             separator,
-            foreground: None
+            foreground: None,
         }
     }
 

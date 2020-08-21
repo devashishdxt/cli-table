@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use termcolor::{BufferWriter, ColorSpec, Color, ColorChoice, WriteColor};
+use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
 
 use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},

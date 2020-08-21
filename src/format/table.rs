@@ -191,7 +191,11 @@ pub struct TableFormat {
 impl TableFormat {
     /// Creates a new instance of [`TableFormat`](struct.TableFormat.html)
     pub fn new(border: Border, separator: Separator) -> Self {
-        Self { border, separator, foreground: None }
+        Self {
+            border,
+            separator,
+            foreground: None
+        }
     }
 
     /// Set the foreground color of the table borders & separators.

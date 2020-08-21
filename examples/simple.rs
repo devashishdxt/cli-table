@@ -1,5 +1,5 @@
 use cli_table::{
-    format::{CellFormat, TableFormat, Color, Justify, Padding},
+    format::{CellFormat, Color, Justify, Padding, TableFormat},
     Cell, Row, Table,
 };
 use std::error::Error;

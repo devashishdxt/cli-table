@@ -24,6 +24,7 @@ pub use self::table::{
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -64,6 +65,7 @@ pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -103,6 +105,7 @@ pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -136,6 +139,7 @@ pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: None,
         bottom: None,
@@ -166,6 +170,7 @@ pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: None,
         bottom: None,
@@ -198,6 +203,7 @@ pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +----------------------------+
 /// ```
 pub const BORDER_NO_COLUMN_ROW: TableFormat = TableFormat {
+    foreground: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',

@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use termcolor::{BufferWriter, ColorChoice, WriteColor};
+use termcolor::{BufferWriter, ColorSpec, Color, ColorChoice, WriteColor};
 
 use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},
@@ -56,9 +56,9 @@ impl Table {
                 let mut line_buffers = line.into_iter().peekable();
 
                 while let Some(buffer) = line_buffers.next() {
-                    print_char(&writer, ' ')?;
+                    print_char(&writer, ' ', None)?;
                     writer.print(&buffer)?;
-                    print_char(&writer, ' ')?;
+                    print_char(&writer, ' ', None)?;
 
                     match line_buffers.peek() {
                         Some(_) => self
@@ -69,7 +69,7 @@ impl Table {
                     }
                 }
 
-                println_str(&writer, "")?;
+                println_str(&writer, "", None)?;
             }
 
             match rows.peek() {
@@ -103,7 +103,7 @@ impl Table {
     ) -> io::Result<()> {
         if let Some(line) = line {
             if self.format.border.left.is_some() {
-                print_char(writer, line.left_end)?;
+                print_char(writer, line.left_end, self.format.foreground)?;
             }
 
             let mut widths = self.widths.iter().peekable();
@@ -112,19 +112,19 @@ impl Table {
                 let s = std::iter::repeat(line.filler)
                     .take(width + 2)
                     .collect::<String>();
-                print_str(writer, &s)?;
+                print_str(writer, &s, self.format.foreground)?;
 
                 match widths.peek() {
                     Some(_) => {
                         if self.format.separator.column.is_some() {
-                            print_char(writer, line.junction)?
+                            print_char(writer, line.junction, self.format.foreground)?
                         }
                     }
                     None => {
                         if self.format.border.right.is_some() {
-                            println_char(writer, line.right_end)?;
+                            println_char(writer, line.right_end, self.format.foreground)?;
                         } else {
-                            println_str(writer, "")?;
+                            println_str(writer, "", self.format.foreground)?;
                         }
                     }
                 }
@@ -140,39 +140,43 @@ impl Table {
         line: Option<&VerticalLine>,
     ) -> io::Result<()> {
         if let Some(line) = line {
-            print_char(writer, line.filler)?;
+            print_char(writer, line.filler, self.format.foreground)?;
         }
         Ok(())
     }
 }
 
-fn print_str(writer: &BufferWriter, s: &str) -> io::Result<()> {
+fn print_str(writer: &BufferWriter, s: &str, foreground: Option<Color>) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
+    buffer.set_color(&ColorSpec::default().set_fg(foreground))?;
     write!(&mut buffer, "{}", s)?;
     writer.print(&buffer)?;
     Ok(())
 }
 
-fn println_str(writer: &BufferWriter, s: &str) -> io::Result<()> {
+fn println_str(writer: &BufferWriter, s: &str, foreground: Option<Color>) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
+    buffer.set_color(&ColorSpec::default().set_fg(foreground))?;
     writeln!(&mut buffer, "{}", s)?;
     writer.print(&buffer)?;
     Ok(())
 }
 
-fn print_char(writer: &BufferWriter, c: char) -> io::Result<()> {
+fn print_char(writer: &BufferWriter, c: char, foreground: Option<Color>) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
+    buffer.set_color(&ColorSpec::default().set_fg(foreground))?;
     write!(&mut buffer, "{}", c)?;
     writer.print(&buffer)?;
     Ok(())
 }
 
-fn println_char(writer: &BufferWriter, c: char) -> io::Result<()> {
+fn println_char(writer: &BufferWriter, c: char, foreground: Option<Color>) -> io::Result<()> {
     let mut buffer = writer.buffer();
     buffer.reset()?;
+    buffer.set_color(&ColorSpec::default().set_fg(foreground))?;
     writeln!(&mut buffer, "{}", c)?;
     writer.print(&buffer)?;
     Ok(())

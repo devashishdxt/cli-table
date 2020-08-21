@@ -1,3 +1,5 @@
+use termcolor::Color;
+
 /// A vertical line in a [`Table`](struct.Table.html) (border or column separator)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct VerticalLine {
@@ -181,6 +183,7 @@ impl SeparatorBuilder {
 /// Struct for configuring a [`Table`](struct.Table.html)'s format
 #[derive(Debug, Default)]
 pub struct TableFormat {
+    pub(crate) foreground: Option<Color>,
     pub(crate) border: Border,
     pub(crate) separator: Separator,
 }
@@ -188,6 +191,12 @@ pub struct TableFormat {
 impl TableFormat {
     /// Creates a new instance of [`TableFormat`](struct.TableFormat.html)
     pub fn new(border: Border, separator: Separator) -> Self {
-        Self { border, separator }
+        Self { border, separator, foreground: None }
+    }
+
+    /// Set the foreground color of the table borders & separators.
+    pub fn foreground(mut self, color: Color) -> Self {
+        self.foreground = Some(color);
+        self
     }
 }

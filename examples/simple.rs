@@ -1,5 +1,5 @@
 use cli_table::{
-    format::{CellFormat, Justify, Padding},
+    format::{CellFormat, TableFormat, Color, Justify, Padding},
     Cell, Row, Table,
 };
 use std::error::Error;
@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 Cell::new("25", justify_right),
             ]),
         ],
-        Default::default(),
+        TableFormat::default().foreground(Color::Red),
     )?;
 
     table.print_stdout()?;

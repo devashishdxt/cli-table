@@ -225,6 +225,12 @@
 <span id="225">225</span>
 <span id="226">226</span>
 <span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Utilities for formatting of a [`Table`](struct.Table.html)</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
@@ -252,6 +258,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -292,6 +299,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -331,6 +339,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_NO_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -364,6 +373,7 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -394,6 +404,7 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -426,6 +437,7 @@
 <span class="doccomment">/// +----------------------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_NO_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
+    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -454,4 +466,4 @@
     },
 };
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -210,10 +210,14 @@
 <span id="210">210</span>
 <span id="211">211</span>
 <span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
 
-<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">BufferWriter</span>, <span class="ident">ColorChoice</span>, <span class="ident">WriteColor</span>};
+<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">BufferWriter</span>, <span class="ident">Color</span>, <span class="ident">ColorChoice</span>, <span class="ident">ColorSpec</span>, <span class="ident">WriteColor</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">format</span>::{<span class="ident">HorizontalLine</span>, <span class="ident">TableFormat</span>, <span class="ident">VerticalLine</span>},
@@ -269,9 +273,9 @@
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">line_buffers</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">into_iter</span>().<span class="ident">peekable</span>();
 
                 <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">buffer</span>) <span class="op">=</span> <span class="ident">line_buffers</span>.<span class="ident">next</span>() {
-                    <span class="ident">print_char</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&#39; &#39;</span>)<span class="question-mark">?</span>;
+                    <span class="ident">print_char</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&#39; &#39;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
                     <span class="ident">writer</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="ident">buffer</span>)<span class="question-mark">?</span>;
-                    <span class="ident">print_char</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&#39; &#39;</span>)<span class="question-mark">?</span>;
+                    <span class="ident">print_char</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&#39; &#39;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
 
                     <span class="kw">match</span> <span class="ident">line_buffers</span>.<span class="ident">peek</span>() {
                         <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>
@@ -282,7 +286,7 @@
                     }
                 }
 
-                <span class="ident">println_str</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>;
+                <span class="ident">println_str</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
             }
 
             <span class="kw">match</span> <span class="ident">rows</span>.<span class="ident">peek</span>() {
@@ -316,7 +320,7 @@
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">line</span>) <span class="op">=</span> <span class="ident">line</span> {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">left</span>.<span class="ident">is_some</span>() {
-                <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">left_end</span>)<span class="question-mark">?</span>;
+                <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">left_end</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>;
             }
 
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">widths</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">widths</span>.<span class="ident">iter</span>().<span class="ident">peekable</span>();
@@ -325,19 +329,19 @@
                 <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">line</span>.<span class="ident">filler</span>)
                     .<span class="ident">take</span>(<span class="ident">width</span> <span class="op">+</span> <span class="number">2</span>)
                     .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
-                <span class="ident">print_str</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>)<span class="question-mark">?</span>;
+                <span class="ident">print_str</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>;
 
                 <span class="kw">match</span> <span class="ident">widths</span>.<span class="ident">peek</span>() {
                     <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">column</span>.<span class="ident">is_some</span>() {
-                            <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">junction</span>)<span class="question-mark">?</span>
+                            <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">junction</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>
                         }
                     }
                     <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">right</span>.<span class="ident">is_some</span>() {
-                            <span class="ident">println_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">right_end</span>)<span class="question-mark">?</span>;
+                            <span class="ident">println_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">right_end</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>;
                         } <span class="kw">else</span> {
-                            <span class="ident">println_str</span>(<span class="ident">writer</span>, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>;
+                            <span class="ident">println_str</span>(<span class="ident">writer</span>, <span class="string">&quot;&quot;</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>;
                         }
                     }
                 }
@@ -353,39 +357,43 @@
         <span class="ident">line</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">line</span>) <span class="op">=</span> <span class="ident">line</span> {
-            <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">filler</span>)<span class="question-mark">?</span>;
+            <span class="ident">print_char</span>(<span class="ident">writer</span>, <span class="ident">line</span>.<span class="ident">filler</span>, <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">foreground</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">fn</span> <span class="ident">print_str</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">print_str</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">buffer</span>();
     <span class="ident">buffer</span>.<span class="ident">reset</span>()<span class="question-mark">?</span>;
+    <span class="ident">buffer</span>.<span class="ident">set_color</span>(<span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>::<span class="ident">default</span>().<span class="ident">set_fg</span>(<span class="ident">foreground</span>))<span class="question-mark">?</span>;
     <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>)<span class="question-mark">?</span>;
     <span class="ident">writer</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="ident">buffer</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">fn</span> <span class="ident">println_str</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">println_str</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">buffer</span>();
     <span class="ident">buffer</span>.<span class="ident">reset</span>()<span class="question-mark">?</span>;
+    <span class="ident">buffer</span>.<span class="ident">set_color</span>(<span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>::<span class="ident">default</span>().<span class="ident">set_fg</span>(<span class="ident">foreground</span>))<span class="question-mark">?</span>;
     <span class="macro">writeln</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>)<span class="question-mark">?</span>;
     <span class="ident">writer</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="ident">buffer</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">fn</span> <span class="ident">print_char</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">print_char</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">buffer</span>();
     <span class="ident">buffer</span>.<span class="ident">reset</span>()<span class="question-mark">?</span>;
+    <span class="ident">buffer</span>.<span class="ident">set_color</span>(<span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>::<span class="ident">default</span>().<span class="ident">set_fg</span>(<span class="ident">foreground</span>))<span class="question-mark">?</span>;
     <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">c</span>)<span class="question-mark">?</span>;
     <span class="ident">writer</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="ident">buffer</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">fn</span> <span class="ident">println_char</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">println_char</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>, <span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">buffer</span>();
     <span class="ident">buffer</span>.<span class="ident">reset</span>()<span class="question-mark">?</span>;
+    <span class="ident">buffer</span>.<span class="ident">set_color</span>(<span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>::<span class="ident">default</span>().<span class="ident">set_fg</span>(<span class="ident">foreground</span>))<span class="question-mark">?</span>;
     <span class="macro">writeln</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">c</span>)<span class="question-mark">?</span>;
     <span class="ident">writer</span>.<span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="ident">buffer</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
@@ -424,4 +432,4 @@
     <span class="ident">widths</span>
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

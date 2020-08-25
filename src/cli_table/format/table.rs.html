@@ -191,7 +191,22 @@
 <span id="191">191</span>
 <span id="192">192</span>
 <span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">Color</span>;
+
 <span class="doccomment">/// A vertical line in a [`Table`](struct.Table.html) (border or column separator)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VerticalLine</span> {
@@ -375,6 +390,7 @@
 <span class="doccomment">/// Struct for configuring a [`Table`](struct.Table.html)&#39;s format</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableFormat</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">border</span>: <span class="ident">Border</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">separator</span>: <span class="ident">Separator</span>,
 }
@@ -382,8 +398,18 @@
 <span class="kw">impl</span> <span class="ident">TableFormat</span> {
     <span class="doccomment">/// Creates a new instance of [`TableFormat`](struct.TableFormat.html)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">border</span>: <span class="ident">Border</span>, <span class="ident">separator</span>: <span class="ident">Separator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">border</span>, <span class="ident">separator</span> }
+        <span class="self">Self</span> {
+            <span class="ident">border</span>,
+            <span class="ident">separator</span>,
+            <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+        }
+    }
+
+    <span class="doccomment">/// Set the foreground color of the table borders &amp; separators.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">foreground</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>);
+        <span class="self">self</span>
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "cli_table";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "cli_table";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

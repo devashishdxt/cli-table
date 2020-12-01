@@ -324,6 +324,10 @@
 <span id="321">321</span>
 <span id="322">322</span>
 <span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
 
@@ -391,10 +395,12 @@
         <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">iter_mut</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">row</span><span class="op">|</span> <span class="ident">row</span>.<span class="ident">reset</span>());
     }
 
+    <span class="doccomment">/// Initializes color specs and stores it in memory for future use</span>
     <span class="kw">fn</span> <span class="ident">init_color_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="self">self</span>.<span class="ident">color_spec</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">format</span>.<span class="ident">color_spec</span>())
     }
 
+    <span class="doccomment">/// Returns color specs for table. Initializes if missing</span>
     <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ColorSpec</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">color_spec</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">init_color_spec</span>()
@@ -403,6 +409,7 @@
         <span class="self">self</span>.<span class="ident">color_spec</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()
     }
 
+    <span class="doccomment">/// Initializes dimension and stores it in memory for future use</span>
     <span class="kw">fn</span> <span class="ident">init_dimension</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">is_empty</span>() {
             <span class="self">self</span>.<span class="ident">dimension</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TableDimension</span> {
@@ -434,6 +441,7 @@
         <span class="self">self</span>.<span class="ident">dimension</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TableDimension</span> { <span class="ident">widths</span>, <span class="ident">heights</span> });
     }
 
+    <span class="doccomment">/// Returns dimension for table. Initializes if missing</span>
     <span class="kw">fn</span> <span class="ident">dimension</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableDimension</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">dimension</span>.<span class="ident">is_none</span>() {
             <span class="self">self</span>.<span class="ident">init_dimension</span>()

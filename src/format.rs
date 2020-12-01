@@ -25,7 +25,6 @@ pub use self::table::{
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -52,6 +51,9 @@ pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
         }),
         title: None,
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };
 
 /// Format with borders, column separators and title separator (without row separators)
@@ -66,7 +68,6 @@ pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -93,6 +94,9 @@ pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
             filler: '-',
         }),
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };
 
 /// Format with borders and column separators (without row separators)
@@ -106,7 +110,6 @@ pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -128,6 +131,9 @@ pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
         row: None,
         title: None,
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };
 
 /// Format with no borders, column separators and title separator (without row separators)
@@ -140,7 +146,6 @@ pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: None,
         bottom: None,
@@ -157,6 +162,9 @@ pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
             filler: '-',
         }),
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };
 
 /// Format with no borders, column separators and row separators
@@ -171,7 +179,6 @@ pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: None,
         bottom: None,
@@ -188,6 +195,9 @@ pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
         }),
         title: None,
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };
 
 /// Format with borders and row separators (without column separators)
@@ -204,7 +214,6 @@ pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +----------------------------+
 /// ```
 pub const BORDER_NO_COLUMN_ROW: TableFormat = TableFormat {
-    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -231,4 +240,7 @@ pub const BORDER_NO_COLUMN_ROW: TableFormat = TableFormat {
         }),
         title: None,
     },
+    foreground_color: None,
+    background_color: None,
+    bold: false,
 };

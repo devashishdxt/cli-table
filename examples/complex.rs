@@ -45,9 +45,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         .column(Some(column_separator))
         .build();
 
-    let table_format = TableFormat::new(border, separator);
+    let table_format = TableFormat::builder()
+        .border(border)
+        .separator(separator)
+        .build();
 
-    let table = Table::new(
+    let mut table = Table::new(
         vec![
             Row::new(vec![
                 Cell::new(&format!("Name"), bold),

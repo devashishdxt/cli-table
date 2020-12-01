@@ -1,3 +1,5 @@
+use termcolor::ColorSpec;
+
 pub use termcolor::Color;
 
 /// Struct for configuring a [`Cell`](crate::Cell)'s format
@@ -17,6 +19,17 @@ impl CellFormat {
     #[inline]
     pub fn builder() -> CellFormatBuilder {
         Default::default()
+    }
+
+    pub(crate) fn color_spec(&self) -> ColorSpec {
+        let mut color_spec = ColorSpec::new();
+
+        color_spec.set_fg(self.foreground_color);
+        color_spec.set_bg(self.background_color);
+        color_spec.set_bold(self.bold);
+        color_spec.set_underline(self.underline);
+
+        color_spec
     }
 }
 

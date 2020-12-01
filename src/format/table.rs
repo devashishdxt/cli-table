@@ -1,4 +1,4 @@
-use termcolor::Color;
+use termcolor::{Color, ColorSpec};
 
 /// A vertical line in a [`Table`](crate::Table) (border or column separator)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -52,7 +52,7 @@ impl HorizontalLine {
 }
 
 /// Borders of a [`Table`](crate::Table)
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Border {
     pub(crate) top: Option<HorizontalLine>,
     pub(crate) bottom: Option<HorizontalLine>,
@@ -119,7 +119,7 @@ impl BorderBuilder {
 }
 
 /// Inner (column/row) separators of a [`Table`](crate::Table)
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Separator {
     pub(crate) column: Option<VerticalLine>,
     pub(crate) row: Option<HorizontalLine>,
@@ -181,26 +181,29 @@ impl SeparatorBuilder {
 }
 
 /// Struct for configuring a [`Table`](crate::Table)'s format
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct TableFormat {
     pub(crate) border: Border,
     pub(crate) separator: Separator,
     pub(crate) foreground_color: Option<Color>,
+    pub(crate) background_color: Option<Color>,
+    pub(crate) bold: bool,
 }
 
 impl TableFormat {
-    /// Creates a new instance of [`TableFormat`](crate::format::TableFormat)
-    pub fn new(border: Border, separator: Separator) -> Self {
-        Self {
-            border,
-            separator,
-            foreground_color: None,
-        }
-    }
-
     /// Creates a new builder for [`TableFormat`](crate::format::TableFormat)
     pub fn builder() -> TableFormatBuilder {
         Default::default()
+    }
+
+    pub(crate) fn color_spec(&self) -> ColorSpec {
+        let mut color_spec = ColorSpec::new();
+
+        color_spec.set_fg(self.foreground_color);
+        color_spec.set_bg(self.background_color);
+        color_spec.set_bold(self.bold);
+
+        color_spec
     }
 }
 
@@ -224,6 +227,19 @@ impl TableFormatBuilder {
     /// Sets foreground colors for borders and separators of a [`Table`](crate::Table)
     pub fn foreground_color(mut self, foreground_color: Option<Color>) -> Self {
         self.0.foreground_color = foreground_color;
+        self
+    }
+
+    /// Sets background colors for borders and separators of a [`Table`](crate::Table)
+    pub fn background_color(mut self, background_color: Option<Color>) -> Self {
+        self.0.background_color = background_color;
+        self
+    }
+
+    /// Sets boldness for borders and separators of a [`Table`](crate::Table)
+    #[inline]
+    pub fn bold(mut self, bold: bool) -> Self {
+        self.0.bold = bold;
         self
     }
 

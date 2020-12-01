@@ -13,7 +13,7 @@ Add `cli-table` in your `Cargo.toms`'s `dependencies` section
 
 ```toml
 [dependencies]
-cli-table = "0.3"
+cli-table = "0.4"
 ```
 
 Each cell in a `Table` can be formatted using `CellFormat`. `CellFormat` can be easily created like this:
@@ -90,5 +90,5 @@ at your option.
 
 ## Contribution
 
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as 
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as
 defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

@@ -8,7 +8,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! cli-table = "0.3"
+//! cli-table = "0.4"
 //! ```
 //!
 //! Each cell in a [`Table`] can be formatted using [`CellFormat`]. [`CellFormat`] can be easily created like this:
@@ -93,6 +93,7 @@
 //! [`NO_BORDER_COLUMN_ROW`]: crate::format::NO_BORDER_COLUMN_ROW
 //! [`NO_BORDER_COLUMN_TITLE`]: crate::format::NO_BORDER_COLUMN_TITLE
 mod cell;
+mod dimension;
 mod error;
 mod row;
 mod table;

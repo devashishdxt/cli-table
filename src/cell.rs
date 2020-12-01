@@ -6,148 +6,173 @@ use std::{
 use termcolor::{Buffer, BufferWriter, ColorSpec, WriteColor};
 use unicode_width::UnicodeWidthStr;
 
-use crate::format::{Align, CellFormat, Justify, Padding};
+use crate::{
+    dimension::CellDimension,
+    format::{Align, CellFormat, Justify},
+};
 
 /// A `Cell` in a [`Table`](crate::Table)
-#[derive(Debug)]
 pub struct Cell {
-    pub(crate) data: Vec<String>,
-    pub(crate) format: CellFormat,
-    pub(crate) height: usize,
-    pub(crate) width: usize,
+    data: Vec<String>,
+    format: CellFormat,
+    dimension: Option<CellDimension>,
+    color_spec: Option<ColorSpec>,
+}
+
+/// Return the display width of a unicode string.
+/// This functions takes ANSI-escaped color codes into account.
+pub fn display_width(text: &str) -> usize {
+    let width = UnicodeWidthStr::width(text);
+
+    let mut state = 0;
+    let mut hidden = 0;
+
+    for c in text.chars() {
+        state = match (state, c) {
+            (0, '\u{1b}') => 1,
+            (1, '[') => 2,
+            (1, _) => 0,
+            (2, 'm') => 3,
+            _ => state,
+        };
+
+        // We don't count escape characters as hidden as
+        // UnicodeWidthStr::width already considers them.
+        if state > 1 {
+            hidden += 1;
+        }
+
+        if state == 3 {
+            state = 0;
+        }
+    }
+
+    width - hidden
 }
 
 impl Cell {
     /// Creates a new [`Cell`](crate::Cell)
     pub fn new<T: Display + ?Sized>(data: &T, format: CellFormat) -> Self {
-        let data: Vec<String> = data.to_string().lines().map(ToString::to_string).collect();
-        let height = data.len() + format.padding.top + format.padding.bottom;
-        let width = data.iter().map(|x| x.width()).max().unwrap_or_default()
-            + format.padding.left
-            + format.padding.right;
-
         Self {
-            data,
+            data: data.to_string().lines().map(ToString::to_string).collect(),
             format,
-            height,
-            width,
+            dimension: None,
+            color_spec: None,
         }
     }
 
-    pub(crate) fn buffers(
-        &self,
+    pub(crate) fn reset(&mut self) {
+        self.dimension = None;
+        self.color_spec = None;
+    }
+
+    fn init_color_spec(&mut self) {
+        self.color_spec = Some(self.format.color_spec());
+    }
+
+    fn color_spec(&mut self) -> &ColorSpec {
+        if self.color_spec.is_none() {
+            self.init_color_spec();
+        }
+
+        self.color_spec.as_ref().unwrap()
+    }
+
+    fn init_dimension(&mut self) {
+        let height = self.data.len() + self.format.padding.top + self.format.padding.bottom;
+        let width = self
+            .data
+            .iter()
+            .map(|x| display_width(x))
+            .max()
+            .unwrap_or_default()
+            + self.format.padding.left
+            + self.format.padding.right;
+
+        self.dimension = Some(CellDimension { height, width });
+    }
+
+    pub(crate) fn dimension(&mut self) -> CellDimension {
+        if self.dimension.is_none() {
+            self.init_dimension()
+        }
+
+        self.dimension.unwrap()
+    }
+
+    fn compute_buffer(
+        &mut self,
         writer: &BufferWriter,
-        height: usize,
-        width: usize,
-    ) -> io::Result<Vec<Option<Buffer>>> {
+        available_dimension: CellDimension,
+        data: &str,
+    ) -> io::Result<Buffer> {
+        let dimension = self.dimension();
+
+        let empty_chars = match self.format.justify {
+            Justify::Left => self.format.padding.left,
+            Justify::Right => {
+                (available_dimension.width - dimension.width) + self.format.padding.left
+            }
+            Justify::Center => {
+                ((available_dimension.width - dimension.width) / 2) + self.format.padding.left
+            }
+        };
+
+        let mut buffer = writer.buffer();
+        buffer.set_color(self.color_spec())?;
+
+        for _ in 0..empty_chars {
+            write!(buffer, " ")?;
+        }
+
+        write!(buffer, "{}", data)?;
+
+        for _ in 0..(available_dimension.width - (display_width(data) + empty_chars)) {
+            write!(buffer, " ")?;
+        }
+
+        Ok(buffer)
+    }
+
+    pub(crate) fn compute_buffers(
+        &mut self,
+        writer: &BufferWriter,
+        available_dimension: CellDimension,
+    ) -> io::Result<Vec<Buffer>> {
+        let dimension = self.dimension();
+
         assert!(
-            height >= self.height,
-            "Provided height is less than that required by cell"
+            available_dimension.height >= dimension.height,
+            "Available height is less than that required by cell"
         );
         assert!(
-            width >= self.width,
-            "Provided width is less than that required by cell"
+            available_dimension.width >= dimension.width,
+            "Available width is less than that required by cell"
         );
 
-        let color_spec = self.color_spec();
-
-        let mut buffers = Vec::with_capacity(height);
+        let mut buffers = Vec::with_capacity(available_dimension.height);
         let blank_lines = match self.format.align {
             Align::Top => self.format.padding.top,
-            Align::Bottom => (height - self.height) + self.format.padding.top,
-            Align::Center => ((height - self.height) / 2) + self.format.padding.top,
+            Align::Bottom => {
+                (available_dimension.height - dimension.height) + self.format.padding.top
+            }
+            Align::Center => {
+                ((available_dimension.height - dimension.height) / 2) + self.format.padding.top
+            }
         };
 
         for _ in 0..blank_lines {
-            buffers.push(Some(get_buffer(
-                writer,
-                "",
-                width,
-                self.format.justify,
-                self.format.padding,
-                &color_spec,
-            )?));
+            buffers.push(self.compute_buffer(writer, available_dimension, "")?);
         }
 
-        for line in self.data.iter() {
-            buffers.push(Some(get_buffer(
-                writer,
-                line,
-                width,
-                self.format.justify,
-                self.format.padding,
-                &color_spec,
-            )?));
+        for line in self.data.clone().iter() {
+            buffers.push(self.compute_buffer(writer, available_dimension, line)?);
         }
 
-        for _ in 0..(height - (self.data.len() + blank_lines)) {
-            buffers.push(Some(get_buffer(
-                writer,
-                "",
-                width,
-                self.format.justify,
-                self.format.padding,
-                &color_spec,
-            )?));
+        for _ in 0..(available_dimension.height - (self.data.len() + blank_lines)) {
+            buffers.push(self.compute_buffer(writer, available_dimension, "")?);
         }
 
         Ok(buffers)
     }
-
-    fn color_spec(&self) -> ColorSpec {
-        let mut spec = ColorSpec::new();
-
-        spec.set_fg(self.format.foreground_color);
-        spec.set_bg(self.format.background_color);
-        spec.set_bold(self.format.bold);
-        spec.set_underline(self.format.underline);
-
-        spec
-    }
-}
-
-fn get_buffer(
-    writer: &BufferWriter,
-    data: &str,
-    width: usize,
-    justify: Justify,
-    padding: Padding,
-    color_spec: &ColorSpec,
-) -> io::Result<Buffer> {
-    let mut buffer = writer.buffer();
-    buffer.set_color(&color_spec)?;
-
-    match justify {
-        Justify::Left => {
-            if padding.left != 0 {
-                write!(
-                    &mut buffer,
-                    "{space:padding$}{data:<width$}",
-                    space = " ",
-                    padding = padding.left,
-                    data = data,
-                    width = width - padding.left
-                )?
-            } else {
-                write!(&mut buffer, "{data:<width$}", data = data, width = width)?
-            }
-        }
-        Justify::Right => {
-            if padding.right != 0 {
-                write!(
-                    &mut buffer,
-                    "{data:>width$}{space:padding$}",
-                    data = data,
-                    width = width - padding.right,
-                    space = " ",
-                    padding = padding.right
-                )?
-            } else {
-                write!(&mut buffer, "{data:>width$}", data = data, width = width)?
-            }
-        }
-        Justify::Center => write!(&mut buffer, "{:^width$}", data, width = width)?,
-    }
-
-    Ok(buffer)
 }

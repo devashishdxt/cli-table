@@ -11,7 +11,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .build();
     let bold = CellFormat::builder().bold(true).build();
 
-    let table = Table::new(
+    let mut table = Table::new(
         vec![
             Row::new(vec![
                 Cell::new(&format!("Name"), bold),

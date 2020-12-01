@@ -1,13 +1,17 @@
 use std::io::{self, Write};
 
-use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
+use termcolor::{BufferWriter, Color, ColorSpec, WriteColor};
 
 use crate::{
     format::{HorizontalLine, TableFormat, VerticalLine},
     Error, Row,
 };
 
-/// Struct for building a [`Table`](struct.Table.html) on command line
+pub use termcolor::ColorChoice;
+
+const DEFAULT_COLOR_CHOICE: ColorChoice = ColorChoice::Always;
+
+/// Struct for building a [`Table`](crate::Table) on command line
 pub struct Table {
     /// Rows in the table
     rows: Vec<Row>,
@@ -15,10 +19,12 @@ pub struct Table {
     format: TableFormat,
     /// The maximum widths of each of the columns in the table
     widths: Vec<usize>,
+    /// Color preferences for printing the table
+    color_choice: ColorChoice,
 }
 
 impl Table {
-    /// Creates a new [`Table`](struct.Table.html)
+    /// Creates a new [`Table`](crate::Table)
     pub fn new(rows: Vec<Row>, format: TableFormat) -> Result<Table, Error> {
         validate_equal_columns(&rows)?;
         let widths = get_widths(&rows);
@@ -27,17 +33,23 @@ impl Table {
             rows,
             format,
             widths,
+            color_choice: DEFAULT_COLOR_CHOICE,
         })
     }
 
-    /// Prints current [`Table`](struct.Table.html) to `stdout`
-    pub fn print_stdout(&self) -> io::Result<()> {
-        self.print_writer(BufferWriter::stdout(ColorChoice::Always))
+    /// Sent the color color preferences for printing the table
+    pub fn set_color_choice(&mut self, color_choice: ColorChoice) {
+        self.color_choice = color_choice
     }
 
-    /// Prints current [`Table`](struct.Table.html) to `stderr`
+    /// Prints current [`Table`](crate::Table) to `stdout`
+    pub fn print_stdout(&self) -> io::Result<()> {
+        self.print_writer(BufferWriter::stdout(self.color_choice))
+    }
+
+    /// Prints current [`Table`](crate::Table) to `stderr`
     pub fn print_stderr(&self) -> io::Result<()> {
-        self.print_writer(BufferWriter::stderr(ColorChoice::Always))
+        self.print_writer(BufferWriter::stderr(self.color_choice))
     }
 
     fn print_writer(&self, writer: BufferWriter) -> io::Result<()> {
@@ -103,7 +115,7 @@ impl Table {
     ) -> io::Result<()> {
         if let Some(line) = line {
             if self.format.border.left.is_some() {
-                print_char(writer, line.left_end, self.format.foreground)?;
+                print_char(writer, line.left_end, self.format.foreground_color)?;
             }
 
             let mut widths = self.widths.iter().peekable();
@@ -112,19 +124,19 @@ impl Table {
                 let s = std::iter::repeat(line.filler)
                     .take(width + 2)
                     .collect::<String>();
-                print_str(writer, &s, self.format.foreground)?;
+                print_str(writer, &s, self.format.foreground_color)?;
 
                 match widths.peek() {
                     Some(_) => {
                         if self.format.separator.column.is_some() {
-                            print_char(writer, line.junction, self.format.foreground)?
+                            print_char(writer, line.junction, self.format.foreground_color)?
                         }
                     }
                     None => {
                         if self.format.border.right.is_some() {
-                            println_char(writer, line.right_end, self.format.foreground)?;
+                            println_char(writer, line.right_end, self.format.foreground_color)?;
                         } else {
-                            println_str(writer, "", self.format.foreground)?;
+                            println_str(writer, "", self.format.foreground_color)?;
                         }
                     }
                 }
@@ -140,7 +152,7 @@ impl Table {
         line: Option<&VerticalLine>,
     ) -> io::Result<()> {
         if let Some(line) = line {
-            print_char(writer, line.filler, self.format.foreground)?;
+            print_char(writer, line.filler, self.format.foreground_color)?;
         }
         Ok(())
     }

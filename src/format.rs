@@ -1,4 +1,4 @@
-//! Utilities for formatting of a [`Table`](struct.Table.html)
+//! Utilities for formatting of a [`Table`](crate::Table)
 mod cell;
 mod table;
 
@@ -6,10 +6,11 @@ pub use self::cell::{
     Align, CellFormat, CellFormatBuilder, Color, Justify, Padding, PaddingBuilder,
 };
 pub use self::table::{
-    Border, BorderBuilder, HorizontalLine, Separator, SeparatorBuilder, TableFormat, VerticalLine,
+    Border, BorderBuilder, HorizontalLine, Separator, SeparatorBuilder, TableFormat,
+    TableFormatBuilder, VerticalLine,
 };
 
-/// Format with borders, column separators and row separators (calling `Default::default()` on [`TableFormat`](struct.TableFormat.html)
+/// Format with borders, column separators and row separators (calling `Default::default()` on [`TableFormat`](crate::format::TableFormat)
 /// also returns this format)
 ///
 /// ```markdown
@@ -24,7 +25,7 @@ pub use self::table::{
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -65,7 +66,7 @@ pub const BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -105,7 +106,7 @@ pub const BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 /// +------------+----------------+
 /// ```
 pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',
@@ -139,7 +140,7 @@ pub const BORDER_COLUMN_NO_ROW: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: None,
         bottom: None,
@@ -170,7 +171,7 @@ pub const NO_BORDER_COLUMN_TITLE: TableFormat = TableFormat {
 ///  Scooby Doo |             25
 /// ```
 pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: None,
         bottom: None,
@@ -203,7 +204,7 @@ pub const NO_BORDER_COLUMN_ROW: TableFormat = TableFormat {
 /// +----------------------------+
 /// ```
 pub const BORDER_NO_COLUMN_ROW: TableFormat = TableFormat {
-    foreground: None,
+    foreground_color: None,
     border: Border {
         top: Some(HorizontalLine {
             left_end: '+',

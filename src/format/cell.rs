@@ -1,6 +1,6 @@
 pub use termcolor::Color;
 
-/// Struct for configuring a [`Cell`](struct.Cell.html)'s format
+/// Struct for configuring a [`Cell`](crate::Cell)'s format
 #[derive(Debug, Clone, Copy, Default)]
 pub struct CellFormat {
     pub(crate) justify: Justify,
@@ -13,75 +13,75 @@ pub struct CellFormat {
 }
 
 impl CellFormat {
-    /// Creates a new builder for [`CellFormat`](struct.CellFormat.html)
+    /// Creates a new builder for [`CellFormat`](crate::format::CellFormat)
     #[inline]
     pub fn builder() -> CellFormatBuilder {
         Default::default()
     }
 }
 
-/// Builder for [`CellFormat`](struct.CellFormat.html)
+/// Builder for [`CellFormat`](crate::format::CellFormat)
 #[derive(Debug, Default)]
 pub struct CellFormatBuilder(CellFormat);
 
 impl CellFormatBuilder {
-    /// Justify contents of a [`Cell`](struct.Cell.html)
+    /// Justify contents of a [`Cell`](crate::Cell)
     #[inline]
     pub fn justify(mut self, justify: Justify) -> Self {
         self.0.justify = justify;
         self
     }
 
-    /// Align contents of a [`Cell`](struct.Cell.html)
+    /// Align contents of a [`Cell`](crate::Cell)
     #[inline]
     pub fn align(mut self, align: Align) -> Self {
         self.0.align = align;
         self
     }
 
-    /// Sets padding of a [`Cell`](struct.Cell.html)
+    /// Sets padding of a [`Cell`](crate::Cell)
     #[inline]
     pub fn padding(mut self, padding: Padding) -> Self {
         self.0.padding = padding;
         self
     }
 
-    /// Set foreground color of a [`Cell`](struct.Cell.html)
+    /// Set foreground color of a [`Cell`](crate::Cell)
     #[inline]
     pub fn foreground_color(mut self, foreground_color: Option<Color>) -> Self {
         self.0.foreground_color = foreground_color;
         self
     }
 
-    /// Set background color of a [`Cell`](struct.Cell.html)
+    /// Set background color of a [`Cell`](crate::Cell)
     #[inline]
     pub fn background_color(mut self, background_color: Option<Color>) -> Self {
         self.0.background_color = background_color;
         self
     }
 
-    /// Set contents of [`Cell`](struct.Cell.html) to be bold
+    /// Set contents of [`Cell`](crate::Cell) to be bold
     #[inline]
     pub fn bold(mut self, bold: bool) -> Self {
         self.0.bold = bold;
         self
     }
 
-    /// Set contents of [`Cell`](struct.Cell.html) to be underlined
+    /// Set contents of [`Cell`](crate::Cell) to be underlined
     #[inline]
     pub fn underline(mut self, underline: bool) -> Self {
         self.0.underline = underline;
         self
     }
 
-    /// Build [`CellFormat`](struct.CellFormat.html)
+    /// Build [`CellFormat`](crate::format::CellFormat)
     #[inline]
     pub fn build(self) -> CellFormat {
         self.0
     }
 }
 
-/// Used to horizontally justify contents of a [`Cell`](struct.Cell.html)
+/// Used to horizontally justify contents of a [`Cell`](crate::Cell)
 #[derive(Debug, Clone, Copy)]
 pub enum Justify {
     /// Justifies contents to left
@@ -99,7 +99,7 @@ impl Default for Justify {
     }
 }
 
-/// Used to vertically align contents of a [`Cell`](struct.Cell.html)
+/// Used to vertically align contents of a [`Cell`](crate::Cell)
 #[derive(Debug, Clone, Copy)]
 pub enum Align {
     /// Aligns contents to top
@@ -117,7 +117,7 @@ impl Default for Align {
     }
 }
 
-/// Used to add padding to the contents of a [`Cell`](struct.Cell.html)
+/// Used to add padding to the contents of a [`Cell`](crate::Cell)
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Padding {
     /// Left padding
@@ -131,46 +131,46 @@ pub struct Padding {
 }
 
 impl Padding {
-    /// Creates a new builder for [`Padding`](struct.Padding.html)
+    /// Creates a new builder for [`Padding`](crate::format::Padding)
     pub fn builder() -> PaddingBuilder {
         Default::default()
     }
 }
 
-/// Builder for [`Padding`](struct.Padding.html)
+/// Builder for [`Padding`](crate::format::Padding)
 #[derive(Debug, Default)]
 pub struct PaddingBuilder(Padding);
 
 impl PaddingBuilder {
-    /// Sets left padding of a [`Cell`](struct.Cell.html)
+    /// Sets left padding of a [`Cell`](crate::Cell)
     #[inline]
     pub fn left(mut self, left_padding: usize) -> Self {
         self.0.left = left_padding;
         self
     }
 
-    /// Sets right padding of a [`Cell`](struct.Cell.html)
+    /// Sets right padding of a [`Cell`](crate::Cell)
     #[inline]
     pub fn right(mut self, right_padding: usize) -> Self {
         self.0.right = right_padding;
         self
     }
 
-    /// Sets top padding of a [`Cell`](struct.Cell.html)
+    /// Sets top padding of a [`Cell`](crate::Cell)
     #[inline]
     pub fn top(mut self, top_padding: usize) -> Self {
         self.0.top = top_padding;
         self
     }
 
-    /// Sets bottom padding of a [`Cell`](struct.Cell.html)
+    /// Sets bottom padding of a [`Cell`](crate::Cell)
     #[inline]
     pub fn bottom(mut self, bottom_padding: usize) -> Self {
         self.0.bottom = bottom_padding;
         self
     }
 
-    /// Build [`Padding`](struct.Padding.html)
+    /// Build [`Padding`](crate::format::Padding)
     #[inline]
     pub fn build(self) -> Padding {
         self.0

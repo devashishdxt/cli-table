@@ -30,7 +30,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 Cell::new("25", justify_right),
             ]),
         ],
-        TableFormat::default().foreground(Color::Red),
+        TableFormat::builder()
+            .foreground_color(Some(Color::Red))
+            .build(),
     )?;
 
     table.print_stdout()?;

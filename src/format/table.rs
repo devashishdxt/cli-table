@@ -1,6 +1,6 @@
 use termcolor::Color;
 
-/// A vertical line in a [`Table`](struct.Table.html) (border or column separator)
+/// A vertical line in a [`Table`](crate::Table) (border or column separator)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct VerticalLine {
     pub(crate) filler: char,
@@ -13,13 +13,13 @@ impl Default for VerticalLine {
 }
 
 impl VerticalLine {
-    /// Creates a new instance of [`VerticalLine`](struct.VerticalLine.html)
+    /// Creates a new instance of [`VerticalLine`](crate::format::VerticalLine)
     pub fn new(filler: char) -> Self {
         Self { filler }
     }
 }
 
-/// A horizontal line in a [`Table`](struct.Table.html) (border or row separator)
+/// A horizontal line in a [`Table`](crate::Table) (border or row separator)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct HorizontalLine {
     pub(crate) left_end: char,
@@ -40,7 +40,7 @@ impl Default for HorizontalLine {
 }
 
 impl HorizontalLine {
-    /// Creates a new instance of [`HorizontalLine`](struct.HorizontalLine.html)
+    /// Creates a new instance of [`HorizontalLine`](crate::format::HorizontalLine)
     pub fn new(left_end: char, right_end: char, junction: char, filler: char) -> Self {
         Self {
             left_end,
@@ -51,7 +51,7 @@ impl HorizontalLine {
     }
 }
 
-/// Borders of a [`Table`](struct.Table.html)
+/// Borders of a [`Table`](crate::Table)
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Border {
     pub(crate) top: Option<HorizontalLine>,
@@ -61,7 +61,7 @@ pub struct Border {
 }
 
 impl Border {
-    /// Creates a new builder for [`Border`](struct.Border.html)
+    /// Creates a new builder for [`Border`](crate::format::Border)
     pub fn builder() -> BorderBuilder {
         BorderBuilder(Border {
             top: None,
@@ -83,42 +83,42 @@ impl Default for Border {
     }
 }
 
-/// Builder for [`Border`](struct.Border.html)
+/// Builder for [`Border`](crate::format::Border)
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BorderBuilder(Border);
 
 impl BorderBuilder {
-    /// Set top border of a [`Table`](struct.Table.html)
+    /// Set top border of a [`Table`](crate::Table)
     pub fn top(mut self, top: HorizontalLine) -> Self {
         self.0.top = Some(top);
         self
     }
 
-    /// Set bottom border of a [`Table`](struct.Table.html)
+    /// Set bottom border of a [`Table`](crate::Table)
     pub fn bottom(mut self, bottom: HorizontalLine) -> Self {
         self.0.bottom = Some(bottom);
         self
     }
 
-    /// Set left border of a [`Table`](struct.Table.html)
+    /// Set left border of a [`Table`](crate::Table)
     pub fn left(mut self, left: VerticalLine) -> Self {
         self.0.left = Some(left);
         self
     }
 
-    /// Set right border of a [`Table`](struct.Table.html)
+    /// Set right border of a [`Table`](crate::Table)
     pub fn right(mut self, right: VerticalLine) -> Self {
         self.0.right = Some(right);
         self
     }
 
-    /// Build [`Border`](struct.Border.html)
+    /// Build [`Border`](crate::format::Border)
     pub fn build(self) -> Border {
         self.0
     }
 }
 
-/// Inner (column/row) separators of a [`Table`](struct.Table.html)
+/// Inner (column/row) separators of a [`Table`](crate::Table)
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Separator {
     pub(crate) column: Option<VerticalLine>,
@@ -127,7 +127,7 @@ pub struct Separator {
 }
 
 impl Separator {
-    /// Creates a new builder for [`Separator`](struct.Separator.html)
+    /// Creates a new builder for [`Separator`](crate::format::Separator)
     pub fn builder() -> SeparatorBuilder {
         SeparatorBuilder(Separator {
             column: None,
@@ -147,24 +147,24 @@ impl Default for Separator {
     }
 }
 
-/// Builder for [`Separator`](struct.Separator.html)
+/// Builder for [`Separator`](crate::format::Separator)
 #[derive(Debug)]
 pub struct SeparatorBuilder(Separator);
 
 impl SeparatorBuilder {
-    /// Set column separators of a [`Table`](struct.Table.html)
+    /// Set column separators of a [`Table`](crate::Table)
     pub fn column(mut self, column: Option<VerticalLine>) -> Self {
         self.0.column = column;
         self
     }
 
-    /// Set column separators of a [`Table`](struct.Table.html)
+    /// Set column separators of a [`Table`](crate::Table)
     pub fn row(mut self, row: Option<HorizontalLine>) -> Self {
         self.0.row = row;
         self
     }
 
-    /// Set title title of a [`Table`](struct.Table.html)
+    /// Set title of a [`Table`](crate::Table)
     ///
     /// # None
     ///
@@ -174,33 +174,61 @@ impl SeparatorBuilder {
         self
     }
 
-    /// Build [`Separator`](struct.Separator.html)
+    /// Build [`Separator`](crate::format::Separator)
     pub fn build(self) -> Separator {
         self.0
     }
 }
 
-/// Struct for configuring a [`Table`](struct.Table.html)'s format
+/// Struct for configuring a [`Table`](crate::Table)'s format
 #[derive(Debug, Default)]
 pub struct TableFormat {
-    pub(crate) foreground: Option<Color>,
     pub(crate) border: Border,
     pub(crate) separator: Separator,
+    pub(crate) foreground_color: Option<Color>,
 }
 
 impl TableFormat {
-    /// Creates a new instance of [`TableFormat`](struct.TableFormat.html)
+    /// Creates a new instance of [`TableFormat`](crate::format::TableFormat)
     pub fn new(border: Border, separator: Separator) -> Self {
         Self {
             border,
             separator,
-            foreground: None,
+            foreground_color: None,
         }
     }
 
-    /// Set the foreground color of the table borders & separators.
-    pub fn foreground(mut self, color: Color) -> Self {
-        self.foreground = Some(color);
+    /// Creates a new builder for [`TableFormat`](crate::format::TableFormat)
+    pub fn builder() -> TableFormatBuilder {
+        Default::default()
+    }
+}
+
+/// Builder for [`TableFormat`](crate::format::TableFormat)
+#[derive(Debug, Default)]
+pub struct TableFormatBuilder(TableFormat);
+
+impl TableFormatBuilder {
+    /// Sets border of a [`Table`](crate::Table)
+    pub fn border(mut self, border: Border) -> Self {
+        self.0.border = border;
         self
+    }
+
+    /// Sets separators of a [`Table`](crate::Table)
+    pub fn separator(mut self, separator: Separator) -> Self {
+        self.0.separator = separator;
+        self
+    }
+
+    /// Sets foreground colors for borders and separators of a [`Table`](crate::Table)
+    pub fn foreground_color(mut self, foreground_color: Option<Color>) -> Self {
+        self.0.foreground_color = foreground_color;
+        self
+    }
+
+    /// Build [`TableFormat`](crate::format::TableFormat)
+    pub fn build(self) -> TableFormat {
+        self.0
     }
 }

@@ -80,18 +80,18 @@
 //! +------------+----------------+
 //! ```
 //!
-//! [`Table`]: struct.Table.html
-//! [`CellFormat`]: struct.CellFormat.html
-//! [`TableFormat`]: struct.TableFormat.html
-//! [`Table::new()`]: struct.Table.html#method.new
-//! [`table.print_stdout()`]: struct.Table.html#method.print_stdout
+//! [`Table`]: crate::Table
+//! [`CellFormat`]: crate::format::CellFormat
+//! [`TableFormat`]: crate::format::TableFormat
+//! [`Table::new()`]: crate::Table::new
+//! [`table.print_stdout()`]: crate::Table::print_stdout
 //!
-//! [`BORDER_COLUMN_ROW`]: format/constant.BORDER_COLUMN_ROW.html
-//! [`BORDER_COLUMN_NO_ROW`]: format/constant.BORDER_COLUMN_NO_ROW.html
-//! [`BORDER_COLUMN_TITLE`]: format/constant.BORDER_COLUMN_TITLE.html
-//! [`BORDER_NO_COLUMN_ROW`]: format/constant.BORDER_NO_COLUMN_ROW.html
-//! [`NO_BORDER_COLUMN_ROW`]: format/constant.NO_BORDER_COLUMN_ROW.html
-//! [`NO_BORDER_COLUMN_TITLE`]: format/constant.NO_BORDER_COLUMN_TITLE.html
+//! [`BORDER_COLUMN_ROW`]: crate::format::BORDER_COLUMN_ROW
+//! [`BORDER_COLUMN_NO_ROW`]: crate::format::BORDER_COLUMN_NO_ROW
+//! [`BORDER_COLUMN_TITLE`]: crate::format::BORDER_COLUMN_TITLE
+//! [`BORDER_NO_COLUMN_ROW`]: crate::format::BORDER_NO_COLUMN_ROW
+//! [`NO_BORDER_COLUMN_ROW`]: crate::format::NO_BORDER_COLUMN_ROW
+//! [`NO_BORDER_COLUMN_TITLE`]: crate::format::NO_BORDER_COLUMN_TITLE
 mod cell;
 mod error;
 mod row;
@@ -102,4 +102,4 @@ pub mod format;
 pub use self::cell::Cell;
 pub use self::error::Error;
 pub use self::row::Row;
-pub use self::table::Table;
+pub use self::table::{ColorChoice, Table};

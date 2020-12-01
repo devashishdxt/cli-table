@@ -19,8 +19,7 @@ impl Row {
         }
     }
 
-    /// Returns the number of columns
-    pub fn columns(&self) -> usize {
+    pub(crate) fn columns(&self) -> usize {
         self.cells.len()
     }
 

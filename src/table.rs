@@ -64,10 +64,12 @@ impl Table {
         self.rows.iter_mut().for_each(|row| row.reset());
     }
 
+    /// Initializes color specs and stores it in memory for future use
     fn init_color_spec(&mut self) {
         self.color_spec = Some(self.format.color_spec())
     }
 
+    /// Returns color specs for table. Initializes if missing
     fn color_spec(&mut self) -> &ColorSpec {
         if self.color_spec.is_none() {
             self.init_color_spec()
@@ -76,6 +78,7 @@ impl Table {
         self.color_spec.as_ref().unwrap()
     }
 
+    /// Initializes dimension and stores it in memory for future use
     fn init_dimension(&mut self) {
         if self.rows.is_empty() {
             self.dimension = Some(TableDimension {
@@ -107,6 +110,7 @@ impl Table {
         self.dimension = Some(TableDimension { widths, heights });
     }
 
+    /// Returns dimension for table. Initializes if missing
     fn dimension(&mut self) -> TableDimension {
         if self.dimension.is_none() {
             self.init_dimension()

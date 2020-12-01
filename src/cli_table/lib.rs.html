@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cli_table/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cli_table/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -186,18 +189,18 @@
 <span class="doccomment">//! +------------+----------------+</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! [`Table`]: struct.Table.html</span>
-<span class="doccomment">//! [`CellFormat`]: struct.CellFormat.html</span>
-<span class="doccomment">//! [`TableFormat`]: struct.TableFormat.html</span>
-<span class="doccomment">//! [`Table::new()`]: struct.Table.html#method.new</span>
-<span class="doccomment">//! [`table.print_stdout()`]: struct.Table.html#method.print_stdout</span>
+<span class="doccomment">//! [`Table`]: crate::Table</span>
+<span class="doccomment">//! [`CellFormat`]: crate::format::CellFormat</span>
+<span class="doccomment">//! [`TableFormat`]: crate::format::TableFormat</span>
+<span class="doccomment">//! [`Table::new()`]: crate::Table::new</span>
+<span class="doccomment">//! [`table.print_stdout()`]: crate::Table::print_stdout</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! [`BORDER_COLUMN_ROW`]: format/constant.BORDER_COLUMN_ROW.html</span>
-<span class="doccomment">//! [`BORDER_COLUMN_NO_ROW`]: format/constant.BORDER_COLUMN_NO_ROW.html</span>
-<span class="doccomment">//! [`BORDER_COLUMN_TITLE`]: format/constant.BORDER_COLUMN_TITLE.html</span>
-<span class="doccomment">//! [`BORDER_NO_COLUMN_ROW`]: format/constant.BORDER_NO_COLUMN_ROW.html</span>
-<span class="doccomment">//! [`NO_BORDER_COLUMN_ROW`]: format/constant.NO_BORDER_COLUMN_ROW.html</span>
-<span class="doccomment">//! [`NO_BORDER_COLUMN_TITLE`]: format/constant.NO_BORDER_COLUMN_TITLE.html</span>
+<span class="doccomment">//! [`BORDER_COLUMN_ROW`]: crate::format::BORDER_COLUMN_ROW</span>
+<span class="doccomment">//! [`BORDER_COLUMN_NO_ROW`]: crate::format::BORDER_COLUMN_NO_ROW</span>
+<span class="doccomment">//! [`BORDER_COLUMN_TITLE`]: crate::format::BORDER_COLUMN_TITLE</span>
+<span class="doccomment">//! [`BORDER_NO_COLUMN_ROW`]: crate::format::BORDER_NO_COLUMN_ROW</span>
+<span class="doccomment">//! [`NO_BORDER_COLUMN_ROW`]: crate::format::NO_BORDER_COLUMN_ROW</span>
+<span class="doccomment">//! [`NO_BORDER_COLUMN_TITLE`]: crate::format::NO_BORDER_COLUMN_TITLE</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">row</span>;
@@ -208,6 +211,6 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cell</span>::<span class="ident">Cell</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">row</span>::<span class="ident">Row</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">table</span>::<span class="ident">Table</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">table</span>::{<span class="ident">ColorChoice</span>, <span class="ident">Table</span>};
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

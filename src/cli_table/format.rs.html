@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>format.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cli_table/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>format.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cli_table/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -231,8 +234,9 @@
 <span id="231">231</span>
 <span id="232">232</span>
 <span id="233">233</span>
+<span id="234">234</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Utilities for formatting of a [`Table`](struct.Table.html)</span>
+<span class="doccomment">//! Utilities for formatting of a [`Table`](crate::Table)</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
 <span class="kw">mod</span> <span class="ident">table</span>;
 
@@ -240,10 +244,11 @@
     <span class="ident">Align</span>, <span class="ident">CellFormat</span>, <span class="ident">CellFormatBuilder</span>, <span class="ident">Color</span>, <span class="ident">Justify</span>, <span class="ident">Padding</span>, <span class="ident">PaddingBuilder</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">table</span>::{
-    <span class="ident">Border</span>, <span class="ident">BorderBuilder</span>, <span class="ident">HorizontalLine</span>, <span class="ident">Separator</span>, <span class="ident">SeparatorBuilder</span>, <span class="ident">TableFormat</span>, <span class="ident">VerticalLine</span>,
+    <span class="ident">Border</span>, <span class="ident">BorderBuilder</span>, <span class="ident">HorizontalLine</span>, <span class="ident">Separator</span>, <span class="ident">SeparatorBuilder</span>, <span class="ident">TableFormat</span>,
+    <span class="ident">TableFormatBuilder</span>, <span class="ident">VerticalLine</span>,
 };
 
-<span class="doccomment">/// Format with borders, column separators and row separators (calling `Default::default()` on [`TableFormat`](struct.TableFormat.html)</span>
+<span class="doccomment">/// Format with borders, column separators and row separators (calling `Default::default()` on [`TableFormat`](crate::format::TableFormat)</span>
 <span class="doccomment">/// also returns this format)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```markdown</span>
@@ -258,7 +263,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -299,7 +304,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -339,7 +344,7 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_NO_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -373,7 +378,7 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -404,7 +409,7 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -437,7 +442,7 @@
 <span class="doccomment">/// +----------------------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_NO_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,

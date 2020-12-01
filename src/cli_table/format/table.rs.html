@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../cli_table/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../cli_table/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -204,10 +207,38 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">Color</span>;
 
-<span class="doccomment">/// A vertical line in a [`Table`](struct.Table.html) (border or column separator)</span>
+<span class="doccomment">/// A vertical line in a [`Table`](crate::Table) (border or column separator)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VerticalLine</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">filler</span>: <span class="ident">char</span>,
@@ -220,13 +251,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">VerticalLine</span> {
-    <span class="doccomment">/// Creates a new instance of [`VerticalLine`](struct.VerticalLine.html)</span>
+    <span class="doccomment">/// Creates a new instance of [`VerticalLine`](crate::format::VerticalLine)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">filler</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">filler</span> }
     }
 }
 
-<span class="doccomment">/// A horizontal line in a [`Table`](struct.Table.html) (border or row separator)</span>
+<span class="doccomment">/// A horizontal line in a [`Table`](crate::Table) (border or row separator)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HorizontalLine</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">left_end</span>: <span class="ident">char</span>,
@@ -247,7 +278,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">HorizontalLine</span> {
-    <span class="doccomment">/// Creates a new instance of [`HorizontalLine`](struct.HorizontalLine.html)</span>
+    <span class="doccomment">/// Creates a new instance of [`HorizontalLine`](crate::format::HorizontalLine)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">left_end</span>: <span class="ident">char</span>, <span class="ident">right_end</span>: <span class="ident">char</span>, <span class="ident">junction</span>: <span class="ident">char</span>, <span class="ident">filler</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">left_end</span>,
@@ -258,7 +289,7 @@
     }
 }
 
-<span class="doccomment">/// Borders of a [`Table`](struct.Table.html)</span>
+<span class="doccomment">/// Borders of a [`Table`](crate::Table)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Border</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">top</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
@@ -268,7 +299,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Border</span> {
-    <span class="doccomment">/// Creates a new builder for [`Border`](struct.Border.html)</span>
+    <span class="doccomment">/// Creates a new builder for [`Border`](crate::format::Border)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BorderBuilder</span> {
         <span class="ident">BorderBuilder</span>(<span class="ident">Border</span> {
             <span class="ident">top</span>: <span class="prelude-val">None</span>,
@@ -290,42 +321,42 @@
     }
 }
 
-<span class="doccomment">/// Builder for [`Border`](struct.Border.html)</span>
+<span class="doccomment">/// Builder for [`Border`](crate::format::Border)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BorderBuilder</span>(<span class="ident">Border</span>);
 
 <span class="kw">impl</span> <span class="ident">BorderBuilder</span> {
-    <span class="doccomment">/// Set top border of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set top border of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">top</span>: <span class="ident">HorizontalLine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">top</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">top</span>);
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set bottom border of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set bottom border of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bottom</span>: <span class="ident">HorizontalLine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bottom</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bottom</span>);
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set left border of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set left border of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left</span>: <span class="ident">VerticalLine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">left</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">left</span>);
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set right border of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set right border of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right</span>: <span class="ident">VerticalLine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">right</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">right</span>);
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Build [`Border`](struct.Border.html)</span>
+    <span class="doccomment">/// Build [`Border`](crate::format::Border)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Border</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
 
-<span class="doccomment">/// Inner (column/row) separators of a [`Table`](struct.Table.html)</span>
+<span class="doccomment">/// Inner (column/row) separators of a [`Table`](crate::Table)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Separator</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
@@ -334,7 +365,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Separator</span> {
-    <span class="doccomment">/// Creates a new builder for [`Separator`](struct.Separator.html)</span>
+    <span class="doccomment">/// Creates a new builder for [`Separator`](crate::format::Separator)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SeparatorBuilder</span> {
         <span class="ident">SeparatorBuilder</span>(<span class="ident">Separator</span> {
             <span class="ident">column</span>: <span class="prelude-val">None</span>,
@@ -354,24 +385,24 @@
     }
 }
 
-<span class="doccomment">/// Builder for [`Separator`](struct.Separator.html)</span>
+<span class="doccomment">/// Builder for [`Separator`](crate::format::Separator)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SeparatorBuilder</span>(<span class="ident">Separator</span>);
 
 <span class="kw">impl</span> <span class="ident">SeparatorBuilder</span> {
-    <span class="doccomment">/// Set column separators of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set column separators of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">column</span> <span class="op">=</span> <span class="ident">column</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set column separators of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set column separators of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">row</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">row</span> <span class="op">=</span> <span class="ident">row</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set title title of a [`Table`](struct.Table.html)</span>
+    <span class="doccomment">/// Set title of a [`Table`](crate::Table)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # None</span>
     <span class="doccomment">///</span>
@@ -381,34 +412,62 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Build [`Separator`](struct.Separator.html)</span>
+    <span class="doccomment">/// Build [`Separator`](crate::format::Separator)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Separator</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
 
-<span class="doccomment">/// Struct for configuring a [`Table`](struct.Table.html)&#39;s format</span>
+<span class="doccomment">/// Struct for configuring a [`Table`](crate::Table)&#39;s format</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableFormat</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">foreground</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">border</span>: <span class="ident">Border</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">separator</span>: <span class="ident">Separator</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TableFormat</span> {
-    <span class="doccomment">/// Creates a new instance of [`TableFormat`](struct.TableFormat.html)</span>
+    <span class="doccomment">/// Creates a new instance of [`TableFormat`](crate::format::TableFormat)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">border</span>: <span class="ident">Border</span>, <span class="ident">separator</span>: <span class="ident">Separator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">border</span>,
             <span class="ident">separator</span>,
-            <span class="ident">foreground</span>: <span class="prelude-val">None</span>,
+            <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// Set the foreground color of the table borders &amp; separators.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">foreground</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>);
+    <span class="doccomment">/// Creates a new builder for [`TableFormat`](crate::format::TableFormat)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormatBuilder</span> {
+        <span class="ident">Default</span>::<span class="ident">default</span>()
+    }
+}
+
+<span class="doccomment">/// Builder for [`TableFormat`](crate::format::TableFormat)</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableFormatBuilder</span>(<span class="ident">TableFormat</span>);
+
+<span class="kw">impl</span> <span class="ident">TableFormatBuilder</span> {
+    <span class="doccomment">/// Sets border of a [`Table`](crate::Table)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">Border</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">border</span> <span class="op">=</span> <span class="ident">border</span>;
         <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Sets separators of a [`Table`](crate::Table)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">separator</span>: <span class="ident">Separator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">separator</span> <span class="op">=</span> <span class="ident">separator</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Sets foreground colors for borders and separators of a [`Table`](crate::Table)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">foreground_color</span> <span class="op">=</span> <span class="ident">foreground_color</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Build [`TableFormat`](crate::format::TableFormat)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormat</span> {
+        <span class="self">self</span>.<span class="number">0</span>
     }
 }
 </pre></div>

@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../cli_table/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/format/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../cli_table/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -179,7 +182,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">Color</span>;
 
-<span class="doccomment">/// Struct for configuring a [`Cell`](struct.Cell.html)&#39;s format</span>
+<span class="doccomment">/// Struct for configuring a [`Cell`](crate::Cell)&#39;s format</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellFormat</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">justify</span>: <span class="ident">Justify</span>,
@@ -192,75 +195,75 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CellFormat</span> {
-    <span class="doccomment">/// Creates a new builder for [`CellFormat`](struct.CellFormat.html)</span>
+    <span class="doccomment">/// Creates a new builder for [`CellFormat`](crate::format::CellFormat)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellFormatBuilder</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 }
 
-<span class="doccomment">/// Builder for [`CellFormat`](struct.CellFormat.html)</span>
+<span class="doccomment">/// Builder for [`CellFormat`](crate::format::CellFormat)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellFormatBuilder</span>(<span class="ident">CellFormat</span>);
 
 <span class="kw">impl</span> <span class="ident">CellFormatBuilder</span> {
-    <span class="doccomment">/// Justify contents of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Justify contents of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">justify</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justify</span>: <span class="ident">Justify</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">justify</span> <span class="op">=</span> <span class="ident">justify</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Align contents of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Align contents of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">align</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Align</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">align</span> <span class="op">=</span> <span class="ident">align</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets padding of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Sets padding of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">padding</span>: <span class="ident">Padding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">padding</span> <span class="op">=</span> <span class="ident">padding</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set foreground color of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Set foreground color of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">foreground_color</span> <span class="op">=</span> <span class="ident">foreground_color</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set background color of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Set background color of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">background_color</span> <span class="op">=</span> <span class="ident">background_color</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set contents of [`Cell`](struct.Cell.html) to be bold</span>
+    <span class="doccomment">/// Set contents of [`Cell`](crate::Cell) to be bold</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bold</span> <span class="op">=</span> <span class="ident">bold</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Set contents of [`Cell`](struct.Cell.html) to be underlined</span>
+    <span class="doccomment">/// Set contents of [`Cell`](crate::Cell) to be underlined</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">underline</span> <span class="op">=</span> <span class="ident">underline</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Build [`CellFormat`](struct.CellFormat.html)</span>
+    <span class="doccomment">/// Build [`CellFormat`](crate::format::CellFormat)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellFormat</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
 
-<span class="doccomment">/// Used to horizontally justify contents of a [`Cell`](struct.Cell.html)</span>
+<span class="doccomment">/// Used to horizontally justify contents of a [`Cell`](crate::Cell)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Justify</span> {
     <span class="doccomment">/// Justifies contents to left</span>
@@ -278,7 +281,7 @@
     }
 }
 
-<span class="doccomment">/// Used to vertically align contents of a [`Cell`](struct.Cell.html)</span>
+<span class="doccomment">/// Used to vertically align contents of a [`Cell`](crate::Cell)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Align</span> {
     <span class="doccomment">/// Aligns contents to top</span>
@@ -296,7 +299,7 @@
     }
 }
 
-<span class="doccomment">/// Used to add padding to the contents of a [`Cell`](struct.Cell.html)</span>
+<span class="doccomment">/// Used to add padding to the contents of a [`Cell`](crate::Cell)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Padding</span> {
     <span class="doccomment">/// Left padding</span>
@@ -310,46 +313,46 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Padding</span> {
-    <span class="doccomment">/// Creates a new builder for [`Padding`](struct.Padding.html)</span>
+    <span class="doccomment">/// Creates a new builder for [`Padding`](crate::format::Padding)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PaddingBuilder</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 }
 
-<span class="doccomment">/// Builder for [`Padding`](struct.Padding.html)</span>
+<span class="doccomment">/// Builder for [`Padding`](crate::format::Padding)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PaddingBuilder</span>(<span class="ident">Padding</span>);
 
 <span class="kw">impl</span> <span class="ident">PaddingBuilder</span> {
-    <span class="doccomment">/// Sets left padding of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Sets left padding of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_padding</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">left</span> <span class="op">=</span> <span class="ident">left_padding</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets right padding of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Sets right padding of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_padding</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">right</span> <span class="op">=</span> <span class="ident">right_padding</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets top padding of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Sets top padding of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">top_padding</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">top</span> <span class="op">=</span> <span class="ident">top_padding</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets bottom padding of a [`Cell`](struct.Cell.html)</span>
+    <span class="doccomment">/// Sets bottom padding of a [`Cell`](crate::Cell)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bottom_padding</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bottom</span> <span class="op">=</span> <span class="ident">bottom_padding</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Build [`Padding`](struct.Padding.html)</span>
+    <span class="doccomment">/// Build [`Padding`](crate::format::Padding)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Padding</span> {
         <span class="self">self</span>.<span class="number">0</span>

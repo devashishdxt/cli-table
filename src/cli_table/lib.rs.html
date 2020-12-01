@@ -106,6 +106,7 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
+<span id="106">106</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>, <span class="ident">unstable_features</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -117,7 +118,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```toml</span>
 <span class="doccomment">//! [dependencies]</span>
-<span class="doccomment">//! cli-table = &quot;0.3&quot;</span>
+<span class="doccomment">//! cli-table = &quot;0.4&quot;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Each cell in a [`Table`] can be formatted using [`CellFormat`]. [`CellFormat`] can be easily created like this:</span>
@@ -202,6 +203,7 @@
 <span class="doccomment">//! [`NO_BORDER_COLUMN_ROW`]: crate::format::NO_BORDER_COLUMN_ROW</span>
 <span class="doccomment">//! [`NO_BORDER_COLUMN_TITLE`]: crate::format::NO_BORDER_COLUMN_TITLE</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
+<span class="kw">mod</span> <span class="ident">dimension</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">row</span>;
 <span class="kw">mod</span> <span class="ident">table</span>;

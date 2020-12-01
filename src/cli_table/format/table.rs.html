@@ -235,8 +235,24 @@
 <span id="232">232</span>
 <span id="233">233</span>
 <span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">Color</span>;
+<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Color</span>, <span class="ident">ColorSpec</span>};
 
 <span class="doccomment">/// A vertical line in a [`Table`](crate::Table) (border or column separator)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
@@ -290,7 +306,7 @@
 }
 
 <span class="doccomment">/// Borders of a [`Table`](crate::Table)</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Border</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">top</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">bottom</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
@@ -357,7 +373,7 @@
 }
 
 <span class="doccomment">/// Inner (column/row) separators of a [`Table`](crate::Table)</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Separator</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">row</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
@@ -419,26 +435,29 @@
 }
 
 <span class="doccomment">/// Struct for configuring a [`Table`](crate::Table)&#39;s format</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableFormat</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">border</span>: <span class="ident">Border</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">separator</span>: <span class="ident">Separator</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">bold</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TableFormat</span> {
-    <span class="doccomment">/// Creates a new instance of [`TableFormat`](crate::format::TableFormat)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">border</span>: <span class="ident">Border</span>, <span class="ident">separator</span>: <span class="ident">Separator</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">border</span>,
-            <span class="ident">separator</span>,
-            <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
-        }
-    }
-
     <span class="doccomment">/// Creates a new builder for [`TableFormat`](crate::format::TableFormat)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableFormatBuilder</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColorSpec</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color_spec</span> <span class="op">=</span> <span class="ident">ColorSpec</span>::<span class="ident">new</span>();
+
+        <span class="ident">color_spec</span>.<span class="ident">set_fg</span>(<span class="self">self</span>.<span class="ident">foreground_color</span>);
+        <span class="ident">color_spec</span>.<span class="ident">set_bg</span>(<span class="self">self</span>.<span class="ident">background_color</span>);
+        <span class="ident">color_spec</span>.<span class="ident">set_bold</span>(<span class="self">self</span>.<span class="ident">bold</span>);
+
+        <span class="ident">color_spec</span>
     }
 }
 
@@ -462,6 +481,19 @@
     <span class="doccomment">/// Sets foreground colors for borders and separators of a [`Table`](crate::Table)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">foreground_color</span> <span class="op">=</span> <span class="ident">foreground_color</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Sets background colors for borders and separators of a [`Table`](crate::Table)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">background_color</span> <span class="op">=</span> <span class="ident">background_color</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Sets boldness for borders and separators of a [`Table`](crate::Table)</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bold</span> <span class="op">=</span> <span class="ident">bold</span>;
         <span class="self">self</span>
     }
 

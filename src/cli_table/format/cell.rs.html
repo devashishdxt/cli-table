@@ -179,7 +179,22 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">ColorSpec</span>;
+
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">termcolor</span>::<span class="ident">Color</span>;
 
 <span class="doccomment">/// Struct for configuring a [`Cell`](crate::Cell)&#39;s format</span>
@@ -199,6 +214,17 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellFormatBuilder</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColorSpec</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color_spec</span> <span class="op">=</span> <span class="ident">ColorSpec</span>::<span class="ident">new</span>();
+
+        <span class="ident">color_spec</span>.<span class="ident">set_fg</span>(<span class="self">self</span>.<span class="ident">foreground_color</span>);
+        <span class="ident">color_spec</span>.<span class="ident">set_bg</span>(<span class="self">self</span>.<span class="ident">background_color</span>);
+        <span class="ident">color_spec</span>.<span class="ident">set_bold</span>(<span class="self">self</span>.<span class="ident">bold</span>);
+        <span class="ident">color_spec</span>.<span class="ident">set_underline</span>(<span class="self">self</span>.<span class="ident">underline</span>);
+
+        <span class="ident">color_spec</span>
     }
 }
 

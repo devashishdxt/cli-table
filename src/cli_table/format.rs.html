@@ -235,6 +235,18 @@
 <span id="232">232</span>
 <span id="233">233</span>
 <span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Utilities for formatting of a [`Table`](crate::Table)</span>
 <span class="kw">mod</span> <span class="ident">cell</span>;
@@ -263,7 +275,6 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -290,6 +301,9 @@
         }),
         <span class="ident">title</span>: <span class="prelude-val">None</span>,
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 
 <span class="doccomment">/// Format with borders, column separators and title separator (without row separators)</span>
@@ -304,7 +318,6 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -331,6 +344,9 @@
             <span class="ident">filler</span>: <span class="string">&#39;-&#39;</span>,
         }),
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 
 <span class="doccomment">/// Format with borders and column separators (without row separators)</span>
@@ -344,7 +360,6 @@
 <span class="doccomment">/// +------------+----------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_COLUMN_NO_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -366,6 +381,9 @@
         <span class="ident">row</span>: <span class="prelude-val">None</span>,
         <span class="ident">title</span>: <span class="prelude-val">None</span>,
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 
 <span class="doccomment">/// Format with no borders, column separators and title separator (without row separators)</span>
@@ -378,7 +396,6 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_TITLE</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -395,6 +412,9 @@
             <span class="ident">filler</span>: <span class="string">&#39;-&#39;</span>,
         }),
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 
 <span class="doccomment">/// Format with no borders, column separators and row separators</span>
@@ -409,7 +429,6 @@
 <span class="doccomment">///  Scooby Doo |             25</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NO_BORDER_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">None</span>,
         <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
@@ -426,6 +445,9 @@
         }),
         <span class="ident">title</span>: <span class="prelude-val">None</span>,
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 
 <span class="doccomment">/// Format with borders and row separators (without column separators)</span>
@@ -442,7 +464,6 @@
 <span class="doccomment">/// +----------------------------+</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BORDER_NO_COLUMN_ROW</span>: <span class="ident">TableFormat</span> <span class="op">=</span> <span class="ident">TableFormat</span> {
-    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
     <span class="ident">border</span>: <span class="ident">Border</span> {
         <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">HorizontalLine</span> {
             <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
@@ -469,6 +490,9 @@
         }),
         <span class="ident">title</span>: <span class="prelude-val">None</span>,
     },
+    <span class="ident">foreground_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">background_color</span>: <span class="prelude-val">None</span>,
+    <span class="ident">bold</span>: <span class="bool-val">false</span>,
 };
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cli_table";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

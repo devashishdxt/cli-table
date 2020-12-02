@@ -22,10 +22,7 @@ impl RowDimension {
 
         self.widths
             .into_iter()
-            .map(|width| CellDimension {
-                width,
-                height: height,
-            })
+            .map(|width| CellDimension { width, height })
             .collect()
     }
 }

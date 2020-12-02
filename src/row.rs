@@ -1,100 +1,116 @@
-use std::io;
+use std::io::Result;
 
 use termcolor::{Buffer, BufferWriter};
 
-use crate::{dimension::RowDimension, Cell};
+use crate::{
+    buffers::Buffers,
+    cell::{Cell, CellStruct, Dimension as CellDimension},
+    table::Dimension as TableDimension,
+    utils::transpose,
+};
 
-/// A `Row` in a [`Table`](crate::Table)
-pub struct Row {
-    cells: Vec<Cell>,
-    dimension: Option<RowDimension>,
+/// Concrete row of a table
+pub struct RowStruct {
+    pub(crate) cells: Vec<CellStruct>,
 }
 
-impl Row {
-    /// Creates a new [`Row`](crate::Row)
-    pub fn new(cells: Vec<Cell>) -> Self {
-        Self {
-            cells,
-            dimension: None,
-        }
-    }
-
-    pub(crate) fn columns(&self) -> usize {
-        self.cells.len()
-    }
-
-    pub(crate) fn reset(&mut self) {
-        self.dimension = None;
-        self.cells.iter_mut().for_each(|cell| cell.reset());
-    }
-
-    fn init_dimension(&mut self) {
+impl RowStruct {
+    pub(crate) fn required_dimension(&self) -> Dimension {
         let mut widths = Vec::with_capacity(self.cells.len());
         let mut height = 0;
 
-        for cell in self.cells.iter_mut() {
-            let cell_dimension = cell.dimension();
+        for cell in self.cells.iter() {
+            let cell_dimension = cell.required_dimension();
 
             widths.push(cell_dimension.width);
 
-            if cell_dimension.height > height {
-                height = cell_dimension.height;
-            }
+            height = std::cmp::max(cell_dimension.height, height);
         }
 
-        self.dimension = Some(RowDimension { widths, height })
+        Dimension { widths, height }
     }
+}
 
-    pub(crate) fn dimension(&mut self) -> RowDimension {
-        if self.dimension.is_none() {
-            self.init_dimension()
-        }
+impl Buffers for RowStruct {
+    type Dimension = Dimension;
 
-        self.dimension.clone().unwrap()
-    }
+    type Buffers = Vec<Vec<Buffer>>;
 
-    fn compute_cell_buffers(
-        &mut self,
+    fn buffers(
+        &self,
         writer: &BufferWriter,
-        available_dimension: RowDimension,
-    ) -> io::Result<Vec<Vec<Buffer>>> {
-        self.cells
-            .iter_mut()
-            .zip(available_dimension.cell_dimensions().into_iter())
-            .map(|(cell, dimension)| cell.compute_buffers(writer, dimension))
+        available_dimension: Self::Dimension,
+    ) -> Result<Self::Buffers> {
+        let available_cell_dimensions: Vec<CellDimension> = available_dimension.into();
+
+        let cell_buffers = self
+            .cells
+            .iter()
+            .zip(available_cell_dimensions.into_iter())
+            .map(|(cell, available_dimension)| cell.buffers(writer, available_dimension))
+            .collect::<Result<Vec<Vec<Buffer>>>>()?;
+        Ok(transpose(cell_buffers))
+    }
+}
+
+impl<C: Cell, T: IntoIterator<Item = C>> From<T> for RowStruct {
+    fn from(cell_iter: T) -> Self {
+        let cells = cell_iter.into_iter().map(Cell::cell).collect();
+        Self { cells }
+    }
+}
+
+/// Trait to convert raw types into rows
+pub trait Row {
+    /// Converts raw type to rows of a table
+    fn row(self) -> RowStruct;
+}
+
+impl<T: Into<RowStruct>> Row for T {
+    fn row(self) -> RowStruct {
+        self.into()
+    }
+}
+
+/// Dimensions of a row
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub(crate) struct Dimension {
+    /// Widths of each cell of row
+    pub(crate) widths: Vec<usize>,
+    /// Height of row
+    pub(crate) height: usize,
+}
+
+impl From<TableDimension> for Vec<Dimension> {
+    fn from(table_dimension: TableDimension) -> Self {
+        let heights = table_dimension.heights;
+        let widths = table_dimension.widths;
+
+        heights
+            .into_iter()
+            .map(|height| Dimension {
+                widths: widths.clone(),
+                height,
+            })
             .collect()
     }
+}
 
-    pub(crate) fn compute_buffers(
-        &mut self,
-        writer: &BufferWriter,
-        available_dimension: RowDimension,
-    ) -> io::Result<Vec<Vec<Buffer>>> {
-        let cell_buffers = self.compute_cell_buffers(writer, available_dimension)?;
-        Ok(self.zip_buffers(writer, cell_buffers))
+#[cfg(test)]
+mod tests {
+    use crate::style::Style;
+
+    use super::*;
+
+    #[test]
+    fn test_into_row_with_style() {
+        let row = vec!["Hello".cell().bold(true), "World".into()].row();
+        assert_eq!(2, row.cells.len());
     }
 
-    fn zip_buffers(
-        &mut self,
-        writer: &BufferWriter,
-        mut buffers: Vec<Vec<Buffer>>,
-    ) -> Vec<Vec<Buffer>> {
-        let columns = self.cells.len();
-        let dimension = self.dimension();
-        let mut zipped_buffers = Vec::with_capacity(dimension.height);
-
-        for i in 0..dimension.height {
-            let mut line = Vec::with_capacity(columns);
-
-            for buffer_line in buffers.iter_mut() {
-                let mut buffer = writer.buffer();
-                std::mem::swap(&mut buffer, &mut buffer_line[i]);
-                line.push(buffer);
-            }
-
-            zipped_buffers.push(line);
-        }
-
-        zipped_buffers
+    #[test]
+    fn test_into_row() {
+        let row = &["Hello", "World"].row();
+        assert_eq!(2, row.cells.len());
     }
 }

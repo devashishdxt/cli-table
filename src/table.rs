@@ -1,102 +1,73 @@
-use std::io::{self, Write};
+use std::io::Result;
 
-use termcolor::{BufferWriter, ColorSpec, WriteColor};
+use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec};
 
 use crate::{
-    dimension::TableDimension,
-    format::{HorizontalLine, TableFormat, VerticalLine},
-    Error, Row,
+    buffers::Buffers,
+    row::{Dimension as RowDimension, Row, RowStruct},
+    style::{Style, StyleStruct},
+    utils::*,
 };
 
-pub use termcolor::ColorChoice;
-
-const DEFAULT_COLOR_CHOICE: ColorChoice = ColorChoice::Always;
-
-/// Struct for building a [`Table`](crate::Table) on command line
-pub struct Table {
+/// Struct for building a table on command line
+pub struct TableStruct {
     /// Rows in the table
-    rows: Vec<Row>,
+    rows: Vec<RowStruct>,
     /// Format of the table
     format: TableFormat,
+    /// Style of the table
+    style: StyleStruct,
     /// Color preferences for printing the table
     color_choice: ColorChoice,
-    /// Dimensions of table
-    dimension: Option<TableDimension>,
-    /// [`ColorSpec`](termcolor::ColorSpec) for the table
-    color_spec: Option<ColorSpec>,
 }
 
-impl Table {
-    /// Creates a new [`Table`](crate::Table)
-    pub fn new(rows: Vec<Row>, format: TableFormat) -> Result<Table, Error> {
-        validate_equal_columns(&rows)?;
-
-        Ok(Table {
-            rows,
-            format,
-            color_choice: DEFAULT_COLOR_CHOICE,
-            dimension: None,
-            color_spec: None,
-        })
+impl TableStruct {
+    /// Used to set border of a table
+    pub fn border(mut self, border: Border) -> Self {
+        self.format.border = border;
+        self
     }
 
-    /// Sent the color color preferences for printing the table
-    pub fn set_color_choice(&mut self, color_choice: ColorChoice) {
-        self.color_choice = color_choice
+    /// Used to set column/row separators of a table
+    pub fn separator(mut self, separator: Separator) -> Self {
+        self.format.separator = separator;
+        self
     }
 
-    /// Prints current [`Table`](crate::Table) to `stdout`
-    pub fn print_stdout(&mut self) -> io::Result<()> {
+    /// Used to set the color preferences for printing the table
+    pub fn color_choice(mut self, color_choice: ColorChoice) -> Self {
+        self.color_choice = color_choice;
+        self
+    }
+
+    /// Prints current table to `stdout`
+    pub(crate) fn print_stdout(&self) -> Result<()> {
         self.print_writer(BufferWriter::stdout(self.color_choice))
     }
 
-    /// Prints current [`Table`](crate::Table) to `stderr`
-    pub fn print_stderr(&mut self) -> io::Result<()> {
+    /// Prints current table to `stderr`
+    pub(crate) fn print_stderr(&self) -> Result<()> {
         self.print_writer(BufferWriter::stderr(self.color_choice))
     }
 
-    /// Resets all the precomputed dimension and color information. This function should only be used when you're
-    /// printing table again after making some changes to config or data.
-    pub fn reset(&mut self) {
-        self.dimension = None;
-        self.color_spec = None;
-
-        self.rows.iter_mut().for_each(|row| row.reset());
+    fn color_spec(&self) -> ColorSpec {
+        self.style.color_spec()
     }
 
-    /// Initializes color specs and stores it in memory for future use
-    fn init_color_spec(&mut self) {
-        self.color_spec = Some(self.format.color_spec())
-    }
-
-    /// Returns color specs for table. Initializes if missing
-    fn color_spec(&mut self) -> &ColorSpec {
-        if self.color_spec.is_none() {
-            self.init_color_spec()
-        }
-
-        self.color_spec.as_ref().unwrap()
-    }
-
-    /// Initializes dimension and stores it in memory for future use
-    fn init_dimension(&mut self) {
+    fn required_dimension(&self) -> Dimension {
         if self.rows.is_empty() {
-            self.dimension = Some(TableDimension {
-                widths: Vec::new(),
-                heights: Vec::new(),
-            });
-            return;
+            return Default::default();
         }
 
         let mut heights = Vec::with_capacity(self.rows.len());
 
-        let row_dimension = self.rows[0].dimension();
+        let row_dimension = self.rows[0].required_dimension();
 
         let mut widths = row_dimension.widths;
         heights.push(row_dimension.height);
 
-        for row in self.rows.iter_mut().skip(1) {
-            let row_dimension = row.dimension();
+        for row in self.rows.iter().skip(1) {
+            let row_dimension = row.required_dimension();
 
             heights.push(row_dimension.height);
 
@@ -107,42 +78,28 @@ impl Table {
             }
         }
 
-        self.dimension = Some(TableDimension { widths, heights });
+        Dimension { widths, heights }
     }
 
-    /// Returns dimension for table. Initializes if missing
-    fn dimension(&mut self) -> TableDimension {
-        if self.dimension.is_none() {
-            self.init_dimension()
-        }
-
-        self.dimension.clone().unwrap()
-    }
-
-    fn print_writer(&mut self, writer: BufferWriter) -> io::Result<()> {
-        let table_dimension = self.dimension();
-        let row_dimensions = table_dimension.row_dimensions();
-        let table_format = self.format;
-        let color_spec = self.color_spec().clone();
+    fn print_writer(&self, writer: BufferWriter) -> Result<()> {
+        let table_dimension = self.required_dimension();
+        let row_dimensions: Vec<RowDimension> = table_dimension.clone().into();
+        let color_spec = self.color_spec();
 
         print_horizontal_line(
             &writer,
-            self.format.border.top,
+            self.format.border.top.as_ref(),
             &table_dimension,
-            &table_format,
+            &self.format,
             &color_spec,
         )?;
 
-        let mut rows = self
-            .rows
-            .iter_mut()
-            .zip(row_dimensions.into_iter())
-            .peekable();
+        let mut rows = self.rows.iter().zip(row_dimensions.into_iter()).peekable();
 
         let mut first = true;
 
         while let Some((row, row_dimension)) = rows.next() {
-            let buffers = row.compute_buffers(&writer, row_dimension)?;
+            let buffers = row.buffers(&writer, row_dimension)?;
 
             for line in buffers.into_iter() {
                 print_vertical_line(&writer, self.format.border.left.as_ref(), &color_spec)?;
@@ -177,26 +134,26 @@ impl Table {
                         if self.format.separator.title.is_some() {
                             print_horizontal_line(
                                 &writer,
-                                self.format.separator.title,
+                                self.format.separator.title.as_ref(),
                                 &table_dimension,
-                                &table_format,
+                                &self.format,
                                 &color_spec,
                             )?
                         } else {
                             print_horizontal_line(
                                 &writer,
-                                self.format.separator.row,
+                                self.format.separator.row.as_ref(),
                                 &table_dimension,
-                                &table_format,
+                                &self.format,
                                 &color_spec,
                             )?
                         }
                     } else {
                         print_horizontal_line(
                             &writer,
-                            self.format.separator.row,
+                            self.format.separator.row.as_ref(),
                             &table_dimension,
-                            &table_format,
+                            &self.format,
                             &color_spec,
                         )?
                     }
@@ -205,9 +162,9 @@ impl Table {
                 }
                 None => print_horizontal_line(
                     &writer,
-                    self.format.border.bottom,
+                    self.format.border.bottom.as_ref(),
                     &table_dimension,
-                    &table_format,
+                    &self.format,
                     &color_spec,
                 )?,
             }
@@ -217,111 +174,273 @@ impl Table {
     }
 }
 
-fn print_horizontal_line(
-    writer: &BufferWriter,
-    line: Option<HorizontalLine>,
-    dimension: &TableDimension,
-    table_format: &TableFormat,
-    color_spec: &ColorSpec,
-) -> io::Result<()> {
-    if let Some(line) = line {
-        if table_format.border.left.is_some() {
-            print_char(writer, line.left_end, color_spec)?;
-        }
+impl<C: Row, T: IntoIterator<Item = C>> From<T> for TableStruct {
+    fn from(row_iter: T) -> Self {
+        let rows = row_iter.into_iter().map(Row::row).collect();
 
-        let mut widths = dimension.widths.iter().peekable();
-
-        while let Some(width) = widths.next() {
-            let s = std::iter::repeat(line.filler)
-                .take(width + 2)
-                .collect::<String>();
-            print_str(writer, &s, color_spec)?;
-
-            match widths.peek() {
-                Some(_) => {
-                    if table_format.separator.column.is_some() {
-                        print_char(writer, line.junction, color_spec)?
-                    }
-                }
-                None => {
-                    if table_format.border.right.is_some() {
-                        println_char(writer, line.right_end, color_spec)?;
-                    } else {
-                        println_str(writer, "", color_spec)?;
-                    }
-                }
-            }
+        Self {
+            rows,
+            format: Default::default(),
+            style: Default::default(),
+            color_choice: ColorChoice::Always,
         }
     }
-
-    Ok(())
 }
 
-fn print_vertical_line(
-    writer: &BufferWriter,
-    line: Option<&VerticalLine>,
-    color_spec: &ColorSpec,
-) -> io::Result<()> {
-    if let Some(line) = line {
-        print_char(writer, line.filler, color_spec)?;
+/// Trait to convert raw type into table
+pub trait Table {
+    /// Converts raw type to a table
+    fn table(self) -> TableStruct;
+}
+
+impl<T: Into<TableStruct>> Table for T {
+    fn table(self) -> TableStruct {
+        self.into()
     }
-    Ok(())
 }
 
-fn print_str(writer: &BufferWriter, s: &str, color_spec: &ColorSpec) -> io::Result<()> {
-    let mut buffer = writer.buffer();
-    buffer.reset()?;
-    buffer.set_color(color_spec)?;
-    write!(&mut buffer, "{}", s)?;
-    writer.print(&buffer)?;
-    Ok(())
-}
-
-fn println_str(writer: &BufferWriter, s: &str, color_spec: &ColorSpec) -> io::Result<()> {
-    let mut buffer = writer.buffer();
-    buffer.reset()?;
-    buffer.set_color(color_spec)?;
-    writeln!(&mut buffer, "{}", s)?;
-    writer.print(&buffer)?;
-    Ok(())
-}
-
-fn print_char(writer: &BufferWriter, c: char, color_spec: &ColorSpec) -> io::Result<()> {
-    let mut buffer = writer.buffer();
-    buffer.reset()?;
-    buffer.set_color(color_spec)?;
-    write!(&mut buffer, "{}", c)?;
-    writer.print(&buffer)?;
-    Ok(())
-}
-
-fn println_char(writer: &BufferWriter, c: char, color_spec: &ColorSpec) -> io::Result<()> {
-    let mut buffer = writer.buffer();
-    buffer.reset()?;
-    buffer.set_color(color_spec)?;
-    writeln!(&mut buffer, "{}", c)?;
-    writer.print(&buffer)?;
-    Ok(())
-}
-
-fn reset_colors(writer: &BufferWriter) -> io::Result<()> {
-    let mut buffer = writer.buffer();
-    buffer.reset()?;
-    write!(&mut buffer, "")?;
-    writer.print(&buffer)?;
-    Ok(())
-}
-
-fn validate_equal_columns(rows: &[Row]) -> Result<(), Error> {
-    if rows.len() <= 1 {
-        return Ok(());
+impl Style for TableStruct {
+    fn foreground_color(mut self, foreground_color: Option<Color>) -> Self {
+        self.style = self.style.foreground_color(foreground_color);
+        self
     }
-    let columns = rows[0].columns();
 
-    for row in rows.iter().skip(1) {
-        if columns != row.columns() {
-            return Err(Error::MismatchedColumns);
+    fn background_color(mut self, background_color: Option<Color>) -> Self {
+        self.style = self.style.background_color(background_color);
+        self
+    }
+
+    fn bold(mut self, bold: bool) -> Self {
+        self.style = self.style.bold(bold);
+        self
+    }
+
+    fn underline(mut self, underline: bool) -> Self {
+        self.style = self.style.underline(underline);
+        self
+    }
+
+    fn italic(mut self, italic: bool) -> Self {
+        self.style = self.style.italic(italic);
+        self
+    }
+
+    fn intense(mut self, intense: bool) -> Self {
+        self.style = self.style.intense(intense);
+        self
+    }
+
+    fn dimmed(mut self, dimmed: bool) -> Self {
+        self.style = self.style.dimmed(dimmed);
+        self
+    }
+}
+
+/// A vertical line in a table (border or column separator)
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct VerticalLine {
+    pub(crate) filler: char,
+}
+
+impl Default for VerticalLine {
+    fn default() -> Self {
+        Self { filler: '|' }
+    }
+}
+
+impl VerticalLine {
+    /// Creates a new instance of vertical line
+    pub fn new(filler: char) -> Self {
+        Self { filler }
+    }
+}
+
+/// A horizontal line in a table (border or row separator)
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct HorizontalLine {
+    pub(crate) left_end: char,
+    pub(crate) right_end: char,
+    pub(crate) junction: char,
+    pub(crate) filler: char,
+}
+
+impl Default for HorizontalLine {
+    fn default() -> Self {
+        Self {
+            left_end: '+',
+            right_end: '+',
+            junction: '+',
+            filler: '-',
         }
     }
-    Ok(())
+}
+
+impl HorizontalLine {
+    /// Creates a new instance of horizontal line
+    pub fn new(left_end: char, right_end: char, junction: char, filler: char) -> Self {
+        Self {
+            left_end,
+            right_end,
+            junction,
+            filler,
+        }
+    }
+}
+
+/// Borders of a table
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct Border {
+    pub(crate) top: Option<HorizontalLine>,
+    pub(crate) bottom: Option<HorizontalLine>,
+    pub(crate) left: Option<VerticalLine>,
+    pub(crate) right: Option<VerticalLine>,
+}
+
+impl Border {
+    /// Creates a new builder for border
+    pub fn builder() -> BorderBuilder {
+        BorderBuilder(Border {
+            top: None,
+            bottom: None,
+            left: None,
+            right: None,
+        })
+    }
+}
+
+impl Default for Border {
+    fn default() -> Self {
+        Self {
+            top: Some(Default::default()),
+            bottom: Some(Default::default()),
+            left: Some(Default::default()),
+            right: Some(Default::default()),
+        }
+    }
+}
+
+/// Builder for border
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct BorderBuilder(Border);
+
+impl BorderBuilder {
+    /// Set top border of a table
+    pub fn top(mut self, top: HorizontalLine) -> Self {
+        self.0.top = Some(top);
+        self
+    }
+
+    /// Set bottom border of a table
+    pub fn bottom(mut self, bottom: HorizontalLine) -> Self {
+        self.0.bottom = Some(bottom);
+        self
+    }
+
+    /// Set left border of a table
+    pub fn left(mut self, left: VerticalLine) -> Self {
+        self.0.left = Some(left);
+        self
+    }
+
+    /// Set right border of a table
+    pub fn right(mut self, right: VerticalLine) -> Self {
+        self.0.right = Some(right);
+        self
+    }
+
+    /// Build border
+    pub fn build(self) -> Border {
+        self.0
+    }
+}
+
+/// Inner (column/row) separators of a table
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct Separator {
+    pub(crate) column: Option<VerticalLine>,
+    pub(crate) row: Option<HorizontalLine>,
+    pub(crate) title: Option<HorizontalLine>,
+}
+
+impl Separator {
+    /// Creates a new builder for separator
+    pub fn builder() -> SeparatorBuilder {
+        SeparatorBuilder(Separator {
+            column: None,
+            row: None,
+            title: None,
+        })
+    }
+}
+
+impl Default for Separator {
+    fn default() -> Self {
+        Self {
+            column: Some(Default::default()),
+            row: Some(Default::default()),
+            title: None,
+        }
+    }
+}
+
+/// Builder for separator
+#[derive(Debug)]
+pub struct SeparatorBuilder(Separator);
+
+impl SeparatorBuilder {
+    /// Set column separators of a table
+    pub fn column(mut self, column: Option<VerticalLine>) -> Self {
+        self.0.column = column;
+        self
+    }
+
+    /// Set column separators of a table
+    pub fn row(mut self, row: Option<HorizontalLine>) -> Self {
+        self.0.row = row;
+        self
+    }
+
+    /// Set title of a table
+    ///
+    /// # None
+    ///
+    /// When title separator is not preset (i.e., it is `None`), row separator is displayed in place of title separator.
+    pub fn title(mut self, title: Option<HorizontalLine>) -> Self {
+        self.0.title = title;
+        self
+    }
+
+    /// Build separator
+    pub fn build(self) -> Separator {
+        self.0
+    }
+}
+
+/// Struct for configuring a table's format
+#[derive(Debug, Default, Copy, Clone)]
+pub(crate) struct TableFormat {
+    pub(crate) border: Border,
+    pub(crate) separator: Separator,
+}
+
+/// Dimensions of a table
+#[derive(Debug, Clone, Eq, PartialEq, Default)]
+pub(crate) struct Dimension {
+    /// Widths of each column of table
+    pub(crate) widths: Vec<usize>,
+    /// Height of each row of table
+    pub(crate) heights: Vec<usize>,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_row_from_str_arr() {
+        let table: TableStruct = vec![&["Hello", "World"], &["Scooby", "Doo"]].into();
+        assert_eq!(2, table.rows.len());
+        assert_eq!(2, table.rows[0].cells.len());
+        assert_eq!(2, table.rows[1].cells.len());
+    }
 }

@@ -1,5 +1,6 @@
 #![forbid(unsafe_code, unstable_features)]
 #![deny(missing_docs)]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 //! Rust crate for printing tables on command line.
 //!
 //! ## Usage
@@ -11,67 +12,28 @@
 //! cli-table = "0.4"
 //! ```
 //!
-//! Each cell in a [`Table`] can be formatted using [`CellFormat`]. [`CellFormat`] can be easily created like this:
+//! To create a table,
 //!
+//! ```rust
+//! # use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+//! let table = vec![
+//!     vec!["Name".cell().bold(true), "Age (in years)".cell().bold(true)],
+//!     vec!["Tom".cell(), 10.cell().justify(Justify::Right)],
+//!     vec!["Jerry".cell(), 15.cell().justify(Justify::Right)],
+//!     vec!["Scooby Doo".cell(), 20.cell().justify(Justify::Right)],
+//! ]
+//! .table()
+//! .bold(true);
+//!
+//! assert!(print_stdout(table).is_ok());
 //! ```
-//! # use cli_table::format::{CellFormat, Justify};
-//! // Justifies contents of a cell to right
-//! let justify_right = CellFormat::builder().justify(Justify::Right).build();
-//!
-//! // Makes contents of a cell bold
-//! let bold = CellFormat::builder().bold(true).build();
-//! ```
-//!
-//! [`Table`] can be formatted using [`TableFormat`]. It is very easy to create a custom table format, but for
-//! simplicity, this crate provides a few predefined [`TableFormat`]s:
-//!
-//! - [`BORDER_COLUMN_ROW`]: Format with borders, column separators and row separators (calling `Default::default()`
-//!   on [`TableFormat`] also returns this format)
-//! - [`BORDER_COLUMN_NO_ROW`]: Format with borders and column separators (without row separators)
-//! - [`BORDER_COLUMN_TITLE`]: Format with borders, column separators and title separator (without row separators)
-//! - [`BORDER_NO_COLUMN_ROW`]: Format with borders and row separators (without column separators)
-//! - [`NO_BORDER_COLUMN_ROW`]: Format with no borders, column separators and row separators
-//! - [`NO_BORDER_COLUMN_TITLE`]: Format with no borders, column separators and title separator (without row separators)
-//!
-//! To create a table, you can use [`Table::new()`] like this:
-//!
-//! ```
-//! # use cli_table::format::{CellFormat, Justify};
-//! # use cli_table::{Table, Row, Cell};
-//! # let justify_right = CellFormat::builder().justify(Justify::Right).build();
-//! # let bold = CellFormat::builder().bold(true).build();
-//! let table = Table::new(
-//!     vec![
-//!         Row::new(vec![
-//!             Cell::new(&format!("Name"), bold),
-//!             Cell::new("Age (in years)", bold),
-//!         ]),
-//!         Row::new(vec![
-//!             Cell::new("Tom", Default::default()),
-//!             Cell::new("10", justify_right),
-//!         ]),
-//!         Row::new(vec![
-//!             Cell::new("Jerry", Default::default()),
-//!             Cell::new("15", justify_right),
-//!         ]),
-//!         Row::new(vec![
-//!             Cell::new("Scooby Doo", Default::default()),
-//!             Cell::new("25", justify_right),
-//!         ]),
-//!     ],
-//!     Default::default(),
-//! )
-//! .unwrap();
-//! ```
-//!
-//! To print this table on `stdout`, you can call [`table.print_stdout()`].
 //!
 //! Below is the output of the table we created just now:
 //!
 //! ```markdown
 //! +------------+----------------+
-//! | Name       | Age (in years) |  <-- This row will appear in bold
-//! +------------+----------------+
+//! | Name       | Age (in years) |  <-- This row and all the borders/separators
+//! +------------+----------------+      will appear in bold
 //! | Tom        |             10 |
 //! +------------+----------------+
 //! | Jerry      |             15 |
@@ -79,28 +41,38 @@
 //! | Scooby Doo |             25 |
 //! +------------+----------------+
 //! ```
-//!
-//! [`Table`]: crate::Table
-//! [`CellFormat`]: crate::format::CellFormat
-//! [`TableFormat`]: crate::format::TableFormat
-//! [`Table::new()`]: crate::Table::new
-//! [`table.print_stdout()`]: crate::Table::print_stdout
-//!
-//! [`BORDER_COLUMN_ROW`]: crate::format::BORDER_COLUMN_ROW
-//! [`BORDER_COLUMN_NO_ROW`]: crate::format::BORDER_COLUMN_NO_ROW
-//! [`BORDER_COLUMN_TITLE`]: crate::format::BORDER_COLUMN_TITLE
-//! [`BORDER_NO_COLUMN_ROW`]: crate::format::BORDER_NO_COLUMN_ROW
-//! [`NO_BORDER_COLUMN_ROW`]: crate::format::NO_BORDER_COLUMN_ROW
-//! [`NO_BORDER_COLUMN_TITLE`]: crate::format::NO_BORDER_COLUMN_TITLE
+mod buffers;
 mod cell;
-mod dimension;
-mod error;
 mod row;
+mod style;
 mod table;
+#[cfg(feature = "title")]
+mod title;
+mod utils;
 
 pub mod format;
 
-pub use self::cell::Cell;
-pub use self::error::Error;
-pub use self::row::Row;
-pub use self::table::{ColorChoice, Table};
+pub use termcolor::{Color, ColorChoice};
+
+pub use self::{
+    cell::{Cell, CellStruct},
+    row::{Row, RowStruct},
+    style::Style,
+    table::{Table, TableStruct},
+};
+
+#[cfg(feature = "title")]
+#[cfg_attr(docsrs, doc(cfg(feature = "title")))]
+pub use self::title::Title;
+
+use std::io::Result;
+
+/// Prints a table to `stdout`
+pub fn print_stdout<T: Table>(table: T) -> Result<()> {
+    table.table().print_stdout()
+}
+
+/// Prints a table to `stderr`
+pub fn print_stderr<T: Table>(table: T) -> Result<()> {
+    table.table().print_stderr()
+}

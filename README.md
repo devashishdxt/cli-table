@@ -16,61 +16,29 @@ Add `cli-table` in your `Cargo.toms`'s `dependencies` section
 cli-table = "0.4"
 ```
 
-Each cell in a `Table` can be formatted using `CellFormat`. `CellFormat` can be easily created like this:
+To create a table,
 
 ```rust
-// Justifies contents of a cell to right
-let justify_right = CellFormat::builder().justify(Justify::Right).build();
+use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
 
-// Makes contents of a cell bold
-let bold = CellFormat::builder().bold(true).build();
+let table = vec![
+    vec!["Name".cell().bold(true), "Age (in years)".cell().bold(true)],
+    vec!["Tom".cell(), 10.cell().justify(Justify::Right)],
+    vec!["Jerry".cell(), 15.cell().justify(Justify::Right)],
+    vec!["Scooby Doo".cell(), 20.cell().justify(Justify::Right)],
+]
+.table()
+.bold(true);
+
+assert!(print_stdout(table).is_ok());
 ```
-
-`Table` can be formatted using `TableFormat`. It is very easy to create a custom table format, but for simplicity, this
-crate provides a few predefined `TableFormat`s:
-
-- `BORDER_COLUMN_TITLE`: Format with borders, column separators and row separators (calling `Default::default()` on
-  `TableFormat` also returns this format)
-- `BORDER_COLUMN_NO_ROW`: Format with borders and column separators (without row separators)
-- `BORDER_COLUMN_TITLE`: Format with borders, column separators and title separator (without row separators)
-- `BORDER_NO_COLUMN_ROW`: Format with borders and row separators (without column separators)
-- `NO_BORDER_COLUMN_ROW`: Format with no borders, column separators and row separators
-- `NO_BORDER_COLUMN_TITLE`: Format with no borders, column separators and title separator (without row separators)
-
-To create a table, you can use `Table::new()` like this:
-
-```rust
-let table = Table::new(
-    vec![
-        Row::new(vec![
-            Cell::new(&format!("Name"), bold),
-            Cell::new("Age (in years)", bold),
-        ]),
-        Row::new(vec![
-            Cell::new("Tom", Default::default()),
-            Cell::new("10", justify_right),
-        ]),
-        Row::new(vec![
-            Cell::new("Jerry", Default::default()),
-            Cell::new("15", justify_right),
-        ]),
-        Row::new(vec![
-            Cell::new("Scooby Doo", Default::default()),
-            Cell::new("25", justify_right),
-        ]),
-    ],
-    Default::default(),
-)?;
-```
-
-To print this table on `stdout`, you can call `table.print_stdout()`.
 
 Below is the output of the table we created just now:
 
-```
+```markdown
 +------------+----------------+
-| Name       | Age (in years) |  <-- This row will appear in bold
-+------------+----------------+
+| Name       | Age (in years) |  <-- This row and all the borders/separators
++------------+----------------+      will appear in bold
 | Tom        |             10 |
 +------------+----------------+
 | Jerry      |             15 |

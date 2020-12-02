@@ -1,61 +1,29 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `cli_table` crate."><meta name="keywords" content="rust, rustlang, rust-lang, cli_table"><title>cli_table - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../cli_table/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate cli_table</p><div class='block version'><p>Version 0.4.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all cli_table's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'cli_table', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/cli_table/lib.rs.html#1-106' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>cli_table</a></span></h1><div class='docblock'><p>Rust crate for printing tables on command line.</p>
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../cli_table/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate cli_table</p><div class='block version'><p>Version 0.4.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all cli_table's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'cli_table', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/cli_table/lib.rs.html#1-78' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>cli_table</a></span></h1><div class='docblock'><p>Rust crate for printing tables on command line.</p>
 <h2 id="usage" class="section-header"><a href="#usage">Usage</a></h2>
 <p>Add <code>cli-table</code> in your <code>Cargo.toms</code>'s <code>dependencies</code> section</p>
 <pre><code class="language-toml">[dependencies]
 cli-table = &quot;0.4&quot;
 </code></pre>
-<p>Each cell in a <a href="../cli_table/struct.Table.html"><code>Table</code></a> can be formatted using <a href="../cli_table/format/struct.CellFormat.html"><code>CellFormat</code></a>. <a href="../cli_table/format/struct.CellFormat.html"><code>CellFormat</code></a> can be easily created like this:</p>
+<p>To create a table,</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="comment">// Justifies contents of a cell to right</span>
-<span class="kw">let</span> <span class="ident">justify_right</span> <span class="op">=</span> <span class="ident">CellFormat</span>::<span class="ident">builder</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>).<span class="ident">build</span>();
+<span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Name&quot;</span>.<span class="ident">cell</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>), <span class="string">&quot;Age (in years)&quot;</span>.<span class="ident">cell</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>)],
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Tom&quot;</span>.<span class="ident">cell</span>(), <span class="number">10</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Jerry&quot;</span>.<span class="ident">cell</span>(), <span class="number">15</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Scooby Doo&quot;</span>.<span class="ident">cell</span>(), <span class="number">20</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+]
+.<span class="ident">table</span>()
+.<span class="ident">bold</span>(<span class="bool-val">true</span>);
 
-<span class="comment">// Makes contents of a cell bold</span>
-<span class="kw">let</span> <span class="ident">bold</span> <span class="op">=</span> <span class="ident">CellFormat</span>::<span class="ident">builder</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>).<span class="ident">build</span>();</pre></div>
-<p><a href="../cli_table/struct.Table.html"><code>Table</code></a> can be formatted using <a href="../cli_table/format/struct.TableFormat.html"><code>TableFormat</code></a>. It is very easy to create a custom table format, but for
-simplicity, this crate provides a few predefined <a href="../cli_table/format/struct.TableFormat.html"><code>TableFormat</code></a>s:</p>
-<ul>
-<li><a href="../cli_table/format/constant.BORDER_COLUMN_ROW.html"><code>BORDER_COLUMN_ROW</code></a>: Format with borders, column separators and row separators (calling <code>Default::default()</code>
-on <a href="../cli_table/format/struct.TableFormat.html"><code>TableFormat</code></a> also returns this format)</li>
-<li><a href="../cli_table/format/constant.BORDER_COLUMN_NO_ROW.html"><code>BORDER_COLUMN_NO_ROW</code></a>: Format with borders and column separators (without row separators)</li>
-<li><a href="../cli_table/format/constant.BORDER_COLUMN_TITLE.html"><code>BORDER_COLUMN_TITLE</code></a>: Format with borders, column separators and title separator (without row separators)</li>
-<li><a href="../cli_table/format/constant.BORDER_NO_COLUMN_ROW.html"><code>BORDER_NO_COLUMN_ROW</code></a>: Format with borders and row separators (without column separators)</li>
-<li><a href="../cli_table/format/constant.NO_BORDER_COLUMN_ROW.html"><code>NO_BORDER_COLUMN_ROW</code></a>: Format with no borders, column separators and row separators</li>
-<li><a href="../cli_table/format/constant.NO_BORDER_COLUMN_TITLE.html"><code>NO_BORDER_COLUMN_TITLE</code></a>: Format with no borders, column separators and title separator (without row separators)</li>
-</ul>
-<p>To create a table, you can use <a href="../cli_table/struct.Table.html#method.new"><code>Table::new()</code></a> like this:</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">Table</span>::<span class="ident">new</span>(
-    <span class="macro">vec</span><span class="macro">!</span>[
-        <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Name&quot;</span>), <span class="ident">bold</span>),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;Age (in years)&quot;</span>, <span class="ident">bold</span>),
-        ]),
-        <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;Tom&quot;</span>, <span class="ident">Default</span>::<span class="ident">default</span>()),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;10&quot;</span>, <span class="ident">justify_right</span>),
-        ]),
-        <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;Jerry&quot;</span>, <span class="ident">Default</span>::<span class="ident">default</span>()),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;15&quot;</span>, <span class="ident">justify_right</span>),
-        ]),
-        <span class="ident">Row</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;Scooby Doo&quot;</span>, <span class="ident">Default</span>::<span class="ident">default</span>()),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="string">&quot;25&quot;</span>, <span class="ident">justify_right</span>),
-        ]),
-    ],
-    <span class="ident">Default</span>::<span class="ident">default</span>(),
-)
-.<span class="ident">unwrap</span>();</pre></div>
-<p>To print this table on <code>stdout</code>, you can call <a href="../cli_table/struct.Table.html#method.print_stdout"><code>table.print_stdout()</code></a>.</p>
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">print_stdout</span>(<span class="ident">table</span>).<span class="ident">is_ok</span>());</pre></div>
 <p>Below is the output of the table we created just now:</p>
 <pre><code class="language-markdown">+------------+----------------+
-| Name       | Age (in years) |  &lt;-- This row will appear in bold
-+------------+----------------+
+| Name       | Age (in years) |  &lt;-- This row and all the borders/separators
++------------+----------------+      will appear in bold
 | Tom        |             10 |
 +------------+----------------+
 | Jerry      |             15 |
@@ -64,12 +32,20 @@ on <a href="../cli_table/format/struct.TableFormat.html"><code>TableFormat</code
 +------------+----------------+
 </code></pre>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
-<table><tr class='module-item'><td><a class="mod" href="format/index.html" title='cli_table::format mod'>format</a></td><td class='docblock-short'><p>Utilities for formatting of a <a href="../cli_table/struct.Table.html"><code>Table</code></a></p>
+<table><tr class='module-item'><td><a class="mod" href="format/index.html" title='cli_table::format mod'>format</a></td><td class='docblock-short'><p>Utilities for formatting of a table</p>
 </td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table><tr class='module-item'><td><a class="struct" href="struct.Cell.html" title='cli_table::Cell struct'>Cell</a></td><td class='docblock-short'><p>A <code>Cell</code> in a <a href="../cli_table/struct.Table.html"><code>Table</code></a></p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Row.html" title='cli_table::Row struct'>Row</a></td><td class='docblock-short'><p>A <code>Row</code> in a <a href="../cli_table/struct.Table.html"><code>Table</code></a></p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Table.html" title='cli_table::Table struct'>Table</a></td><td class='docblock-short'><p>Struct for building a <a href="../cli_table/struct.Table.html"><code>Table</code></a> on command line</p>
+<table><tr class='module-item'><td><a class="struct" href="struct.CellStruct.html" title='cli_table::CellStruct struct'>CellStruct</a></td><td class='docblock-short'><p>Concrete cell of a table</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RowStruct.html" title='cli_table::RowStruct struct'>RowStruct</a></td><td class='docblock-short'><p>Concrete row of a table</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.TableStruct.html" title='cli_table::TableStruct struct'>TableStruct</a></td><td class='docblock-short'><p>Struct for building a table on command line</p>
 </td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table><tr class='module-item'><td><a class="enum" href="enum.ColorChoice.html" title='cli_table::ColorChoice enum'>ColorChoice</a></td><td class='docblock-short'><p>ColorChoice represents the color preferences of an end user.</p>
-</td></tr><tr class='module-item'><td><a class="enum" href="enum.Error.html" title='cli_table::Error enum'>Error</a></td><td class='docblock-short'><p>Errors returned by functions in this crate</p>
+<table><tr class='module-item'><td><a class="enum" href="enum.Color.html" title='cli_table::Color enum'>Color</a></td><td class='docblock-short'><p>The set of available colors for the terminal foreground/background.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.ColorChoice.html" title='cli_table::ColorChoice enum'>ColorChoice</a></td><td class='docblock-short'><p>ColorChoice represents the color preferences of an end user.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Cell.html" title='cli_table::Cell trait'>Cell</a></td><td class='docblock-short'><p>Trait to convert raw types into cells</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Row.html" title='cli_table::Row trait'>Row</a></td><td class='docblock-short'><p>Trait to convert raw types into rows</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Style.html" title='cli_table::Style trait'>Style</a></td><td class='docblock-short'><p>Trait for modifying style of table and cells</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Table.html" title='cli_table::Table trait'>Table</a></td><td class='docblock-short'><p>Trait to convert raw type into table</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.print_stderr.html" title='cli_table::print_stderr fn'>print_stderr</a></td><td class='docblock-short'><p>Prints a table to <code>stderr</code></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.print_stdout.html" title='cli_table::print_stdout fn'>print_stdout</a></td><td class='docblock-short'><p>Prints a table to <code>stdout</code></p>
 </td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "cli_table";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

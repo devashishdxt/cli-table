@@ -53,22 +53,26 @@ impl Buffers for RowStruct {
     }
 }
 
-impl<C: Cell, T: IntoIterator<Item = C>> From<T> for RowStruct {
-    fn from(cell_iter: T) -> Self {
-        let cells = cell_iter.into_iter().map(Cell::cell).collect();
-        Self { cells }
-    }
-}
-
 /// Trait to convert raw types into rows
 pub trait Row {
     /// Converts raw type to rows of a table
     fn row(self) -> RowStruct;
 }
 
-impl<T: Into<RowStruct>> Row for T {
+impl<T, C> Row for T
+where
+    T: IntoIterator<Item = C>,
+    C: Cell,
+{
     fn row(self) -> RowStruct {
-        self.into()
+        let cells = self.into_iter().map(|cell| cell.cell()).collect();
+        RowStruct { cells }
+    }
+}
+
+impl Row for RowStruct {
+    fn row(self) -> RowStruct {
+        self
     }
 }
 
@@ -104,7 +108,7 @@ mod tests {
 
     #[test]
     fn test_into_row_with_style() {
-        let row = vec!["Hello".cell().bold(true), "World".into()].row();
+        let row = vec!["Hello".cell().bold(true), "World".cell()].row();
         assert_eq!(2, row.cells.len());
     }
 

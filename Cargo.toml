@@ -21,3 +21,8 @@ path = "src/lib.rs"
 [dependencies]
 termcolor = "1.1"
 unicode-width = "0.1"
+
+[features]
+default = ["derive"]
+derive = ["title"]
+title = []

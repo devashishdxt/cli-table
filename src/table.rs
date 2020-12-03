@@ -174,11 +174,21 @@ impl TableStruct {
     }
 }
 
-impl<C: Row, T: IntoIterator<Item = C>> From<T> for TableStruct {
-    fn from(row_iter: T) -> Self {
-        let rows = row_iter.into_iter().map(Row::row).collect();
+/// Trait to convert raw type into table
+pub trait Table {
+    /// Converts raw type to a table
+    fn table(self) -> TableStruct;
+}
 
-        Self {
+impl<T, R> Table for T
+where
+    T: IntoIterator<Item = R>,
+    R: Row,
+{
+    fn table(self) -> TableStruct {
+        let rows = self.into_iter().map(Row::row).collect();
+
+        TableStruct {
             rows,
             format: Default::default(),
             style: Default::default(),
@@ -187,15 +197,9 @@ impl<C: Row, T: IntoIterator<Item = C>> From<T> for TableStruct {
     }
 }
 
-/// Trait to convert raw type into table
-pub trait Table {
-    /// Converts raw type to a table
-    fn table(self) -> TableStruct;
-}
-
-impl<T: Into<TableStruct>> Table for T {
+impl Table for TableStruct {
     fn table(self) -> TableStruct {
-        self.into()
+        self
     }
 }
 
@@ -438,7 +442,7 @@ mod tests {
 
     #[test]
     fn test_row_from_str_arr() {
-        let table: TableStruct = vec![&["Hello", "World"], &["Scooby", "Doo"]].into();
+        let table: TableStruct = vec![&["Hello", "World"], &["Scooby", "Doo"]].table();
         assert_eq!(2, table.rows.len());
         assert_eq!(2, table.rows[0].cells.len());
         assert_eq!(2, table.rows[1].cells.len());

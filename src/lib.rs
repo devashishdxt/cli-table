@@ -46,7 +46,7 @@ mod cell;
 mod row;
 mod style;
 mod table;
-#[cfg(feature = "title")]
+#[cfg(any(feature = "title", feature = "derive"))]
 mod title;
 mod utils;
 
@@ -61,9 +61,9 @@ pub use self::{
     table::{Table, TableStruct},
 };
 
-#[cfg(feature = "title")]
-#[cfg_attr(docsrs, doc(cfg(feature = "title")))]
-pub use self::title::Title;
+#[cfg(any(feature = "title", feature = "derive"))]
+#[cfg_attr(docsrs, doc(cfg(any(feature = "title", feature = "derive"))))]
+pub use self::title::{Title, WithTitle};
 
 use std::io::Result;
 

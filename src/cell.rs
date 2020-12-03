@@ -145,11 +145,20 @@ impl Buffers for CellStruct {
     }
 }
 
-impl<T: Display> From<T> for CellStruct {
-    fn from(data: T) -> Self {
-        let data = data.to_string().lines().map(ToString::to_string).collect();
+/// Trait to convert raw types into cells
+pub trait Cell {
+    /// Converts raw type to cell of a table
+    fn cell(self) -> CellStruct;
+}
 
-        Self {
+impl<T> Cell for T
+where
+    T: Display,
+{
+    fn cell(self) -> CellStruct {
+        let data = self.to_string().lines().map(ToString::to_string).collect();
+
+        CellStruct {
             data,
             format: Default::default(),
             style: Default::default(),
@@ -157,15 +166,9 @@ impl<T: Display> From<T> for CellStruct {
     }
 }
 
-/// Trait to convert raw types into cells
-pub trait Cell {
-    /// Converts raw type to cell of a table
-    fn cell(self) -> CellStruct;
-}
-
-impl<T: Into<CellStruct>> Cell for T {
+impl Cell for CellStruct {
     fn cell(self) -> CellStruct {
-        self.into()
+        self
     }
 }
 

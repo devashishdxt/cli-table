@@ -1,6 +1,7 @@
-#![forbid(unsafe_code, unstable_features)]
+#![forbid(unsafe_code)]
+#![cfg_attr(not(any(docsrs, feature = "doc")), forbid(unstable_features))]
 #![deny(missing_docs)]
-#![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(any(docsrs, feature = "doc"), feature(doc_cfg))]
 //! Rust crate for printing tables on command line.
 //!
 //! ## Usage
@@ -62,7 +63,6 @@ pub use self::{
 };
 
 #[cfg(any(feature = "title", feature = "derive"))]
-#[cfg_attr(docsrs, doc(cfg(any(feature = "title", feature = "derive"))))]
 pub use self::title::{Title, WithTitle};
 
 use std::io::Result;

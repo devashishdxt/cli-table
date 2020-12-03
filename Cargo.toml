@@ -25,4 +25,5 @@ unicode-width = "0.1"
 [features]
 default = ["derive"]
 derive = ["title"]
+doc = []
 title = []

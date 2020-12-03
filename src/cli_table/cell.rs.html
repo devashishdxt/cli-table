@@ -338,6 +338,9 @@
 <span id="335">335</span>
 <span id="336">336</span>
 <span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">fmt</span>::<span class="ident">Display</span>,
@@ -486,11 +489,20 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CellStruct</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_string</span>().<span class="ident">lines</span>().<span class="ident">map</span>(<span class="ident">ToString</span>::<span class="ident">to_string</span>).<span class="ident">collect</span>();
+<span class="doccomment">/// Trait to convert raw types into cells</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cell</span> {
+    <span class="doccomment">/// Converts raw type to cell of a table</span>
+    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellStruct</span>;
+}
 
-        <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Cell</span> <span class="kw">for</span> <span class="ident">T</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Display</span>,
+{
+    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellStruct</span> {
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">lines</span>().<span class="ident">map</span>(<span class="ident">ToString</span>::<span class="ident">to_string</span>).<span class="ident">collect</span>();
+
+        <span class="ident">CellStruct</span> {
             <span class="ident">data</span>,
             <span class="ident">format</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
             <span class="ident">style</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
@@ -498,15 +510,9 @@
     }
 }
 
-<span class="doccomment">/// Trait to convert raw types into cells</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cell</span> {
-    <span class="doccomment">/// Converts raw type to cell of a table</span>
-    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellStruct</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">CellStruct</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Cell</span> <span class="kw">for</span> <span class="ident">T</span> {
+<span class="kw">impl</span> <span class="ident">Cell</span> <span class="kw">for</span> <span class="ident">CellStruct</span> {
     <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CellStruct</span> {
-        <span class="self">self</span>.<span class="ident">into</span>()
+        <span class="self">self</span>
     }
 }
 

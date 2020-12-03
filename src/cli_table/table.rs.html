@@ -447,6 +447,10 @@
 <span id="444">444</span>
 <span id="445">445</span>
 <span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span>;
 
@@ -624,11 +628,21 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Row</span>, <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TableStruct</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">row_iter</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">rows</span> <span class="op">=</span> <span class="ident">row_iter</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Row</span>::<span class="ident">row</span>).<span class="ident">collect</span>();
+<span class="doccomment">/// Trait to convert raw type into table</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Table</span> {
+    <span class="doccomment">/// Converts raw type to a table</span>
+    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableStruct</span>;
+}
 
-        <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Table</span> <span class="kw">for</span> <span class="ident">T</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">R</span><span class="op">&gt;</span>,
+    <span class="ident">R</span>: <span class="ident">Row</span>,
+{
+    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableStruct</span> {
+        <span class="kw">let</span> <span class="ident">rows</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Row</span>::<span class="ident">row</span>).<span class="ident">collect</span>();
+
+        <span class="ident">TableStruct</span> {
             <span class="ident">rows</span>,
             <span class="ident">format</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
             <span class="ident">style</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
@@ -637,15 +651,9 @@
     }
 }
 
-<span class="doccomment">/// Trait to convert raw type into table</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Table</span> {
-    <span class="doccomment">/// Converts raw type to a table</span>
-    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableStruct</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">TableStruct</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Table</span> <span class="kw">for</span> <span class="ident">T</span> {
+<span class="kw">impl</span> <span class="ident">Table</span> <span class="kw">for</span> <span class="ident">TableStruct</span> {
     <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TableStruct</span> {
-        <span class="self">self</span>.<span class="ident">into</span>()
+        <span class="self">self</span>
     }
 }
 
@@ -888,7 +896,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_row_from_str_arr</span>() {
-        <span class="kw">let</span> <span class="ident">table</span>: <span class="ident">TableStruct</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;Scooby&quot;</span>, <span class="string">&quot;Doo&quot;</span>]].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">table</span>: <span class="ident">TableStruct</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;Scooby&quot;</span>, <span class="string">&quot;Doo&quot;</span>]].<span class="ident">table</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>.<span class="ident">len</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>[<span class="number">0</span>].<span class="ident">cells</span>.<span class="ident">len</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">cells</span>.<span class="ident">len</span>());

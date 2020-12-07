@@ -51,8 +51,5 @@ fn main() -> Result<()> {
         },
     ];
 
-    print_stdout(users.with_title())?;
-    println!("{:?}", users);
-
-    Ok(())
+    print_stdout(users.with_title())
 }

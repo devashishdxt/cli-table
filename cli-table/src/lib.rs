@@ -16,7 +16,8 @@
 //! To create a table,
 //!
 //! ```rust
-//! # use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+//!
 //! let table = vec![
 //!     vec!["Name".cell().bold(true), "Age (in years)".cell().bold(true)],
 //!     vec!["Tom".cell(), 10.cell().justify(Justify::Right)],

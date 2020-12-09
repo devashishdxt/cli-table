@@ -56,6 +56,9 @@ pub mod format;
 
 pub use termcolor::{Color, ColorChoice};
 
+#[cfg(feature = "derive")]
+pub use cli_table_derive::{Row, Title};
+
 pub use self::{
     cell::{Cell, CellStruct},
     row::{Row, RowStruct},

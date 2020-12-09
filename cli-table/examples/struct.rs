@@ -1,40 +1,15 @@
 use std::io::Result;
 
-use cli_table::{format::Justify, print_stdout, Cell, Row, RowStruct, Style, Title, WithTitle};
+use cli_table::{print_stdout, Row, Title, WithTitle};
 
-#[derive(Debug)]
+#[derive(Debug, Title, Row)]
 struct User {
+    #[cli_table(name = "ID", justify = "right")]
     id: u64,
+    #[cli_table(name = "First Name")]
     first_name: &'static str,
+    #[cli_table(name = "Last Name")]
     last_name: &'static str,
-}
-
-impl Row for &User {
-    fn row(self) -> RowStruct {
-        vec![
-            self.id.cell().justify(Justify::Right),
-            self.first_name.cell(),
-            self.last_name.cell(),
-        ]
-        .row()
-    }
-}
-
-impl Row for User {
-    fn row(self) -> RowStruct {
-        (&self).row()
-    }
-}
-
-impl Title for User {
-    fn title() -> RowStruct {
-        vec![
-            "id".cell().bold(true),
-            "first_name".cell().bold(true),
-            "last_name".cell().bold(true),
-        ]
-        .row()
-    }
 }
 
 fn main() -> Result<()> {

@@ -19,11 +19,12 @@ path = "src/lib.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+cli-table-derive = { path = "../cli-table-derive", optional = true }
 termcolor = "1.1"
 unicode-width = "0.1"
 
 [features]
 default = ["derive"]
-derive = ["title"]
+derive = ["cli-table-derive", "title"]
 doc = []
 title = []

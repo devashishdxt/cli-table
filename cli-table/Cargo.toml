@@ -28,3 +28,7 @@ default = ["derive"]
 derive = ["cli-table-derive", "title"]
 doc = []
 title = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

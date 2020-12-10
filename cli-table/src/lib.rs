@@ -102,6 +102,7 @@ pub mod format;
 pub use termcolor::{Color, ColorChoice};
 
 #[cfg(feature = "derive")]
+#[cfg_attr(any(docsrs, feature = "doc"), doc(cfg(feature = "derive")))]
 pub use cli_table_derive::Table;
 
 pub use self::{

@@ -128,6 +128,7 @@
 <span id="125">125</span>
 <span id="126">126</span>
 <span id="127">127</span>
+<span id="128">128</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">docsrs</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>)), <span class="ident">forbid</span>(<span class="ident">unstable_features</span>))]</span>
@@ -233,6 +234,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Color</span>, <span class="ident">ColorChoice</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">any</span>(<span class="ident">docsrs</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>), <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cli_table_derive</span>::<span class="ident">Table</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{

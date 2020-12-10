@@ -172,12 +172,52 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">quote_spanned</span>, <span class="ident">ToTokens</span>};
+<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
 <span class="kw">use</span> <span class="ident">syn</span>::{
-    <span class="ident">spanned</span>::<span class="ident">Spanned</span>, <span class="ident">Data</span>, <span class="ident">DeriveInput</span>, <span class="ident">Error</span>, <span class="ident">Field</span> <span class="kw">as</span> <span class="ident">SynField</span>, <span class="ident">Fields</span> <span class="kw">as</span> <span class="ident">SynFields</span>, <span class="ident">Index</span>, <span class="ident">Lit</span>,
-    <span class="ident">LitStr</span>, <span class="prelude-ty">Result</span>,
+    <span class="ident">spanned</span>::<span class="ident">Spanned</span>, <span class="ident">Data</span>, <span class="ident">DeriveInput</span>, <span class="ident">Error</span>, <span class="ident">Expr</span>, <span class="ident">Field</span> <span class="kw">as</span> <span class="ident">SynField</span>, <span class="ident">Fields</span> <span class="kw">as</span> <span class="ident">SynFields</span>,
+    <span class="ident">Index</span>, <span class="ident">Lit</span>, <span class="ident">LitBool</span>, <span class="ident">LitStr</span>, <span class="prelude-ty">Result</span>,
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="ident">get_attributes</span>;
@@ -215,7 +255,10 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Field</span> {
     <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
     <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">LitStr</span>,
-    <span class="kw">pub</span> <span class="ident">justify</span>: <span class="ident">TokenStream</span>,
+    <span class="kw">pub</span> <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">bold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitBool</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
@@ -230,6 +273,9 @@
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">None</span>;
 
         <span class="kw">let</span> <span class="ident">field_attributes</span> <span class="op">=</span> <span class="ident">get_attributes</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
 
@@ -244,34 +290,34 @@
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;justify&quot;</span>) {
                 <span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">let</span> <span class="ident">lit_str_value</span> <span class="op">=</span> <span class="ident">lit_str</span>.<span class="ident">value</span>();
-
-                        <span class="kw">match</span> <span class="ident">lit_str_value</span>.<span class="ident">as_str</span>() {
-                            <span class="string">&quot;left&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="prelude-val">Ok</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-                                    <span class="ident">Justify</span>::<span class="ident">Left</span>
-                                })
-                            },
-                            <span class="string">&quot;right&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="prelude-val">Ok</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-                                    <span class="ident">Justify</span>::<span class="ident">Right</span>
-                                })
-                            },
-                            <span class="string">&quot;center&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="prelude-val">Ok</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-                                    <span class="ident">Justify</span>::<span class="ident">Center</span>
-                                })
-                            },
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
-                                <span class="ident">lit_str</span>,
-                                <span class="string">&quot;Invalid value for #[cli_table(justify = \&quot;value\&quot;)]. Only \&quot;left\&quot;, \&quot;right\&quot; and \&quot;center\&quot; is allowed&quot;</span>,
-                            )),
-                        }
-                    },
+                    <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(justify = \&quot;value\&quot;)]. Only \&quot;left\&quot;, \&quot;right\&quot; and \&quot;center\&quot; is allowed&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[cli_table(justify = \&quot;value\&quot;)]&quot;</span>,
+                    )),
+                }<span class="question-mark">?</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;align&quot;</span>) {
+                <span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
+                    <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
+                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
+                        <span class="ident">bad</span>,
+                        <span class="string">&quot;Invalid value for #[cli_table(align = \&quot;value\&quot;)]&quot;</span>,
+                    )),
+                }<span class="question-mark">?</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;color&quot;</span>) {
+                <span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
+                    <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
+                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
+                        <span class="ident">bad</span>,
+                        <span class="string">&quot;Invalid value for #[cli_table(color = \&quot;value\&quot;)]&quot;</span>,
+                    )),
+                }<span class="question-mark">?</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;bold&quot;</span>) {
+                <span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
+                    <span class="ident">Lit</span>::<span class="ident">Bool</span>(<span class="ident">lit_bool</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">lit_bool</span>),
+                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
+                        <span class="ident">bad</span>,
+                        <span class="string">&quot;Invalid value for #[cli_table(bold)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             }
@@ -287,6 +333,18 @@
             <span class="ident">field_builder</span>.<span class="ident">justify</span>(<span class="ident">justify</span>);
         }
 
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>) <span class="op">=</span> <span class="ident">align</span> {
+            <span class="ident">field_builder</span>.<span class="ident">align</span>(<span class="ident">align</span>);
+        }
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">color</span> {
+            <span class="ident">field_builder</span>.<span class="ident">color</span>(<span class="ident">color</span>);
+        }
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bold</span>) <span class="op">=</span> <span class="ident">bold</span> {
+            <span class="ident">field_builder</span>.<span class="ident">bold</span>(<span class="ident">bold</span>);
+        }
+
         <span class="prelude-val">Ok</span>(<span class="ident">field_builder</span>.<span class="ident">build</span>())
     }
 
@@ -298,7 +356,10 @@
 <span class="kw">struct</span> <span class="ident">FieldBuilder</span> {
     <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
     <span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitStr</span><span class="op">&gt;</span>,
-    <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span>,
+    <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
+    <span class="ident">bold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitBool</span><span class="op">&gt;</span>,
     <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
@@ -308,6 +369,9 @@
             <span class="ident">ident</span>,
             <span class="ident">name</span>: <span class="prelude-val">None</span>,
             <span class="ident">justify</span>: <span class="prelude-val">None</span>,
+            <span class="ident">align</span>: <span class="prelude-val">None</span>,
+            <span class="ident">color</span>: <span class="prelude-val">None</span>,
+            <span class="ident">bold</span>: <span class="prelude-val">None</span>,
             <span class="ident">span</span>,
         }
     }
@@ -317,29 +381,45 @@
         <span class="self">self</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">justify</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justify</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">justify</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justify</span>: <span class="ident">Expr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">justify</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">align</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Expr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">color</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Expr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">LitBool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bold</span>);
         <span class="self">self</span>
     }
 
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Field</span> {
         <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ident</span>;
+        <span class="kw">let</span> <span class="ident">justify</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">justify</span>;
+        <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">align</span>;
+        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">color</span>;
+        <span class="kw">let</span> <span class="ident">bold</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bold</span>;
         <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">span</span>;
 
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">name</span>
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">LitStr</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>.<span class="ident">to_string</span>(), <span class="ident">span</span>));
 
-        <span class="kw">let</span> <span class="ident">justify</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">justify</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-                <span class="ident">Justify</span>::<span class="ident">Left</span>
-            }
-        });
-
         <span class="ident">Field</span> {
             <span class="ident">ident</span>,
             <span class="ident">name</span>,
             <span class="ident">justify</span>,
+            <span class="ident">align</span>,
+            <span class="ident">color</span>,
+            <span class="ident">bold</span>,
             <span class="ident">span</span>,
         }
     }

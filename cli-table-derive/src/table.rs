@@ -1,5 +1,5 @@
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{quote, quote_spanned};
 use syn::{DeriveInput, Result};
 
 use crate::context::Context;
@@ -25,9 +25,11 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
 
         let ident = field.ident;
         let justify = field.justify;
+        let span = field.span;
 
-        let row =
-            quote!(#cli_table ::Cell::cell(self. #ident).justify(#cli_table ::format:: #justify));
+        let row = quote_spanned! {span=>
+            #cli_table ::Cell::cell(self. #ident).justify(#cli_table ::format:: #justify)
+        };
 
         field_rows.push(row);
     }

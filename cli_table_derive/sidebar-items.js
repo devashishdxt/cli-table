@@ -1,1 +1,1 @@
-initSidebarItems({"derive":[["Table",""]]});
+initSidebarItems({"derive":[["Table","Derive macro to implementing `cli_table` traits"]]});

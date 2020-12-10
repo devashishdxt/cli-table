@@ -1,14 +1,14 @@
 use std::io::Result;
 
-use cli_table::{print_stdout, Row, Title, WithTitle};
+use cli_table::{print_stdout, Table, WithTitle};
 
-#[derive(Debug, Title, Row)]
+#[derive(Debug, Table)]
 struct User {
-    #[cli_table(name = "ID", justify = "right")]
+    #[table(name = "ID", justify = "right")]
     id: u64,
-    #[cli_table(name = "First Name")]
+    #[table(name = "First Name")]
     first_name: &'static str,
-    #[cli_table(name = "Last Name")]
+    #[table(name = "Last Name")]
     last_name: &'static str,
 }
 

@@ -3,7 +3,6 @@ use std::io::Result;
 use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec};
 
 use crate::{
-    buffers::Buffers,
     row::{Dimension as RowDimension, Row, RowStruct},
     style::{Style, StyleStruct},
     utils::*,
@@ -11,6 +10,8 @@ use crate::{
 
 /// Struct for building a table on command line
 pub struct TableStruct {
+    /// Title row of the table
+    title: Option<RowStruct>,
     /// Rows in the table
     rows: Vec<RowStruct>,
     /// Format of the table
@@ -22,6 +23,12 @@ pub struct TableStruct {
 }
 
 impl TableStruct {
+    /// Used to add a title row of a table
+    pub fn title<T: Row>(mut self, title: T) -> Self {
+        self.title = Some(title.row());
+        self
+    }
+
     /// Used to set border of a table
     pub fn border(mut self, border: Border) -> Self {
         self.format.border = border;
@@ -59,14 +66,17 @@ impl TableStruct {
             return Default::default();
         }
 
-        let mut heights = Vec::with_capacity(self.rows.len());
+        let mut heights = Vec::with_capacity(self.rows.len() + 1);
 
-        let row_dimension = self.rows[0].required_dimension();
+        let row_dimension = match self.title {
+            Some(ref title) => title.required_dimension(),
+            None => self.rows[0].required_dimension(),
+        };
 
         let mut widths = row_dimension.widths;
         heights.push(row_dimension.height);
 
-        for row in self.rows.iter().skip(1) {
+        for row in self.rows.iter() {
             let row_dimension = row.required_dimension();
 
             heights.push(row_dimension.height);
@@ -84,6 +94,7 @@ impl TableStruct {
     fn print_writer(&self, writer: BufferWriter) -> Result<()> {
         let table_dimension = self.required_dimension();
         let row_dimensions: Vec<RowDimension> = table_dimension.clone().into();
+        let mut row_dimensions = row_dimensions.into_iter();
         let color_spec = self.color_spec();
 
         print_horizontal_line(
@@ -94,72 +105,42 @@ impl TableStruct {
             &color_spec,
         )?;
 
-        let mut rows = self.rows.iter().zip(row_dimensions.into_iter()).peekable();
+        if let Some(ref title) = self.title {
+            let title_dimension = row_dimensions.next().unwrap();
+            title.print_writer(&writer, title_dimension, &self.format, &color_spec)?;
 
-        let mut first = true;
+            if self.format.separator.title.is_some() {
+                print_horizontal_line(
+                    &writer,
+                    self.format.separator.title.as_ref(),
+                    &table_dimension,
+                    &self.format,
+                    &color_spec,
+                )?
+            } else {
+                print_horizontal_line(
+                    &writer,
+                    self.format.separator.row.as_ref(),
+                    &table_dimension,
+                    &self.format,
+                    &color_spec,
+                )?
+            }
+        }
+
+        let mut rows = self.rows.iter().zip(row_dimensions).peekable();
 
         while let Some((row, row_dimension)) = rows.next() {
-            let buffers = row.buffers(&writer, row_dimension)?;
-
-            for line in buffers.into_iter() {
-                print_vertical_line(&writer, self.format.border.left.as_ref(), &color_spec)?;
-
-                let mut line_buffers = line.into_iter().peekable();
-
-                while let Some(buffer) = line_buffers.next() {
-                    print_char(&writer, ' ', &color_spec)?;
-                    writer.print(&buffer)?;
-                    print_char(&writer, ' ', &color_spec)?;
-
-                    match line_buffers.peek() {
-                        Some(_) => print_vertical_line(
-                            &writer,
-                            self.format.separator.column.as_ref(),
-                            &color_spec,
-                        )?,
-                        None => print_vertical_line(
-                            &writer,
-                            self.format.border.right.as_ref(),
-                            &color_spec,
-                        )?,
-                    }
-                }
-
-                println_str(&writer, "", &color_spec)?;
-            }
+            row.print_writer(&writer, row_dimension, &self.format, &color_spec)?;
 
             match rows.peek() {
-                Some(_) => {
-                    if first {
-                        if self.format.separator.title.is_some() {
-                            print_horizontal_line(
-                                &writer,
-                                self.format.separator.title.as_ref(),
-                                &table_dimension,
-                                &self.format,
-                                &color_spec,
-                            )?
-                        } else {
-                            print_horizontal_line(
-                                &writer,
-                                self.format.separator.row.as_ref(),
-                                &table_dimension,
-                                &self.format,
-                                &color_spec,
-                            )?
-                        }
-                    } else {
-                        print_horizontal_line(
-                            &writer,
-                            self.format.separator.row.as_ref(),
-                            &table_dimension,
-                            &self.format,
-                            &color_spec,
-                        )?
-                    }
-
-                    first = false;
-                }
+                Some(_) => print_horizontal_line(
+                    &writer,
+                    self.format.separator.row.as_ref(),
+                    &table_dimension,
+                    &self.format,
+                    &color_spec,
+                )?,
                 None => print_horizontal_line(
                     &writer,
                     self.format.border.bottom.as_ref(),
@@ -189,6 +170,7 @@ where
         let rows = self.into_iter().map(Row::row).collect();
 
         TableStruct {
+            title: Default::default(),
             rows,
             format: Default::default(),
             style: Default::default(),

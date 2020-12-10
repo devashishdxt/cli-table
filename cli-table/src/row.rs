@@ -1,12 +1,12 @@
 use std::io::Result;
 
-use termcolor::{Buffer, BufferWriter};
+use termcolor::{Buffer, BufferWriter, ColorSpec};
 
 use crate::{
     buffers::Buffers,
     cell::{Cell, CellStruct, Dimension as CellDimension},
-    table::Dimension as TableDimension,
-    utils::transpose,
+    table::{Dimension as TableDimension, TableFormat},
+    utils::{print_char, print_vertical_line, println_str, transpose},
 };
 
 /// Concrete row of a table
@@ -28,6 +28,41 @@ impl RowStruct {
         }
 
         Dimension { widths, height }
+    }
+
+    pub(crate) fn print_writer(
+        &self,
+        writer: &BufferWriter,
+        dimension: Dimension,
+        format: &TableFormat,
+        color_spec: &ColorSpec,
+    ) -> Result<()> {
+        let buffers = self.buffers(&writer, dimension)?;
+
+        for line in buffers.into_iter() {
+            print_vertical_line(&writer, format.border.left.as_ref(), &color_spec)?;
+
+            let mut line_buffers = line.into_iter().peekable();
+
+            while let Some(buffer) = line_buffers.next() {
+                print_char(&writer, ' ', &color_spec)?;
+                writer.print(&buffer)?;
+                print_char(&writer, ' ', &color_spec)?;
+
+                match line_buffers.peek() {
+                    Some(_) => {
+                        print_vertical_line(&writer, format.separator.column.as_ref(), &color_spec)?
+                    }
+                    None => {
+                        print_vertical_line(&writer, format.border.right.as_ref(), &color_spec)?
+                    }
+                }
+            }
+
+            println_str(&writer, "", &color_spec)?;
+        }
+
+        Ok(())
     }
 }
 

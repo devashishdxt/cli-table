@@ -27,13 +27,8 @@ where
     &'a R: Row,
 {
     fn with_title(self) -> TableStruct {
-        let mut data: Vec<RowStruct> = self.into_iter().map(|row| row.row()).collect();
+        let table = self.table();
         let title = R::title();
-
-        let mut rows = Vec::with_capacity(data.len() + 1);
-        rows.push(title);
-        rows.append(&mut data);
-
-        rows.table()
+        table.title(title)
     }
 }

@@ -81,11 +81,11 @@
 //!
 //! ```markdown
 //! +----+------------+-----------+
-//! | id | first_name | last_name |  <-- This row will appear in bold
+//! | ID | First Name | Last Name |  <-- This row will appear in bold
 //! +----+------------+-----------+
-//! | 1  | Scooby     | Doo       |
+//! |  1 | Scooby     | Doo       |
 //! +----+------------+-----------+
-//! | 2  | John       | Cena      |
+//! |  2 | John       | Cena      |
 //! +----+------------+-----------+
 //! ```
 mod context;

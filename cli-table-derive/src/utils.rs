@@ -4,7 +4,7 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
     let mut attributes = Vec::new();
 
     for attribute in attrs {
-        if !attribute.path.is_ident("cli_table") {
+        if !attribute.path.is_ident("table") {
             continue;
         }
 
@@ -14,7 +14,7 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
             Meta::List(meta_list) => Ok(meta_list),
             bad => Err(Error::new_spanned(
                 bad,
-                "Attributes should be of type: #[cli_table(key = \"value\", ..)]",
+                "Attributes should be of type: #[table(key = \"value\", ..)]",
             )),
         }?;
 
@@ -23,7 +23,7 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
                 NestedMeta::Meta(meta) => Ok(meta),
                 bad => Err(Error::new_spanned(
                     bad,
-                    "Attributes should be of type: #[cli_table(key = \"value\", ..)]",
+                    "Attributes should be of type: #[table(key = \"value\", ..)]",
                 )),
             }?;
 
@@ -31,7 +31,7 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
                 Meta::NameValue(meta_name_value) => Ok(meta_name_value),
                 bad => Err(Error::new_spanned(
                     bad,
-                    "Attributes should be of type: #[cli_table(key = \"value\", ..)]",
+                    "Attributes should be of type: #[table(key = \"value\", ..)]",
                 )),
             }?;
 

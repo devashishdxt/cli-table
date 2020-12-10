@@ -1,1 +1,1 @@
-initSidebarItems({"derive":[["Row",""],["Title",""]]});
+initSidebarItems({"derive":[["Table",""]]});

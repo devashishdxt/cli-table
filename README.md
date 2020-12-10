@@ -16,7 +16,7 @@ Add `cli-table` in your `Cargo.toms`'s `dependencies` section
 cli-table = "0.4"
 ```
 
-To create a table,
+### Simple usage
 
 ```rust
 use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
@@ -45,6 +45,51 @@ Below is the output of the table we created just now:
 +------------+----------------+
 | Scooby Doo |             25 |
 +------------+----------------+
+```
+
+### Derive macro
+
+`#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.
+
+```rust
+use cli_table::{print_stdout, Table, WithTitle};
+
+#[derive(Table)]
+struct User {
+    #[table(name = "ID", justify = "right")]
+    id: u64,
+    #[table(name = "First Name")]
+    first_name: &'static str,
+    #[table(name = "Last Name")]
+    last_name: &'static str,
+}
+
+let users = vec![
+    User {
+        id: 1,
+        first_name: "Scooby",
+        last_name: "Doo",
+    },
+    User {
+        id: 2,
+        first_name: "John",
+        last_name: "Cena",
+    },
+];
+
+assert!(print_stdout(users.with_title()).is_ok());
+```
+
+Below is the output of the table we created using derive macro:
+
+```markdown
++----+------------+-----------+
+| id | first_name | last_name |  <-- This row will appear in bold
++----+------------+-----------+
+| 1  | Scooby     | Doo       |
++----+------------+-----------+
+| 2  | John       | Cena      |
++----+------------+-----------+
 ```
 
 ## License

@@ -1,10 +1,19 @@
 use std::io::Result;
 
-use cli_table::{print_stdout, Table, WithTitle};
+use cli_table::{
+    format::{Align, Justify},
+    print_stdout, Color, Table, WithTitle,
+};
 
 #[derive(Debug, Table)]
 struct User {
-    #[table(name = "ID", justify = "right")]
+    #[table(
+        name = "ID",
+        justify = "Justify::Right",
+        align = "Align::Top",
+        color = "Color::Green",
+        bold
+    )]
     id: u64,
     #[table(name = "First Name")]
     first_name: &'static str,

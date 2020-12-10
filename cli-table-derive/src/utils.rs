@@ -1,4 +1,4 @@
-use syn::{Attribute, Error, Lit, Meta, NestedMeta, Path, Result};
+use syn::{spanned::Spanned, Attribute, Error, Lit, LitBool, Meta, NestedMeta, Path, Result};
 
 pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
     let mut attributes = Vec::new();
@@ -27,15 +27,23 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
                 )),
             }?;
 
-            let meta_name_value = match meta {
-                Meta::NameValue(meta_name_value) => Ok(meta_name_value),
-                bad => Err(Error::new_spanned(
+            match meta {
+                Meta::Path(path) => {
+                    let lit = LitBool {
+                        value: true,
+                        span: path.span(),
+                    }
+                    .into();
+                    attributes.push((path, lit));
+                }
+                Meta::NameValue(meta_name_value) => {
+                    attributes.push((meta_name_value.path, meta_name_value.lit));
+                }
+                bad => return Err(Error::new_spanned(
                     bad,
-                    "Attributes should be of type: #[table(key = \"value\", ..)]",
+                    "Attributes should be of type: #[table(key = \"value\", ..)] or #[table(bool)]",
                 )),
-            }?;
-
-            attributes.push((meta_name_value.path, meta_name_value.lit));
+            }
         }
     }
 

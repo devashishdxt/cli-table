@@ -49,11 +49,11 @@
 //! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.
 //!
 //! ```rust
-//! use cli_table::{print_stdout, Table, WithTitle};
+//! use cli_table::{format::Justify, print_stdout, Table, WithTitle};
 //!
 //! #[derive(Table)]
 //! struct User {
-//!     #[table(name = "ID", justify = "right")]
+//!     #[table(name = "ID", justify = "Justify::Right")]
 //!     id: u64,
 //!     #[table(name = "First Name")]
 //!     first_name: &'static str,
@@ -88,6 +88,8 @@
 //! |  2 | John       | Cena      |
 //! +----+------------+-----------+
 //! ```
+//!
+//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
 mod buffers;
 mod cell;
 mod row;

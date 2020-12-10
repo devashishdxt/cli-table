@@ -1,8 +1,8 @@
 use proc_macro2::{Span, TokenStream};
-use quote::{quote_spanned, ToTokens};
+use quote::ToTokens;
 use syn::{
-    spanned::Spanned, Data, DeriveInput, Error, Field as SynField, Fields as SynFields, Index, Lit,
-    LitStr, Result,
+    spanned::Spanned, Data, DeriveInput, Error, Expr, Field as SynField, Fields as SynFields,
+    Index, Lit, LitBool, LitStr, Result,
 };
 
 use crate::utils::get_attributes;
@@ -40,7 +40,10 @@ impl Fields {
 pub struct Field {
     pub ident: TokenStream,
     pub name: LitStr,
-    pub justify: TokenStream,
+    pub justify: Option<Expr>,
+    pub align: Option<Expr>,
+    pub color: Option<Expr>,
+    pub bold: Option<LitBool>,
     pub span: Span,
 }
 
@@ -55,6 +58,9 @@ impl Field {
 
         let mut name = None;
         let mut justify = None;
+        let mut align = None;
+        let mut color = None;
+        let mut bold = None;
 
         let field_attributes = get_attributes(&field.attrs)?;
 
@@ -69,34 +75,34 @@ impl Field {
                 }?);
             } else if key.is_ident("justify") {
                 justify = Some(match value {
-                    Lit::Str(lit_str) => {
-                        let lit_str_value = lit_str.value();
-
-                        match lit_str_value.as_str() {
-                            "left" => {
-                                Ok(quote_spanned! {span=>
-                                    Justify::Left
-                                })
-                            },
-                            "right" => {
-                                Ok(quote_spanned! {span=>
-                                    Justify::Right
-                                })
-                            },
-                            "center" => {
-                                Ok(quote_spanned! {span=>
-                                    Justify::Center
-                                })
-                            },
-                            _ => Err(Error::new_spanned(
-                                lit_str,
-                                "Invalid value for #[cli_table(justify = \"value\")]. Only \"left\", \"right\" and \"center\" is allowed",
-                            )),
-                        }
-                    },
+                    Lit::Str(lit_str) => lit_str.parse::<Expr>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(justify = \"value\")]. Only \"left\", \"right\" and \"center\" is allowed",
+                        "Invalid value for #[cli_table(justify = \"value\")]",
+                    )),
+                }?);
+            } else if key.is_ident("align") {
+                align = Some(match value {
+                    Lit::Str(lit_str) => lit_str.parse::<Expr>(),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(align = \"value\")]",
+                    )),
+                }?);
+            } else if key.is_ident("color") {
+                color = Some(match value {
+                    Lit::Str(lit_str) => lit_str.parse::<Expr>(),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(color = \"value\")]",
+                    )),
+                }?);
+            } else if key.is_ident("bold") {
+                bold = Some(match value {
+                    Lit::Bool(lit_bool) => Ok(lit_bool),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(bold)]",
                     )),
                 }?);
             }
@@ -112,6 +118,18 @@ impl Field {
             field_builder.justify(justify);
         }
 
+        if let Some(align) = align {
+            field_builder.align(align);
+        }
+
+        if let Some(color) = color {
+            field_builder.color(color);
+        }
+
+        if let Some(bold) = bold {
+            field_builder.bold(bold);
+        }
+
         Ok(field_builder.build())
     }
 
@@ -123,7 +141,10 @@ impl Field {
 struct FieldBuilder {
     ident: TokenStream,
     name: Option<LitStr>,
-    justify: Option<TokenStream>,
+    justify: Option<Expr>,
+    align: Option<Expr>,
+    color: Option<Expr>,
+    bold: Option<LitBool>,
     span: Span,
 }
 
@@ -133,6 +154,9 @@ impl FieldBuilder {
             ident,
             name: None,
             justify: None,
+            align: None,
+            color: None,
+            bold: None,
             span,
         }
     }
@@ -142,29 +166,45 @@ impl FieldBuilder {
         self
     }
 
-    fn justify(&mut self, justify: TokenStream) -> &mut Self {
+    fn justify(&mut self, justify: Expr) -> &mut Self {
         self.justify = Some(justify);
+        self
+    }
+
+    fn align(&mut self, align: Expr) -> &mut Self {
+        self.align = Some(align);
+        self
+    }
+
+    fn color(&mut self, color: Expr) -> &mut Self {
+        self.color = Some(color);
+        self
+    }
+
+    fn bold(&mut self, bold: LitBool) -> &mut Self {
+        self.bold = Some(bold);
         self
     }
 
     fn build(self) -> Field {
         let ident = self.ident;
+        let justify = self.justify;
+        let align = self.align;
+        let color = self.color;
+        let bold = self.bold;
         let span = self.span;
 
         let name = self
             .name
             .unwrap_or_else(|| LitStr::new(&ident.to_string(), span));
 
-        let justify = self.justify.unwrap_or_else(|| {
-            quote_spanned! {span=>
-                Justify::Left
-            }
-        });
-
         Field {
             ident,
             name,
             justify,
+            align,
+            color,
+            bold,
             span,
         }
     }

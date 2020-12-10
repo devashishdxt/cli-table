@@ -25,11 +25,38 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
 
         let ident = field.ident;
         let justify = field.justify;
+        let align = field.align;
+        let color = field.color;
+        let bold = field.bold;
         let span = field.span;
 
-        let row = quote_spanned! {span=>
-            #cli_table ::Cell::cell(self. #ident).justify(#cli_table ::format:: #justify)
+        let mut row = quote_spanned! {span=>
+            #cli_table ::Cell::cell(self. #ident)
         };
+
+        if let Some(justify) = justify {
+            row = quote_spanned! {span=>
+                #row .justify(#justify)
+            };
+        }
+
+        if let Some(align) = align {
+            row = quote_spanned! {span=>
+                #row .align(#align)
+            };
+        }
+
+        if let Some(color) = color {
+            row = quote_spanned! {span=>
+                #cli_table ::Style::foreground_color(#row, ::core::convert::From::from(#color))
+            };
+        }
+
+        if let Some(bold) = bold {
+            row = quote_spanned! {span=>
+                #cli_table ::Style::bold(#row, #bold)
+            };
+        }
 
         field_rows.push(row);
     }

@@ -106,7 +106,9 @@ impl TableStruct {
         )?;
 
         if let Some(ref title) = self.title {
-            let title_dimension = row_dimensions.next().unwrap();
+            let title_dimension = row_dimensions
+                .next()
+                .unwrap_or_else(|| title.required_dimension());
             title.print_writer(&writer, title_dimension, &self.format, &color_spec)?;
 
             if self.format.separator.title.is_some() {

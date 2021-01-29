@@ -1,6 +1,6 @@
 [package]
 name = "cli-table"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A crate for printing tables on command line"
@@ -31,4 +31,3 @@ title = []
 
 [package.metadata.docs.rs]
 all-features = true
-rustdoc-args = ["--cfg", "docsrs"]

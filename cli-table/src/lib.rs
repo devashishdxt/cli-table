@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
-#![cfg_attr(not(any(docsrs, feature = "doc")), forbid(unstable_features))]
+#![cfg_attr(not(feature = "doc"), forbid(unstable_features))]
 #![deny(missing_docs)]
-#![cfg_attr(any(docsrs, feature = "doc"), feature(doc_cfg))]
+#![cfg_attr(feature = "doc", feature(doc_cfg))]
 //! Rust crate for printing tables on command line.
 //!
 //! ## Usage
@@ -107,7 +107,7 @@ pub mod format;
 pub use termcolor::{Color, ColorChoice};
 
 #[cfg(feature = "derive")]
-#[cfg_attr(any(docsrs, feature = "doc"), doc(cfg(feature = "derive")))]
+#[cfg_attr(feature = "doc", doc(cfg(feature = "derive")))]
 pub use cli_table_derive::Table;
 
 pub use self::{

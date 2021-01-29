@@ -429,12 +429,6 @@
 <span id="426">426</span>
 <span id="427">427</span>
 <span id="428">428</span>
-<span id="429">429</span>
-<span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span>;
 
@@ -500,10 +494,6 @@
     }
 
     <span class="kw">fn</span> <span class="ident">required_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Dimension</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">is_empty</span>() {
-            <span class="kw">return</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        }
-
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">heights</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
 
         <span class="kw">let</span> <span class="ident">row_dimension</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">title</span> {
@@ -544,9 +534,7 @@
         )<span class="question-mark">?</span>;
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">title</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">title</span> {
-            <span class="kw">let</span> <span class="ident">title_dimension</span> <span class="op">=</span> <span class="ident">row_dimensions</span>
-                .<span class="ident">next</span>()
-                .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">title</span>.<span class="ident">required_dimension</span>());
+            <span class="kw">let</span> <span class="ident">title_dimension</span> <span class="op">=</span> <span class="ident">row_dimensions</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
             <span class="ident">title</span>.<span class="ident">print_writer</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="ident">title_dimension</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">color_spec</span>)<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">title</span>.<span class="ident">is_some</span>() {

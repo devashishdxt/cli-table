@@ -62,10 +62,6 @@ impl TableStruct {
     }
 
     fn required_dimension(&self) -> Dimension {
-        if self.rows.is_empty() {
-            return Default::default();
-        }
-
         let mut heights = Vec::with_capacity(self.rows.len() + 1);
 
         let row_dimension = match self.title {
@@ -106,9 +102,7 @@ impl TableStruct {
         )?;
 
         if let Some(ref title) = self.title {
-            let title_dimension = row_dimensions
-                .next()
-                .unwrap_or_else(|| title.required_dimension());
+            let title_dimension = row_dimensions.next().unwrap();
             title.print_writer(&writer, title_dimension, &self.format, &color_spec)?;
 
             if self.format.separator.title.is_some() {

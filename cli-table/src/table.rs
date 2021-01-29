@@ -66,7 +66,13 @@ impl TableStruct {
 
         let row_dimension = match self.title {
             Some(ref title) => title.required_dimension(),
-            None => self.rows[0].required_dimension(),
+            None => {
+                if self.rows.is_empty() {
+                    Default::default()
+                } else {
+                    self.rows[0].required_dimension()
+                }
+            }
         };
 
         let mut widths = row_dimension.widths;

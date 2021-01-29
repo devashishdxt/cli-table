@@ -112,7 +112,7 @@ impl Row for RowStruct {
 }
 
 /// Dimensions of a row
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub(crate) struct Dimension {
     /// Widths of each cell of row
     pub(crate) widths: Vec<usize>,

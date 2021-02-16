@@ -141,7 +141,7 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
 <span class="doccomment">//! Rust crate for printing tables on command line.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Usage</span>
+<span class="doccomment">//! # Usage</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Add `cli-table` in your `Cargo.toms`&#39;s `dependencies` section</span>
 <span class="doccomment">//!</span>
@@ -150,7 +150,7 @@
 <span class="doccomment">//! cli-table = &quot;0.4&quot;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ### Simple usage</span>
+<span class="doccomment">//! ## Simple usage</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};</span>
@@ -184,7 +184,7 @@
 <span class="doccomment">//! +------------+----------------+</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ### Derive macro</span>
+<span class="doccomment">//! ## Derive macro</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.</span>
 <span class="doccomment">//!</span>
@@ -193,11 +193,11 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! #[derive(Table)]</span>
 <span class="doccomment">//! struct User {</span>
-<span class="doccomment">//!     #[table(name = &quot;ID&quot;, justify = &quot;Justify::Right&quot;)]</span>
+<span class="doccomment">//!     #[table(title = &quot;ID&quot;, justify = &quot;Justify::Right&quot;)]</span>
 <span class="doccomment">//!     id: u64,</span>
-<span class="doccomment">//!     #[table(name = &quot;First Name&quot;)]</span>
+<span class="doccomment">//!     #[table(title = &quot;First Name&quot;)]</span>
 <span class="doccomment">//!     first_name: &amp;&#39;static str,</span>
-<span class="doccomment">//!     #[table(name = &quot;Last Name&quot;)]</span>
+<span class="doccomment">//!     #[table(title = &quot;Last Name&quot;)]</span>
 <span class="doccomment">//!     last_name: &amp;&#39;static str,</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>

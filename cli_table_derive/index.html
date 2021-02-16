@@ -1,7 +1,80 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `cli_table_derive` crate."><meta name="keywords" content="rust, rustlang, rust-lang, cli_table_derive"><title>cli_table_derive - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../cli_table_derive/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate cli_table_derive</p><div class="block version"><p>Version 0.4.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all cli_table_derive's items</p></a><p class="location"></p><div id="sidebar-vars" data-name="cli_table_derive" data-ty="mod" data-relpath="../"></div></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/cli_table_derive/lib.rs.html#1-23" title="goto source code">[src]</a></span><span class="in-band">Crate <a class="mod" href="">cli_table_derive</a></span></h1><div class="docblock"><p>Rust crate for printing tables on command line.</p>
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../cli_table_derive/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate cli_table_derive</p><div class="block version"><p>Version 0.4.1</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all cli_table_derive's items</p></a><p class="location"></p><div id="sidebar-vars" data-name="cli_table_derive" data-ty="mod" data-relpath="../"></div></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">cli_table_derive</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/cli_table_derive/lib.rs.html#1-113" title="goto source code">[src]</a></span></h1><div class="docblock"><p>Rust crate for printing tables on command line.</p>
+<h1 id="usage" class="section-header"><a href="#usage">Usage</a></h1>
+<p>Add <code>cli-table</code> in your <code>Cargo.toms</code>'s <code>dependencies</code> section</p>
+<pre><code class="language-toml">[dependencies]
+cli-table = &quot;0.4&quot;
+</code></pre>
+<h2 id="simple-usage" class="section-header"><a href="#simple-usage">Simple usage</a></h2>
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">use</span> <span class="ident">cli_table</span>::{<span class="ident">format</span>::<span class="ident">Justify</span>, <span class="ident">print_stdout</span>, <span class="ident">Cell</span>, <span class="ident">Style</span>, <span class="ident">Table</span>};
+
+<span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Tom&quot;</span>.<span class="ident">cell</span>(), <span class="number">10</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Jerry&quot;</span>.<span class="ident">cell</span>(), <span class="number">15</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+    <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Scooby Doo&quot;</span>.<span class="ident">cell</span>(), <span class="number">20</span>.<span class="ident">cell</span>().<span class="ident">justify</span>(<span class="ident">Justify</span>::<span class="ident">Right</span>)],
+]
+.<span class="ident">table</span>()
+.<span class="ident">title</span>(<span class="macro">vec</span><span class="macro">!</span>[
+    <span class="string">&quot;Name&quot;</span>.<span class="ident">cell</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>),
+    <span class="string">&quot;Age (in years)&quot;</span>.<span class="ident">cell</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>),
+])
+.<span class="ident">bold</span>(<span class="bool-val">true</span>);
+
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">print_stdout</span>(<span class="ident">table</span>).<span class="ident">is_ok</span>());</pre></div>
+<p>Below is the output of the table we created just now:</p>
+<pre><code class="language-markdown">+------------+----------------+
+| Name       | Age (in years) |  &lt;-- This row and all the borders/separators
++------------+----------------+      will appear in bold
+| Tom        |             10 |
++------------+----------------+
+| Jerry      |             15 |
++------------+----------------+
+| Scooby Doo |             25 |
++------------+----------------+
+</code></pre>
+<h2 id="derive-macro" class="section-header"><a href="#derive-macro">Derive macro</a></h2>
+<p><code>#[derive(Table)]</code> can also be used to print a <code>Vec</code> or slice of <code>struct</code>s as table.</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">use</span> <span class="ident">cli_table</span>::{<span class="ident">format</span>::<span class="ident">Justify</span>, <span class="ident">print_stdout</span>, <span class="ident">Table</span>, <span class="ident">WithTitle</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Table</span>)]</span>
+<span class="kw">struct</span> <span class="ident">User</span> {
+    <span class="attribute">#[<span class="ident">table</span>(<span class="ident">title</span> <span class="op">=</span> <span class="string">&quot;ID&quot;</span>, <span class="ident">justify</span> <span class="op">=</span> <span class="string">&quot;Justify::Right&quot;</span>)]</span>
+    <span class="ident">id</span>: <span class="ident">u64</span>,
+    <span class="attribute">#[<span class="ident">table</span>(<span class="ident">title</span> <span class="op">=</span> <span class="string">&quot;First Name&quot;</span>)]</span>
+    <span class="ident">first_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    <span class="attribute">#[<span class="ident">table</span>(<span class="ident">title</span> <span class="op">=</span> <span class="string">&quot;Last Name&quot;</span>)]</span>
+    <span class="ident">last_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+}
+
+<span class="kw">let</span> <span class="ident">users</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+    <span class="ident">User</span> {
+        <span class="ident">id</span>: <span class="number">1</span>,
+        <span class="ident">first_name</span>: <span class="string">&quot;Scooby&quot;</span>,
+        <span class="ident">last_name</span>: <span class="string">&quot;Doo&quot;</span>,
+    },
+    <span class="ident">User</span> {
+        <span class="ident">id</span>: <span class="number">2</span>,
+        <span class="ident">first_name</span>: <span class="string">&quot;John&quot;</span>,
+        <span class="ident">last_name</span>: <span class="string">&quot;Cena&quot;</span>,
+    },
+];
+
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">print_stdout</span>(<span class="ident">users</span>.<span class="ident">with_title</span>()).<span class="ident">is_ok</span>());</pre></div>
+<p>Below is the output of the table we created using derive macro:</p>
+<pre><code class="language-markdown">+----+------------+-----------+
+| ID | First Name | Last Name |  &lt;-- This row will appear in bold
++----+------------+-----------+
+|  1 | Scooby     | Doo       |
++----+------------+-----------+
+|  2 | John       | Cena      |
++----+------------+-----------+
+</code></pre>
+<p>For more information on configurations available on derive macro, go to <code>cli-table/examples/struct.rs</code>.</p>
 </div><h2 id="derives" class="section-header"><a href="#derives">Derive Macros</a></h2>
 <table><tr class="module-item"><td><a class="derive" href="derive.Table.html" title="cli_table_derive::Table derive">Table</a></td><td class="docblock-short"><p>Derive macro to implementing <code>cli_table</code> traits</p>
 </td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="cli_table_derive"></div>

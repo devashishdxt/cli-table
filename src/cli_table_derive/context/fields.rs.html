@@ -254,7 +254,7 @@
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Field</span> {
     <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
-    <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">LitStr</span>,
+    <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">LitStr</span>,
     <span class="kw">pub</span> <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
@@ -271,7 +271,7 @@
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Index</span>::<span class="ident">from</span>(<span class="ident">index</span>).<span class="ident">into_token_stream</span>());
         <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">span</span>();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">None</span>;
@@ -280,12 +280,12 @@
         <span class="kw">let</span> <span class="ident">field_attributes</span> <span class="op">=</span> <span class="ident">get_attributes</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
 
         <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">field_attributes</span> {
-            <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;name&quot;</span>) {
-                <span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
+            <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;name&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;title&quot;</span>) {
+                <span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">lit_str</span>),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(name = \&quot;field_name\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[cli_table(title = \&quot;field_name\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;justify&quot;</span>) {
@@ -325,8 +325,8 @@
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field_builder</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">builder</span>(<span class="ident">ident</span>, <span class="ident">span</span>);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="ident">name</span> {
-            <span class="ident">field_builder</span>.<span class="ident">name</span>(<span class="ident">name</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>) <span class="op">=</span> <span class="ident">title</span> {
+            <span class="ident">field_builder</span>.<span class="ident">title</span>(<span class="ident">title</span>);
         }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">justify</span>) <span class="op">=</span> <span class="ident">justify</span> {
@@ -355,7 +355,7 @@
 
 <span class="kw">struct</span> <span class="ident">FieldBuilder</span> {
     <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
-    <span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitStr</span><span class="op">&gt;</span>,
+    <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitStr</span><span class="op">&gt;</span>,
     <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
     <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
     <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
@@ -367,7 +367,7 @@
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ident</span>: <span class="ident">TokenStream</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">ident</span>,
-            <span class="ident">name</span>: <span class="prelude-val">None</span>,
+            <span class="ident">title</span>: <span class="prelude-val">None</span>,
             <span class="ident">justify</span>: <span class="prelude-val">None</span>,
             <span class="ident">align</span>: <span class="prelude-val">None</span>,
             <span class="ident">color</span>: <span class="prelude-val">None</span>,
@@ -376,8 +376,8 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">LitStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>);
+    <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">LitStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>);
         <span class="self">self</span>
     }
 
@@ -409,13 +409,13 @@
         <span class="kw">let</span> <span class="ident">bold</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bold</span>;
         <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">span</span>;
 
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">name</span>
+        <span class="kw">let</span> <span class="ident">title</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">title</span>
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">LitStr</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>.<span class="ident">to_string</span>(), <span class="ident">span</span>));
 
         <span class="ident">Field</span> {
             <span class="ident">ident</span>,
-            <span class="ident">name</span>,
+            <span class="ident">title</span>,
             <span class="ident">justify</span>,
             <span class="ident">align</span>,
             <span class="ident">color</span>,

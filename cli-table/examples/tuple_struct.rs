@@ -7,9 +7,9 @@ use cli_table::{
 
 #[derive(Debug, Table)]
 struct User(
-    #[table(name = "ID", justify = "Right")] u64,
-    #[table(name = "First Name")] &'static str,
-    #[table(name = "Last Name")] &'static str,
+    #[table(title = "ID", justify = "Right")] u64,
+    #[table(title = "First Name")] &'static str,
+    #[table(title = "Last Name")] &'static str,
 );
 
 fn main() -> Result<()> {

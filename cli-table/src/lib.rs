@@ -4,7 +4,7 @@
 #![cfg_attr(feature = "doc", feature(doc_cfg))]
 //! Rust crate for printing tables on command line.
 //!
-//! ## Usage
+//! # Usage
 //!
 //! Add `cli-table` in your `Cargo.toms`'s `dependencies` section
 //!
@@ -13,7 +13,7 @@
 //! cli-table = "0.4"
 //! ```
 //!
-//! ### Simple usage
+//! ## Simple usage
 //!
 //! ```rust
 //! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
@@ -47,7 +47,7 @@
 //! +------------+----------------+
 //! ```
 //!
-//! ### Derive macro
+//! ## Derive macro
 //!
 //! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.
 //!
@@ -56,11 +56,11 @@
 //!
 //! #[derive(Table)]
 //! struct User {
-//!     #[table(name = "ID", justify = "Justify::Right")]
+//!     #[table(title = "ID", justify = "Justify::Right")]
 //!     id: u64,
-//!     #[table(name = "First Name")]
+//!     #[table(title = "First Name")]
 //!     first_name: &'static str,
-//!     #[table(name = "Last Name")]
+//!     #[table(title = "Last Name")]
 //!     last_name: &'static str,
 //! }
 //!

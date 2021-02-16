@@ -8,16 +8,16 @@ use cli_table::{
 #[derive(Debug, Table)]
 struct User {
     #[table(
-        name = "ID",
+        title = "ID",
         justify = "Justify::Right",
         align = "Align::Top",
         color = "Color::Green",
         bold
     )]
     id: u64,
-    #[table(name = "First Name")]
+    #[table(title = "First Name")]
     first_name: &'static str,
-    #[table(name = "Last Name")]
+    #[table(title = "Last Name")]
     last_name: &'static str,
 }
 

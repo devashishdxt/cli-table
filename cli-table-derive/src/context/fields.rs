@@ -39,7 +39,7 @@ impl Fields {
 
 pub struct Field {
     pub ident: TokenStream,
-    pub name: LitStr,
+    pub title: LitStr,
     pub justify: Option<Expr>,
     pub align: Option<Expr>,
     pub color: Option<Expr>,
@@ -56,7 +56,7 @@ impl Field {
             .unwrap_or_else(|| Index::from(index).into_token_stream());
         let span = field.span();
 
-        let mut name = None;
+        let mut title = None;
         let mut justify = None;
         let mut align = None;
         let mut color = None;
@@ -65,12 +65,12 @@ impl Field {
         let field_attributes = get_attributes(&field.attrs)?;
 
         for (key, value) in field_attributes {
-            if key.is_ident("name") {
-                name = Some(match value {
+            if key.is_ident("name") || key.is_ident("title") {
+                title = Some(match value {
                     Lit::Str(lit_str) => Ok(lit_str),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(name = \"field_name\")]",
+                        "Invalid value for #[cli_table(title = \"field_name\")]",
                     )),
                 }?);
             } else if key.is_ident("justify") {
@@ -110,8 +110,8 @@ impl Field {
 
         let mut field_builder = Self::builder(ident, span);
 
-        if let Some(name) = name {
-            field_builder.name(name);
+        if let Some(title) = title {
+            field_builder.title(title);
         }
 
         if let Some(justify) = justify {
@@ -140,7 +140,7 @@ impl Field {
 
 struct FieldBuilder {
     ident: TokenStream,
-    name: Option<LitStr>,
+    title: Option<LitStr>,
     justify: Option<Expr>,
     align: Option<Expr>,
     color: Option<Expr>,
@@ -152,7 +152,7 @@ impl FieldBuilder {
     fn new(ident: TokenStream, span: Span) -> Self {
         Self {
             ident,
-            name: None,
+            title: None,
             justify: None,
             align: None,
             color: None,
@@ -161,8 +161,8 @@ impl FieldBuilder {
         }
     }
 
-    fn name(&mut self, name: LitStr) -> &mut Self {
-        self.name = Some(name);
+    fn title(&mut self, title: LitStr) -> &mut Self {
+        self.title = Some(title);
         self
     }
 
@@ -194,13 +194,13 @@ impl FieldBuilder {
         let bold = self.bold;
         let span = self.span;
 
-        let name = self
-            .name
+        let title = self
+            .title
             .unwrap_or_else(|| LitStr::new(&ident.to_string(), span));
 
         Field {
             ident,
-            name,
+            title,
             justify,
             align,
             color,

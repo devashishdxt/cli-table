@@ -17,11 +17,11 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
     // Split a type's generics into the pieces required for implementing a trait for that type
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
 
-    let mut field_names = Vec::new();
+    let mut field_titles = Vec::new();
     let mut field_rows = Vec::new();
 
     for field in context.fields.into_iter() {
-        field_names.push(field.name);
+        field_titles.push(field.title);
 
         let ident = field.ident;
         let justify = field.justify;
@@ -67,7 +67,7 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         impl #impl_generics #cli_table ::Title for #name #ty_generics # where_clause{
             fn title() -> #cli_table ::RowStruct {
                 #cli_table ::Row::row(::std::vec![
-                    #(#cli_table ::Style::bold(#cli_table ::Cell::cell(#field_names), true),)*
+                    #(#cli_table ::Style::bold(#cli_table ::Cell::cell(#field_titles), true),)*
                 ])
             }
         }

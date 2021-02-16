@@ -1,9 +1,9 @@
 # {{crate}}
 
-![Continuous Integration](https://github.com/devashishdxt/cli-table/workflows/Continuous%20Integration/badge.svg)
-[![Crates.io](https://img.shields.io/crates/v/abci-rs)](https://crates.io/crates/abci-rs)
-[![Documentation](https://docs.rs/abci-rs/badge.svg)](https://docs.rs/abci-rs)
-[![License](https://img.shields.io/crates/l/abci-rs)](https://github.com/devashishdxt/abci-rs/blob/master/LICENSE-MIT)
+[![Continuous Integration](https://github.com/devashishdxt/cli-table/workflows/Continuous%20Integration/badge.svg)](https://github.com/devashishdxt/cli-table/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Crates.io](https://img.shields.io/crates/v/cli-table)](https://crates.io/crates/cli-table)
+[![Documentation](https://docs.rs/cli-table/badge.svg)](https://docs.rs/cli-table)
+[![License](https://img.shields.io/crates/l/cli-table)](https://github.com/devashishdxt/cli-table/blob/master/LICENSE-MIT)
 
 {{readme}}
 

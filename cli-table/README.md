@@ -102,6 +102,9 @@ Below is the output of the table we created using derive macro:
 - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = "Align::Top")]`
 - `color`: Used to specify color of contents of a column. Usage: `#[table(color = "Color::Red")]`
 - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`
+- `order`: Used to order columns in a table while printing. Usage: `#[table(order = <usize>)]`. Here, columns will
+  be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by
+  column with `order = 1` and so on.
 - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
 
 For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.

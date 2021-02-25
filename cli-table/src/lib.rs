@@ -92,6 +92,15 @@
 //! +----+------------+-----------+
 //! ```
 //!
+//! ### Field attributes
+//!
+//! - `title` | `name`: Used to specify title of a column. Usage: `#[table(title = "Title")]`
+//! - `justify`: Used to horizontally justify the contents of a column. Usage: `#[table(justify = "Justify::Right")]`
+//! - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = "Align::Top")]`
+//! - `color`: Used to specify color of contents of a column. Usage: `#[table(color = "Color::Red")]`
+//! - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`
+//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
+//!
 //! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
 mod buffers;
 mod cell;

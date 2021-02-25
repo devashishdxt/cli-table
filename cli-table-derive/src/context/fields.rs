@@ -30,7 +30,11 @@ impl Fields {
         let mut fields = Vec::new();
 
         for (index, syn_field) in syn_fields.into_iter().enumerate() {
-            fields.push(Field::new(syn_field, index)?);
+            let field = Field::new(syn_field, index)?;
+
+            if let Some(field) = field {
+                fields.push(field);
+            }
         }
 
         Ok(Fields { fields })
@@ -48,7 +52,7 @@ pub struct Field {
 }
 
 impl Field {
-    pub fn new(field: &SynField, index: usize) -> Result<Self> {
+    pub fn new(field: &SynField, index: usize) -> Result<Option<Self>> {
         let ident = field
             .ident
             .as_ref()
@@ -61,6 +65,7 @@ impl Field {
         let mut align = None;
         let mut color = None;
         let mut bold = None;
+        let mut skip = None;
 
         let field_attributes = get_attributes(&field.attrs)?;
 
@@ -105,6 +110,20 @@ impl Field {
                         "Invalid value for #[cli_table(bold)]",
                     )),
                 }?);
+            } else if key.is_ident("skip") {
+                skip = Some(match value {
+                    Lit::Bool(lit_bool) => Ok(lit_bool),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(bold)]",
+                    )),
+                }?);
+            }
+        }
+
+        if let Some(skip) = skip {
+            if skip.value {
+                return Ok(None);
             }
         }
 
@@ -130,7 +149,7 @@ impl Field {
             field_builder.bold(bold);
         }
 
-        Ok(field_builder.build())
+        Ok(Some(field_builder.build()))
     }
 
     fn builder(ident: TokenStream, span: Span) -> FieldBuilder {

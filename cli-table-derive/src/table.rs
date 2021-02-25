@@ -66,18 +66,22 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         #[automatically_derived]
         impl #impl_generics #cli_table ::Title for #name #ty_generics # where_clause{
             fn title() -> #cli_table ::RowStruct {
-                #cli_table ::Row::row(::std::vec![
+                let title: ::std::vec::Vec<#cli_table ::CellStruct> = ::std::vec![
                     #(#cli_table ::Style::bold(#cli_table ::Cell::cell(#field_titles), true),)*
-                ])
+                ];
+
+                #cli_table ::Row::row(title)
             }
         }
 
         #[automatically_derived]
         impl #impl_generics #cli_table ::Row for & #name #ty_generics # where_clause{
             fn row(self) -> #cli_table ::RowStruct {
-                #cli_table ::Row::row(::std::vec![
+                let row: ::std::vec::Vec<#cli_table ::CellStruct> = ::std::vec![
                     #(#field_rows,)*
-                ])
+                ];
+
+                #cli_table ::Row::row(row)
             }
         }
 

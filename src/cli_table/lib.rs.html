@@ -134,6 +134,15 @@
 <span id="131">131</span>
 <span id="132">132</span>
 <span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>), <span class="ident">forbid</span>(<span class="ident">unstable_features</span>))]</span>
@@ -228,6 +237,15 @@
 <span class="doccomment">//! |  2 | John       | Cena      |</span>
 <span class="doccomment">//! +----+------------+-----------+</span>
 <span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Field attributes</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - `title` | `name`: Used to specify title of a column. Usage: `#[table(title = &quot;Title&quot;)]`</span>
+<span class="doccomment">//! - `justify`: Used to horizontally justify the contents of a column. Usage: `#[table(justify = &quot;Justify::Right&quot;)]`</span>
+<span class="doccomment">//! - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = &quot;Align::Top&quot;)]`</span>
+<span class="doccomment">//! - `color`: Used to specify color of contents of a column. Usage: `#[table(color = &quot;Color::Red&quot;)]`</span>
+<span class="doccomment">//! - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`</span>
+<span class="doccomment">//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.</span>
 <span class="kw">mod</span> <span class="ident">buffers</span>;

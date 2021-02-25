@@ -37,6 +37,8 @@ impl Fields {
             }
         }
 
+        fields.sort_by(|left, right| left.order.cmp(&right.order));
+
         Ok(Fields { fields })
     }
 }
@@ -49,6 +51,7 @@ pub struct Field {
     pub color: Option<Expr>,
     pub bold: Option<LitBool>,
     pub span: Span,
+    pub order: usize,
 }
 
 impl Field {
@@ -66,6 +69,7 @@ impl Field {
         let mut color = None;
         let mut bold = None;
         let mut skip = None;
+        let mut order = None;
 
         let field_attributes = get_attributes(&field.attrs)?;
 
@@ -110,6 +114,14 @@ impl Field {
                         "Invalid value for #[cli_table(bold)]",
                     )),
                 }?);
+            } else if key.is_ident("order") {
+                order = Some(match value {
+                    Lit::Int(lit_int) => lit_int.base10_parse::<usize>(),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(order = <usize>)]",
+                    )),
+                }?);
             } else if key.is_ident("skip") {
                 skip = Some(match value {
                     Lit::Bool(lit_bool) => Ok(lit_bool),
@@ -149,6 +161,10 @@ impl Field {
             field_builder.bold(bold);
         }
 
+        if let Some(order) = order {
+            field_builder.order(order);
+        }
+
         Ok(Some(field_builder.build()))
     }
 
@@ -164,6 +180,7 @@ struct FieldBuilder {
     align: Option<Expr>,
     color: Option<Expr>,
     bold: Option<LitBool>,
+    order: Option<usize>,
     span: Span,
 }
 
@@ -176,6 +193,7 @@ impl FieldBuilder {
             align: None,
             color: None,
             bold: None,
+            order: None,
             span,
         }
     }
@@ -205,12 +223,18 @@ impl FieldBuilder {
         self
     }
 
+    fn order(&mut self, order: usize) -> &mut Self {
+        self.order = Some(order);
+        self
+    }
+
     fn build(self) -> Field {
         let ident = self.ident;
         let justify = self.justify;
         let align = self.align;
         let color = self.color;
         let bold = self.bold;
+        let order = self.order.unwrap_or(usize::MAX);
         let span = self.span;
 
         let title = self
@@ -224,6 +248,7 @@ impl FieldBuilder {
             align,
             color,
             bold,
+            order,
             span,
         }
     }

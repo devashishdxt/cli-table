@@ -1,6 +1,6 @@
 [package]
 name = "cli-table-derive"
-version = "0.4.2"
+version = "0.4.3"
 authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A crate for printing tables on command line"

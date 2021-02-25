@@ -123,6 +123,9 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">docsrs</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>)), <span class="ident">forbid</span>(<span class="ident">unstable_features</span>))]</span>
@@ -225,6 +228,9 @@
 <span class="doccomment">//! - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = &quot;Align::Top&quot;)]`</span>
 <span class="doccomment">//! - `color`: Used to specify color of contents of a column. Usage: `#[table(color = &quot;Color::Red&quot;)]`</span>
 <span class="doccomment">//! - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`</span>
+<span class="doccomment">//! - `order`: Used to order columns in a table while printing. Usage: `#[table(order = &lt;usize&gt;)]`. Here, columns will</span>
+<span class="doccomment">//!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by</span>
+<span class="doccomment">//!   column with `order = 1` and so on.</span>
 <span class="doccomment">//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.</span>

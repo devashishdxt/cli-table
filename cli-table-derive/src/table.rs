@@ -31,7 +31,7 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         let span = field.span;
 
         let mut row = quote_spanned! {span=>
-            #cli_table ::Cell::cell(self. #ident)
+            #cli_table ::Cell::cell(&self. #ident)
         };
 
         if let Some(justify) = justify {

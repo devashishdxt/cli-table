@@ -18,7 +18,7 @@ struct User {
     #[table(title = "First Name")]
     first_name: &'static str,
     #[table(title = "Last Name")]
-    last_name: &'static str,
+    last_name: String,
 }
 
 fn main() -> Result<()> {
@@ -26,12 +26,12 @@ fn main() -> Result<()> {
         User {
             id: 1,
             first_name: "Scooby",
-            last_name: "Doo",
+            last_name: "Doo".to_string(),
         },
         User {
             id: 2,
             first_name: "John",
-            last_name: "Cena",
+            last_name: "Cena".to_string(),
         },
     ];
 

@@ -85,7 +85,7 @@ cli-table = &quot;0.4&quot;
 be sorted based on their order. For e.g., column with <code>order = 0</code> will be displayed on the left followed by
 column with <code>order = 1</code> and so on.</li>
 <li><code>display_fn</code>: Used to print types which do not implement <code>Display</code> trait. Usage <code>#[table(display_fn = &quot;&lt;func_name&gt;&quot;)]</code>.
-signature of provided function should be <code>fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display</code>.</li>
+Signature of provided function should be <code>fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display</code>.</li>
 <li><code>skip</code>: Used to skip a field from table. Usage: <code>#[table(skip)]</code></li>
 </ul>
 <p>For more information on configurations available on derive macro, go to <code>cli-table/examples/struct.rs</code>.</p>

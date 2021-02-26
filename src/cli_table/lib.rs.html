@@ -254,7 +254,7 @@
 <span class="doccomment">//!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by</span>
 <span class="doccomment">//!   column with `order = 1` and so on.</span>
 <span class="doccomment">//! - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = &quot;&lt;func_name&gt;&quot;)]`.</span>
-<span class="doccomment">//!   signature of provided function should be `fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display`.</span>
+<span class="doccomment">//!   Signature of provided function should be `fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display`.</span>
 <span class="doccomment">//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.</span>

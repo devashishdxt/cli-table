@@ -103,7 +103,7 @@
 //!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by
 //!   column with `order = 1` and so on.
 //! - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = "<func_name>")]`.
-//!   signature of provided function should be `fn <func_name>(value: &<type>) -> impl Display`.
+//!   Signature of provided function should be `fn <func_name>(value: &<type>) -> impl Display`.
 //! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
 //!
 //! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.

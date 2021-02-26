@@ -2,7 +2,7 @@ use proc_macro2::{Span, TokenStream};
 use quote::ToTokens;
 use syn::{
     spanned::Spanned, Data, DeriveInput, Error, Expr, Field as SynField, Fields as SynFields,
-    Index, Lit, LitBool, LitStr, Result,
+    Ident, Index, Lit, LitBool, LitStr, Result,
 };
 
 use crate::utils::get_attributes;
@@ -50,8 +50,9 @@ pub struct Field {
     pub align: Option<Expr>,
     pub color: Option<Expr>,
     pub bold: Option<LitBool>,
-    pub span: Span,
     pub order: usize,
+    pub display_fn: Option<Ident>,
+    pub span: Span,
 }
 
 impl Field {
@@ -68,8 +69,9 @@ impl Field {
         let mut align = None;
         let mut color = None;
         let mut bold = None;
-        let mut skip = None;
         let mut order = None;
+        let mut display_fn = None;
+        let mut skip = None;
 
         let field_attributes = get_attributes(&field.attrs)?;
 
@@ -122,6 +124,14 @@ impl Field {
                         "Invalid value for #[cli_table(order = <usize>)]",
                     )),
                 }?);
+            } else if key.is_ident("display_fn") {
+                display_fn = Some(match value {
+                    Lit::Str(lit_str) => lit_str.parse::<Ident>(),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[cli_table(display_fn = \"value\")]",
+                    )),
+                }?);
             } else if key.is_ident("skip") {
                 skip = Some(match value {
                     Lit::Bool(lit_bool) => Ok(lit_bool),
@@ -165,6 +175,10 @@ impl Field {
             field_builder.order(order);
         }
 
+        if let Some(display_fn) = display_fn {
+            field_builder.display_fn(display_fn);
+        }
+
         Ok(Some(field_builder.build()))
     }
 
@@ -181,6 +195,7 @@ struct FieldBuilder {
     color: Option<Expr>,
     bold: Option<LitBool>,
     order: Option<usize>,
+    display_fn: Option<Ident>,
     span: Span,
 }
 
@@ -194,6 +209,7 @@ impl FieldBuilder {
             color: None,
             bold: None,
             order: None,
+            display_fn: None,
             span,
         }
     }
@@ -228,6 +244,11 @@ impl FieldBuilder {
         self
     }
 
+    fn display_fn(&mut self, display_fn: Ident) -> &mut Self {
+        self.display_fn = Some(display_fn);
+        self
+    }
+
     fn build(self) -> Field {
         let ident = self.ident;
         let justify = self.justify;
@@ -235,6 +256,7 @@ impl FieldBuilder {
         let color = self.color;
         let bold = self.bold;
         let order = self.order.unwrap_or(usize::MAX);
+        let display_fn = self.display_fn;
         let span = self.span;
 
         let title = self
@@ -249,6 +271,7 @@ impl FieldBuilder {
             color,
             bold,
             order,
+            display_fn,
             span,
         }
     }

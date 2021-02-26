@@ -28,10 +28,23 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         let align = field.align;
         let color = field.color;
         let bold = field.bold;
+        let display_fn = field.display_fn;
         let span = field.span;
 
+        let cell = match display_fn {
+            None => quote_spanned! {span=>
+                &self. #ident
+            },
+            Some(display_fn) => {
+                let span = display_fn.span();
+                quote_spanned! {span=>
+                    #display_fn (&self. #ident)
+                }
+            }
+        };
+
         let mut row = quote_spanned! {span=>
-            #cli_table ::Cell::cell(&self. #ident)
+            #cli_table ::Cell::cell(#cell)
         };
 
         if let Some(justify) = justify {

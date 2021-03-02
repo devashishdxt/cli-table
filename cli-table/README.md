@@ -111,6 +111,18 @@ Below is the output of the table we created using derive macro:
 
 For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
 
+### CSV
+
+This crate also integrates with [`csv`](https://crates.io/crates/csv) crate. On enabling `"csv"` feature, you can
+use `TryFrom<&mut Reader> for TableStruct` trait implementation to convert `csv::Reader` to `TableStruct`.
+
+For more information on handling CSV values, go to `cli-table/examples/csv.rs`.
+
+## Features
+
+- `derive`: Enables derive macro for creating tables using structs. **Enabled** by default.
+- `csv`: Enables support for printing tables using [`csv`](https://crates.io/crates/csv). **Enabled** by default.
+
 ## License
 
 Licensed under either of

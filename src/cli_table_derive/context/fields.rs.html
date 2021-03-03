@@ -273,12 +273,6 @@
 <span id="270">270</span>
 <span id="271">271</span>
 <span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
 <span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
@@ -363,7 +357,7 @@
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">lit_str</span>),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(title = \&quot;field_name\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(title = \&quot;field_name\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;justify&quot;</span>) {
@@ -371,7 +365,7 @@
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(justify = \&quot;value\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(justify = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;align&quot;</span>) {
@@ -379,7 +373,7 @@
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(align = \&quot;value\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(align = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;color&quot;</span>) {
@@ -387,23 +381,20 @@
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(color = \&quot;value\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(color = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;bold&quot;</span>) {
                 <span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
                     <span class="ident">Lit</span>::<span class="ident">Bool</span>(<span class="ident">lit_bool</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">lit_bool</span>),
-                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
-                        <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(bold)]&quot;</span>,
-                    )),
+                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(<span class="ident">bad</span>, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;order&quot;</span>) {
                 <span class="ident">order</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
                     <span class="ident">Lit</span>::<span class="ident">Int</span>(<span class="ident">lit_int</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_int</span>.<span class="ident">base10_parse</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(order = &lt;usize&gt;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(order = &lt;usize&gt;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;display_fn&quot;</span>) {
@@ -411,16 +402,13 @@
                     <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">lit_str</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>(),
                     <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
                         <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(display_fn = \&quot;value\&quot;)]&quot;</span>,
+                        <span class="string">&quot;Invalid value for #[table(display_fn = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;skip&quot;</span>) {
                 <span class="ident">skip</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
                     <span class="ident">Lit</span>::<span class="ident">Bool</span>(<span class="ident">lit_bool</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">lit_bool</span>),
-                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(
-                        <span class="ident">bad</span>,
-                        <span class="string">&quot;Invalid value for #[cli_table(bold)]&quot;</span>,
-                    )),
+                    <span class="ident">bad</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new_spanned</span>(<span class="ident">bad</span>, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
                 }<span class="question-mark">?</span>);
             }
         }

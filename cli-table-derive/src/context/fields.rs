@@ -81,7 +81,7 @@ impl Field {
                     Lit::Str(lit_str) => Ok(lit_str),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(title = \"field_name\")]",
+                        "Invalid value for #[table(title = \"field_name\")]",
                     )),
                 }?);
             } else if key.is_ident("justify") {
@@ -89,7 +89,7 @@ impl Field {
                     Lit::Str(lit_str) => lit_str.parse::<Expr>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(justify = \"value\")]",
+                        "Invalid value for #[table(justify = \"value\")]",
                     )),
                 }?);
             } else if key.is_ident("align") {
@@ -97,7 +97,7 @@ impl Field {
                     Lit::Str(lit_str) => lit_str.parse::<Expr>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(align = \"value\")]",
+                        "Invalid value for #[table(align = \"value\")]",
                     )),
                 }?);
             } else if key.is_ident("color") {
@@ -105,23 +105,20 @@ impl Field {
                     Lit::Str(lit_str) => lit_str.parse::<Expr>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(color = \"value\")]",
+                        "Invalid value for #[table(color = \"value\")]",
                     )),
                 }?);
             } else if key.is_ident("bold") {
                 bold = Some(match value {
                     Lit::Bool(lit_bool) => Ok(lit_bool),
-                    bad => Err(Error::new_spanned(
-                        bad,
-                        "Invalid value for #[cli_table(bold)]",
-                    )),
+                    bad => Err(Error::new_spanned(bad, "Invalid value for #[table(bold)]")),
                 }?);
             } else if key.is_ident("order") {
                 order = Some(match value {
                     Lit::Int(lit_int) => lit_int.base10_parse::<usize>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(order = <usize>)]",
+                        "Invalid value for #[table(order = <usize>)]",
                     )),
                 }?);
             } else if key.is_ident("display_fn") {
@@ -129,16 +126,13 @@ impl Field {
                     Lit::Str(lit_str) => lit_str.parse::<Ident>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(display_fn = \"value\")]",
+                        "Invalid value for #[table(display_fn = \"value\")]",
                     )),
                 }?);
             } else if key.is_ident("skip") {
                 skip = Some(match value {
                     Lit::Bool(lit_bool) => Ok(lit_bool),
-                    bad => Err(Error::new_spanned(
-                        bad,
-                        "Invalid value for #[cli_table(bold)]",
-                    )),
+                    bad => Err(Error::new_spanned(bad, "Invalid value for #[table(bold)]")),
                 }?);
             }
         }

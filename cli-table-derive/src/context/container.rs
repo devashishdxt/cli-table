@@ -22,7 +22,7 @@ impl<'a> Container<'a> {
                     Lit::Str(lit_str) => lit_str.parse::<Path>(),
                     bad => Err(Error::new_spanned(
                         bad,
-                        "Invalid value for #[cli_table(crate = \"crate_path\")]",
+                        "Invalid value for #[table(crate = \"crate_path\")]",
                     )),
                 }?);
             }

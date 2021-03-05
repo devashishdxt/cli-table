@@ -103,10 +103,22 @@
 //!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by
 //!   column with `order = 1` and so on.
 //! - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = "<func_name>")]`.
-//!   signature of provided function should be `fn <func_name>(value: &<type>) -> impl Display`.
+//!   Signature of provided function should be `fn <func_name>(value: &<type>) -> impl Display`.
 //! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
 //!
 //! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
+//!
+//! ## CSV
+//!
+//! This crate also integrates with [`csv`](https://crates.io/crates/csv) crate. On enabling `"csv"` feature, you can
+//! use `TryFrom<&mut Reader> for TableStruct` trait implementation to convert `csv::Reader` to `TableStruct`.
+//!
+//! For more information on handling CSV values, go to `cli-table/examples/csv.rs`.
+//!
+//! # Features
+//!
+//! - `derive`: Enables derive macro for creating tables using structs. **Enabled** by default.
+//! - `csv`: Enables support for printing tables using [`csv`](https://crates.io/crates/csv). **Enabled** by default.
 mod context;
 mod table;
 mod utils;

@@ -1,2 +1,2 @@
 [workspace]
-members = ["cli-table", "cli-table-derive"]
+members = ["cli-table", "cli-table-derive", "test-suite"]

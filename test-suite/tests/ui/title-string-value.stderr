@@ -1,0 +1,5 @@
+error: `title` only accepts `&str` values
+ --> $DIR/title-string-value.rs:5:21
+  |
+5 |     #[table(title = 1)]
+  |                     ^

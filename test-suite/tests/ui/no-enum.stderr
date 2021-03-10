@@ -1,0 +1,8 @@
+error: `cli_table` derive macros can only be used on structs
+ --> $DIR/no-enum.rs:5:1
+  |
+5 | / enum Test {
+6 | |     Variant1,
+7 | |     Variant2,
+8 | | }
+  | |_^

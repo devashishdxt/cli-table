@@ -5,5 +5,16 @@
 		"matklad.rust-analyzer",
 		"tamasfe.even-better-toml",
 		"usernamehw.errorlens"
-	]
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.rulers": [
+			120
+		],
+		"editor.fontFamily": "'Fira Code'",
+		"editor.fontLigatures": true,
+		"editor.smoothScrolling": true,
+		"editor.cursorSmoothCaretAnimation": true,
+		"rust-analyzer.procMacro.enable": true,
+	}
 }

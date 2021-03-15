@@ -1,0 +1,9 @@
+{
+	"name": "cli-table-container",
+	"dockerFile": "Dockerfile",
+	"extensions": [
+		"matklad.rust-analyzer",
+		"tamasfe.even-better-toml",
+		"usernamehw.errorlens"
+	]
+}

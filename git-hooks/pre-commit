@@ -8,7 +8,7 @@ stash_push() {
 }
 
 stash_pop() {
-    git apply --whitespace=nowarn < /tmp/$STASH_NAME
+    git apply --whitespace=nowarn < /tmp/$STASH_NAME 2> /dev/null
     rm /tmp/$STASH_NAME
     if [ -n "$STASH_NUM" ]; then
         git stash drop -q stash@{$STASH_NUM}

@@ -1,6 +1,11 @@
 {
 	"name": "cli-table-container",
-	"dockerFile": "Dockerfile",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"USERNAME": "${localEnv:USER}"
+		}
+	},
 	"extensions": [
 		"matklad.rust-analyzer",
 		"tamasfe.even-better-toml",
@@ -16,5 +21,6 @@
 		"editor.smoothScrolling": true,
 		"editor.cursorSmoothCaretAnimation": true,
 		"rust-analyzer.procMacro.enable": true,
-	}
+	},
+	"postCreateCommand": "bash ./.devcontainer/scripts/post-script.sh"
 }

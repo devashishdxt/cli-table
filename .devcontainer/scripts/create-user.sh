@@ -3,8 +3,8 @@ USERNAME=${1}
 USER_UID=${2}
 USER_GID=${3}
 
-if [ ! "$USERNAME" ];then
-   USERNAME=vscode
+if [ $USERNAME == "" ]; then
+   exit 0
 fi
 
 # Create the user

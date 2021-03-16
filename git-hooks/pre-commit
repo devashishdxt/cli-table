@@ -1,2 +1,21 @@
 #!/bin/sh
-echo "hello world"
+
+# Check clippy lints
+echo "\e[0;32m[INFO]: Checking clippy lints."
+
+RUSTFLAGS="-Dwarnings" cargo clippy 2> /dev/null
+
+if [ $? -ne 0 ]; then
+    >&2 echo "\e[1;31m[ERROR]: Clippy lints failed!"
+    exit 1;
+fi
+
+# Check format
+echo "\e[0;32m[INFO]: Checking code format."
+
+cargo fmt --all -- --check 1> /dev/null
+
+if [ $? -ne 0 ]; then
+    >&2 echo "\e[1;31m[ERROR]: Code is not properly formatted!"
+    exit 1;
+fi

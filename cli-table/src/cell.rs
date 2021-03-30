@@ -54,7 +54,7 @@ impl CellStruct {
             + self.format.padding.left
             + self.format.padding.right;
 
-        Dimension { height, width }
+        Dimension { width, height }
     }
 
     fn buffer(

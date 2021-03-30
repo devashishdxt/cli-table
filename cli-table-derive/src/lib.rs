@@ -15,7 +15,7 @@
 //!
 //! ## Simple usage
 //!
-//! ```rust
+//! ```rust,ignore
 //! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
 //!
 //! let table = vec![

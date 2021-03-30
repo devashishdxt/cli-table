@@ -52,6 +52,7 @@ pub struct Field {
     pub bold: Option<LitBool>,
     pub order: usize,
     pub display_fn: Option<Ident>,
+    pub customize_fn: Option<Ident>,
     pub span: Span,
 }
 
@@ -71,6 +72,7 @@ impl Field {
         let mut bold = None;
         let mut order = None;
         let mut display_fn = None;
+        let mut customize_fn = None;
         let mut skip = None;
 
         let field_attributes = get_attributes(&field.attrs)?;
@@ -129,6 +131,14 @@ impl Field {
                         "Invalid value for #[table(display_fn = \"value\")]",
                     )),
                 }?);
+            } else if key.is_ident("customize_fn") {
+                customize_fn = Some(match value {
+                    Lit::Str(lit_str) => lit_str.parse::<Ident>(),
+                    bad => Err(Error::new_spanned(
+                        bad,
+                        "Invalid value for #[table(display_fn = \"value\")]",
+                    )),
+                }?);
             } else if key.is_ident("skip") {
                 skip = Some(match value {
                     Lit::Bool(lit_bool) => Ok(lit_bool),
@@ -173,6 +183,10 @@ impl Field {
             field_builder.display_fn(display_fn);
         }
 
+        if let Some(customize_fn) = customize_fn {
+            field_builder.customize_fn(customize_fn);
+        }
+
         Ok(Some(field_builder.build()))
     }
 
@@ -190,6 +204,7 @@ struct FieldBuilder {
     bold: Option<LitBool>,
     order: Option<usize>,
     display_fn: Option<Ident>,
+    customize_fn: Option<Ident>,
     span: Span,
 }
 
@@ -204,6 +219,7 @@ impl FieldBuilder {
             bold: None,
             order: None,
             display_fn: None,
+            customize_fn: None,
             span,
         }
     }
@@ -243,6 +259,11 @@ impl FieldBuilder {
         self
     }
 
+    fn customize_fn(&mut self, customize_fn: Ident) -> &mut Self {
+        self.customize_fn = Some(customize_fn);
+        self
+    }
+
     fn build(self) -> Field {
         let ident = self.ident;
         let justify = self.justify;
@@ -251,6 +272,7 @@ impl FieldBuilder {
         let bold = self.bold;
         let order = self.order.unwrap_or(usize::MAX);
         let display_fn = self.display_fn;
+        let customize_fn = self.customize_fn;
         let span = self.span;
 
         let title = self
@@ -266,6 +288,7 @@ impl FieldBuilder {
             bold,
             order,
             display_fn,
+            customize_fn,
             span,
         }
     }

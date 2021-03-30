@@ -29,6 +29,7 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         let color = field.color;
         let bold = field.bold;
         let display_fn = field.display_fn;
+        let customize_fn = field.customize_fn;
         let span = field.span;
 
         let cell = match display_fn {
@@ -68,6 +69,12 @@ pub fn table(input: DeriveInput) -> Result<TokenStream> {
         if let Some(bold) = bold {
             row = quote_spanned! {span=>
                 #cli_table ::Style::bold(#row, #bold)
+            };
+        }
+
+        if let Some(customize_fn) = customize_fn {
+            row = quote_spanned! {span=>
+                #customize_fn (#row, &self. #ident)
             };
         }
 

@@ -107,6 +107,10 @@ Below is the output of the table we created using derive macro:
   column with `order = 1` and so on.
 - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = "<func_name>")]`.
   Signature of provided function should be `fn <func_name>(value: &<type>) -> impl Display`.
+- `customize_fn`: Used to customize style of a cell. Usage `#[table(customize_fn = "<func_name>")]`. Signature of
+  provided function should be `fn <func_name>(cell: CellStruct, value: &<type>) -> CellStruct`. This attribute can
+  be used when you want to change the formatting/style of a cell based on its contents. Note that this will
+  overwrite all the style settings done by other attributes.
 - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
 
 For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
@@ -117,6 +121,33 @@ This crate also integrates with [`csv`](https://crates.io/crates/csv) crate. On 
 use `TryFrom<&mut Reader> for TableStruct` trait implementation to convert `csv::Reader` to `TableStruct`.
 
 For more information on handling CSV values, go to `cli-table/examples/csv.rs`.
+
+## Styling
+
+Style of a table/cell can be modified by calling functions of [`Style`] trait. It is implementated by both
+[`TableStruct`] and [`CellStruct`].
+
+For individually formatting each cell of a table, `justify`, `align` and `padding` functions can be used from
+`CellStruct`.
+
+In addition to this, borders and separators of a table can be customized by calling `border` and `separator`
+functions in `TableStruct`. For example, to create a borderless table:
+
+```rust
+use cli_table::{Cell, Table, TableStruct, format::{Justify, Border}, print_stdout};
+
+fn get_table() -> TableStruct {
+    vec![
+        vec!["Tom".cell(), 10.cell().justify(Justify::Right)],
+        vec!["Jerry".cell(), 15.cell().justify(Justify::Right)],
+        vec!["Scooby Doo".cell(), 20.cell().justify(Justify::Right)],
+    ]
+    .table()
+}
+
+let table = get_table().border(Border::builder().build()); // Attaches an empty border to the table
+assert!(print_stdout(table).is_ok());
+```
 
 ## Features
 

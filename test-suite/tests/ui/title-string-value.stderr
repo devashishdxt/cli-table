@@ -1,5 +1,5 @@
-error: `title` only accepts `&str` values
- --> $DIR/title-string-value.rs:5:21
+error: Invalid value for #[table(title = "field_name")]
+ --> $DIR/title-string-value.rs:6:21
   |
-5 |     #[table(title = 1)]
+6 |     #[table(title = 1)]
   |                     ^

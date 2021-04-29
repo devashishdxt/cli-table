@@ -88,8 +88,6 @@ impl TableStruct {
             }
         }
 
-        println!("heights: {:?}, widths: {:?}", heights, widths);
-
         Dimension { widths, heights }
     }
 

@@ -63,20 +63,14 @@ impl TableStruct {
 
     fn required_dimension(&self) -> Dimension {
         let mut heights = Vec::with_capacity(self.rows.len() + 1);
+        let mut widths = Vec::new();
 
-        let row_dimension = match self.title {
-            Some(ref title) => title.required_dimension(),
-            None => {
-                if self.rows.is_empty() {
-                    Default::default()
-                } else {
-                    self.rows[0].required_dimension()
-                }
-            }
-        };
+        let title_dimension = self.title.as_ref().map(RowStruct::required_dimension);
 
-        let mut widths = row_dimension.widths;
-        heights.push(row_dimension.height);
+        if let Some(title_dimension) = title_dimension {
+            widths = title_dimension.widths;
+            heights.push(title_dimension.height);
+        }
 
         for row in self.rows.iter() {
             let row_dimension = row.required_dimension();
@@ -85,10 +79,16 @@ impl TableStruct {
 
             let new_widths = row_dimension.widths;
 
-            for (width, new_width) in widths.iter_mut().zip(new_widths.into_iter()) {
-                *width = std::cmp::max(new_width, *width);
+            if widths.is_empty() {
+                widths = new_widths;
+            } else {
+                for (width, new_width) in widths.iter_mut().zip(new_widths.into_iter()) {
+                    *width = std::cmp::max(new_width, *width);
+                }
             }
         }
+
+        println!("heights: {:?}, widths: {:?}", heights, widths);
 
         Dimension { widths, heights }
     }

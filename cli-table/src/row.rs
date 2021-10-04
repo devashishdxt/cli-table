@@ -37,29 +37,27 @@ impl RowStruct {
         format: &TableFormat,
         color_spec: &ColorSpec,
     ) -> Result<()> {
-        let buffers = self.buffers(&writer, dimension)?;
+        let buffers = self.buffers(writer, dimension)?;
 
         for line in buffers.into_iter() {
-            print_vertical_line(&writer, format.border.left.as_ref(), &color_spec)?;
+            print_vertical_line(writer, format.border.left.as_ref(), color_spec)?;
 
             let mut line_buffers = line.into_iter().peekable();
 
             while let Some(buffer) = line_buffers.next() {
-                print_char(&writer, ' ', &color_spec)?;
+                print_char(writer, ' ', color_spec)?;
                 writer.print(&buffer)?;
-                print_char(&writer, ' ', &color_spec)?;
+                print_char(writer, ' ', color_spec)?;
 
                 match line_buffers.peek() {
                     Some(_) => {
-                        print_vertical_line(&writer, format.separator.column.as_ref(), &color_spec)?
+                        print_vertical_line(writer, format.separator.column.as_ref(), color_spec)?
                     }
-                    None => {
-                        print_vertical_line(&writer, format.border.right.as_ref(), &color_spec)?
-                    }
+                    None => print_vertical_line(writer, format.border.right.as_ref(), color_spec)?,
                 }
             }
 
-            println_str(&writer, "", &color_spec)?;
+            println_str(writer, "", color_spec)?;
         }
 
         Ok(())

@@ -47,6 +47,45 @@
 //! +------------+----------------+
 //! ```
 //!
+//! ## `Display` trait implementation
+//!
+//! To get a `Display` trait implementation of `TableStruct`, use `display()` function on the struct to get an instance
+//! of `TableDisplay` which implements `Display` trait.
+//!
+//! ```rust
+//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+//!
+//! let table = vec![
+//!     vec!["Tom".cell(), 10.cell().justify(Justify::Right)],
+//!     vec!["Jerry".cell(), 15.cell().justify(Justify::Right)],
+//!     vec!["Scooby Doo".cell(), 20.cell().justify(Justify::Right)],
+//! ]
+//! .table()
+//! .title(vec![
+//!     "Name".cell().bold(true),
+//!     "Age (in years)".cell().bold(true),
+//! ])
+//! .bold(true);
+//!
+//! let table_display = table.display().unwrap();
+//!
+//! println!("{}", table_display);
+//! ```
+//!
+//! Below is the output of the table we created just now:
+//!
+//! ```markdown
+//! +------------+----------------+
+//! | Name       | Age (in years) |  <-- This row and all the borders/separators
+//! +------------+----------------+      will appear in bold
+//! | Tom        |             10 |
+//! +------------+----------------+
+//! | Jerry      |             15 |
+//! +------------+----------------+
+//! | Scooby Doo |             25 |
+//! +------------+----------------+
+//! ```
+//!
 //! ## Derive macro
 //!
 //! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.
@@ -154,6 +193,7 @@ mod buffers;
 mod cell;
 #[cfg(feature = "csv")]
 mod csv;
+mod display;
 mod row;
 mod style;
 mod table;
@@ -171,6 +211,7 @@ pub use cli_table_derive::Table;
 
 pub use self::{
     cell::{Cell, CellStruct},
+    display::TableDisplay,
     row::{Row, RowStruct},
     style::Style,
     table::{Table, TableStruct},

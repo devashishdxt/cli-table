@@ -122,6 +122,7 @@ impl TableStruct {
             &self.format,
             &color_spec,
         )?;
+        println(&mut buffers)?;
 
         if let Some(ref title) = self.title {
             let title_dimension = row_dimensions.next().unwrap();
@@ -147,6 +148,8 @@ impl TableStruct {
                     &color_spec,
                 )?
             }
+
+            println(&mut buffers)?;
         }
 
         let mut rows = self.rows.iter().zip(row_dimensions).peekable();
@@ -171,6 +174,10 @@ impl TableStruct {
                     &self.format,
                     &color_spec,
                 )?,
+            }
+
+            if rows.peek().is_some() {
+                println(&mut buffers)?;
             }
         }
 

@@ -6,7 +6,7 @@ use crate::{
     buffers::Buffers,
     cell::{Cell, CellStruct, Dimension as CellDimension},
     table::{Dimension as TableDimension, TableFormat},
-    utils::{print_char, print_vertical_line, println_str, transpose},
+    utils::{print_char, print_vertical_line, println, transpose},
 };
 
 /// Concrete row of a table
@@ -72,9 +72,7 @@ impl RowStruct {
                 }
             }
 
-            println_str(&mut buffers, "", color_spec)?;
-
-            buffers.end()?;
+            println(&mut buffers)?;
         }
 
         buffers.into_vec()

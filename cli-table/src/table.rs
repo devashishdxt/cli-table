@@ -1,8 +1,10 @@
 use std::io::Result;
 
-use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec};
+use termcolor::{Buffer, BufferWriter, Color, ColorChoice, ColorSpec};
 
 use crate::{
+    buffers::Buffers,
+    display::TableDisplay,
     row::{Dimension as RowDimension, Row, RowStruct},
     style::{Style, StyleStruct},
     utils::*,
@@ -45,6 +47,20 @@ impl TableStruct {
     pub fn color_choice(mut self, color_choice: ColorChoice) -> Self {
         self.color_choice = color_choice;
         self
+    }
+
+    /// Returns a struct which implements the `Display` trait
+    pub fn display(&self) -> Result<TableDisplay> {
+        let writer = BufferWriter::stdout(self.color_choice);
+        let buffers = self.buffers(&writer)?;
+
+        let mut output = Vec::new();
+
+        for buffer in buffers {
+            output.append(&mut buffer.into_inner());
+        }
+
+        Ok(TableDisplay::new(output))
     }
 
     /// Prints current table to `stdout`
@@ -91,14 +107,16 @@ impl TableStruct {
         Dimension { widths, heights }
     }
 
-    fn print_writer(&self, writer: BufferWriter) -> Result<()> {
+    fn buffers(&self, writer: &BufferWriter) -> Result<Vec<Buffer>> {
         let table_dimension = self.required_dimension();
         let row_dimensions: Vec<RowDimension> = table_dimension.clone().into();
         let mut row_dimensions = row_dimensions.into_iter();
         let color_spec = self.color_spec();
 
+        let mut buffers = Buffers::new(writer);
+
         print_horizontal_line(
-            &writer,
+            &mut buffers,
             self.format.border.top.as_ref(),
             &table_dimension,
             &self.format,
@@ -107,11 +125,14 @@ impl TableStruct {
 
         if let Some(ref title) = self.title {
             let title_dimension = row_dimensions.next().unwrap();
-            title.print_writer(&writer, title_dimension, &self.format, &color_spec)?;
+            let mut title_buffers =
+                title.buffers(writer, title_dimension, &self.format, &color_spec)?;
+
+            buffers.append(&mut title_buffers)?;
 
             if self.format.separator.title.is_some() {
                 print_horizontal_line(
-                    &writer,
+                    &mut buffers,
                     self.format.separator.title.as_ref(),
                     &table_dimension,
                     &self.format,
@@ -119,7 +140,7 @@ impl TableStruct {
                 )?
             } else {
                 print_horizontal_line(
-                    &writer,
+                    &mut buffers,
                     self.format.separator.row.as_ref(),
                     &table_dimension,
                     &self.format,
@@ -131,18 +152,20 @@ impl TableStruct {
         let mut rows = self.rows.iter().zip(row_dimensions).peekable();
 
         while let Some((row, row_dimension)) = rows.next() {
-            row.print_writer(&writer, row_dimension, &self.format, &color_spec)?;
+            let mut row_buffers = row.buffers(writer, row_dimension, &self.format, &color_spec)?;
+
+            buffers.append(&mut row_buffers)?;
 
             match rows.peek() {
                 Some(_) => print_horizontal_line(
-                    &writer,
+                    &mut buffers,
                     self.format.separator.row.as_ref(),
                     &table_dimension,
                     &self.format,
                     &color_spec,
                 )?,
                 None => print_horizontal_line(
-                    &writer,
+                    &mut buffers,
                     self.format.border.bottom.as_ref(),
                     &table_dimension,
                     &self.format,
@@ -151,7 +174,17 @@ impl TableStruct {
             }
         }
 
-        reset_colors(&writer)
+        buffers.into_vec()
+    }
+
+    fn print_writer(&self, writer: BufferWriter) -> Result<()> {
+        let buffers = self.buffers(&writer)?;
+
+        for buffer in buffers.iter() {
+            writer.print(buffer)?;
+        }
+
+        Ok(())
     }
 }
 

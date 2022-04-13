@@ -6,7 +6,6 @@ use std::{
 use termcolor::{Buffer, BufferWriter, Color, ColorSpec, WriteColor};
 
 use crate::{
-    buffers::Buffers,
     row::Dimension as RowDimension,
     style::{Style, StyleStruct},
     utils::display_width,
@@ -55,6 +54,36 @@ impl CellStruct {
             + self.format.padding.right;
 
         Dimension { width, height }
+    }
+
+    pub(crate) fn buffers(
+        &self,
+        writer: &BufferWriter,
+        available_dimension: Dimension,
+    ) -> Result<Vec<Buffer>> {
+        let required_dimension = self.required_dimension();
+        let mut buffers = Vec::with_capacity(available_dimension.height);
+
+        assert!(
+            available_dimension >= required_dimension,
+            "Available dimensions for a cell are smaller than required. Please create an issue in https://github.com/devashishdxt/cli-table"
+        );
+
+        let top_blank_lines = self.top_blank_lines(available_dimension, required_dimension);
+
+        for _ in 0..top_blank_lines {
+            buffers.push(self.buffer(writer, available_dimension, required_dimension, "")?);
+        }
+
+        for line in self.data.clone().iter() {
+            buffers.push(self.buffer(writer, available_dimension, required_dimension, line)?);
+        }
+
+        for _ in 0..(available_dimension.height - (self.data.len() + top_blank_lines)) {
+            buffers.push(self.buffer(writer, available_dimension, required_dimension, "")?);
+        }
+
+        Ok(buffers)
     }
 
     fn buffer(
@@ -106,42 +135,6 @@ impl CellStruct {
                     + self.format.padding.top
             }
         }
-    }
-}
-
-impl Buffers for CellStruct {
-    type Dimension = Dimension;
-
-    type Buffers = Vec<Buffer>;
-
-    fn buffers(
-        &self,
-        writer: &BufferWriter,
-        available_dimension: Self::Dimension,
-    ) -> Result<Self::Buffers> {
-        let required_dimension = self.required_dimension();
-
-        assert!(
-            available_dimension >= required_dimension,
-            "Available dimensions for a cell are smaller than required. Please create an issue in https://github.com/devashishdxt/cli-table"
-        );
-
-        let top_blank_lines = self.top_blank_lines(available_dimension, required_dimension);
-        let mut buffers = Vec::with_capacity(available_dimension.height);
-
-        for _ in 0..top_blank_lines {
-            buffers.push(self.buffer(writer, available_dimension, required_dimension, "")?);
-        }
-
-        for line in self.data.clone().iter() {
-            buffers.push(self.buffer(writer, available_dimension, required_dimension, line)?);
-        }
-
-        for _ in 0..(available_dimension.height - (self.data.len() + top_blank_lines)) {
-            buffers.push(self.buffer(writer, available_dimension, required_dimension, "")?);
-        }
-
-        Ok(buffers)
     }
 }
 

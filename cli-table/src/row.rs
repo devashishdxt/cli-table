@@ -30,50 +30,13 @@ impl RowStruct {
         Dimension { widths, height }
     }
 
-    pub(crate) fn print_writer(
+    pub(crate) fn buffers(
         &self,
         writer: &BufferWriter,
-        dimension: Dimension,
+        available_dimension: Dimension,
         format: &TableFormat,
         color_spec: &ColorSpec,
-    ) -> Result<()> {
-        let buffers = self.buffers(writer, dimension)?;
-
-        for line in buffers.into_iter() {
-            print_vertical_line(writer, format.border.left.as_ref(), color_spec)?;
-
-            let mut line_buffers = line.into_iter().peekable();
-
-            while let Some(buffer) = line_buffers.next() {
-                print_char(writer, ' ', color_spec)?;
-                writer.print(&buffer)?;
-                print_char(writer, ' ', color_spec)?;
-
-                match line_buffers.peek() {
-                    Some(_) => {
-                        print_vertical_line(writer, format.separator.column.as_ref(), color_spec)?
-                    }
-                    None => print_vertical_line(writer, format.border.right.as_ref(), color_spec)?,
-                }
-            }
-
-            println_str(writer, "", color_spec)?;
-        }
-
-        Ok(())
-    }
-}
-
-impl Buffers for RowStruct {
-    type Dimension = Dimension;
-
-    type Buffers = Vec<Vec<Buffer>>;
-
-    fn buffers(
-        &self,
-        writer: &BufferWriter,
-        available_dimension: Self::Dimension,
-    ) -> Result<Self::Buffers> {
+    ) -> Result<Vec<Buffer>> {
         let available_cell_dimensions: Vec<CellDimension> = available_dimension.into();
 
         let cell_buffers = self
@@ -82,7 +45,39 @@ impl Buffers for RowStruct {
             .zip(available_cell_dimensions.into_iter())
             .map(|(cell, available_dimension)| cell.buffers(writer, available_dimension))
             .collect::<Result<Vec<Vec<Buffer>>>>()?;
-        Ok(transpose(cell_buffers))
+
+        let cell_buffers = transpose(cell_buffers);
+
+        let mut buffers = Buffers::new(writer);
+
+        for line in cell_buffers {
+            print_vertical_line(&mut buffers, format.border.left.as_ref(), color_spec)?;
+
+            let mut line_buffers = line.into_iter().peekable();
+
+            while let Some(line_buffer) = line_buffers.next() {
+                print_char(&mut buffers, ' ', color_spec)?;
+                buffers.push(line_buffer)?;
+                print_char(&mut buffers, ' ', color_spec)?;
+
+                match line_buffers.peek() {
+                    Some(_) => print_vertical_line(
+                        &mut buffers,
+                        format.separator.column.as_ref(),
+                        color_spec,
+                    )?,
+                    None => {
+                        print_vertical_line(&mut buffers, format.border.right.as_ref(), color_spec)?
+                    }
+                }
+            }
+
+            println_str(&mut buffers, "", color_spec)?;
+
+            buffers.end()?;
+        }
+
+        buffers.into_vec()
     }
 }
 

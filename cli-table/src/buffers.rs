@@ -39,15 +39,6 @@ impl<'a> Buffers<'a> {
         Ok(())
     }
 
-    pub fn end(&mut self) -> Result<()> {
-        if let Some(mut current_buffer) = self.current_buffer.take() {
-            current_buffer.reset()?;
-            self.buffers.push(current_buffer);
-        }
-
-        Ok(())
-    }
-
     pub fn into_vec(self) -> Result<Vec<Buffer>> {
         let mut buffers = self.buffers;
 

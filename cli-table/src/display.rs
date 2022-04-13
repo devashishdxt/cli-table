@@ -15,6 +15,6 @@ impl TableDisplay {
 
 impl fmt::Display for TableDisplay {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.inner)
+        write!(f, "{}", self.inner.trim())
     }
 }

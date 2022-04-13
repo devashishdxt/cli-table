@@ -97,9 +97,9 @@ pub(crate) fn print_horizontal_line(
                 }
                 None => {
                     if table_format.border.right.is_some() {
-                        println_char(buffers, line.right_end, color_spec)?;
+                        print_char(buffers, line.right_end, color_spec)?;
                     } else {
-                        println_str(buffers, "", color_spec)?;
+                        print_str(buffers, "", color_spec)?;
                     }
                 }
             }
@@ -126,28 +126,12 @@ pub(crate) fn print_str(buffers: &mut Buffers<'_>, s: &str, color_spec: &ColorSp
     buffers.reset()
 }
 
-pub(crate) fn println_str(
-    buffers: &mut Buffers<'_>,
-    s: &str,
-    color_spec: &ColorSpec,
-) -> Result<()> {
-    buffers.set_color(color_spec)?;
-    writeln!(buffers, "{}", s)?;
-    buffers.reset()
-}
-
 pub(crate) fn print_char(buffers: &mut Buffers<'_>, c: char, color_spec: &ColorSpec) -> Result<()> {
     buffers.set_color(color_spec)?;
     write!(buffers, "{}", c)?;
     buffers.reset()
 }
 
-pub(crate) fn println_char(
-    buffers: &mut Buffers<'_>,
-    c: char,
-    color_spec: &ColorSpec,
-) -> Result<()> {
-    buffers.set_color(color_spec)?;
-    writeln!(buffers, "{}", c)?;
-    buffers.reset()
+pub(crate) fn println(buffers: &mut Buffers<'_>) -> Result<()> {
+    writeln!(buffers)
 }

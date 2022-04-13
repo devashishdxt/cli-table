@@ -195,6 +195,47 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>), <span class="ident">forbid</span>(<span class="ident">unstable_features</span>))]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -228,6 +269,45 @@
 <span class="doccomment">//! .bold(true);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! assert!(print_stdout(table).is_ok());</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Below is the output of the table we created just now:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```markdown</span>
+<span class="doccomment">//! +------------+----------------+</span>
+<span class="doccomment">//! | Name       | Age (in years) |  &lt;-- This row and all the borders/separators</span>
+<span class="doccomment">//! +------------+----------------+      will appear in bold</span>
+<span class="doccomment">//! | Tom        |             10 |</span>
+<span class="doccomment">//! +------------+----------------+</span>
+<span class="doccomment">//! | Jerry      |             15 |</span>
+<span class="doccomment">//! +------------+----------------+</span>
+<span class="doccomment">//! | Scooby Doo |             25 |</span>
+<span class="doccomment">//! +------------+----------------+</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## `Display` trait implementation</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! To get a `Display` trait implementation of `TableStruct`, use `display()` function on the struct to get an instance</span>
+<span class="doccomment">//! of `TableDisplay` which implements `Display` trait.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let table = vec![</span>
+<span class="doccomment">//!     vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],</span>
+<span class="doccomment">//!     vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],</span>
+<span class="doccomment">//!     vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],</span>
+<span class="doccomment">//! ]</span>
+<span class="doccomment">//! .table()</span>
+<span class="doccomment">//! .title(vec![</span>
+<span class="doccomment">//!     &quot;Name&quot;.cell().bold(true),</span>
+<span class="doccomment">//!     &quot;Age (in years)&quot;.cell().bold(true),</span>
+<span class="doccomment">//! ])</span>
+<span class="doccomment">//! .bold(true);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let table_display = table.display().unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! println!(&quot;{}&quot;, table_display);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Below is the output of the table we created just now:</span>
@@ -351,6 +431,7 @@
 <span class="kw">mod</span> <span class="ident">cell</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;csv&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">csv</span>;
+<span class="kw">mod</span> <span class="ident">display</span>;
 <span class="kw">mod</span> <span class="ident">row</span>;
 <span class="kw">mod</span> <span class="ident">style</span>;
 <span class="kw">mod</span> <span class="ident">table</span>;
@@ -368,6 +449,7 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{
     <span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">CellStruct</span>},
+    <span class="ident">display::TableDisplay</span>,
     <span class="ident">row</span>::{<span class="ident">Row</span>, <span class="ident">RowStruct</span>},
     <span class="ident">style::Style</span>,
     <span class="ident">table</span>::{<span class="ident">Table</span>, <span class="ident">TableStruct</span>},
@@ -388,5 +470,5 @@
     <span class="ident">table</span>.<span class="ident">table</span>().<span class="ident">print_stderr</span>()
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (90ca44752 2022-04-11)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (52ca603da 2022-04-12)" ></div>
 </body></html>

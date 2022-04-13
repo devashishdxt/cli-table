@@ -140,22 +140,6 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::io</span>::{<span class="prelude-ty">Result</span>, <span class="ident">Write</span>};
 
 <span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">ColorSpec</span>, <span class="ident">WriteColor</span>};
@@ -255,9 +239,9 @@
                 }
                 <span class="prelude-val">None</span> =&gt; {
                     <span class="kw">if</span> <span class="ident">table_format</span>.<span class="ident">border</span>.<span class="ident">right</span>.<span class="ident">is_some</span>() {
-                        <span class="ident">println_char</span>(<span class="ident">buffers</span>, <span class="ident">line</span>.<span class="ident">right_end</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+                        <span class="ident">print_char</span>(<span class="ident">buffers</span>, <span class="ident">line</span>.<span class="ident">right_end</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
                     } <span class="kw">else</span> {
-                        <span class="ident">println_str</span>(<span class="ident">buffers</span>, <span class="string">&quot;&quot;</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+                        <span class="ident">print_str</span>(<span class="ident">buffers</span>, <span class="string">&quot;&quot;</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
                     }
                 }
             }
@@ -284,30 +268,14 @@
     <span class="ident">buffers</span>.<span class="ident">reset</span>()
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">println_str</span>(
-    <span class="ident">buffers</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Buffers</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">color_spec</span>: <span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">buffers</span>.<span class="ident">set_color</span>(<span class="ident">color_spec</span>)<span class="question-mark">?</span>;
-    <span class="macro">writeln!</span>(<span class="ident">buffers</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>)<span class="question-mark">?</span>;
-    <span class="ident">buffers</span>.<span class="ident">reset</span>()
-}
-
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">print_char</span>(<span class="ident">buffers</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Buffers</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">color_spec</span>: <span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="ident">buffers</span>.<span class="ident">set_color</span>(<span class="ident">color_spec</span>)<span class="question-mark">?</span>;
     <span class="macro">write!</span>(<span class="ident">buffers</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">c</span>)<span class="question-mark">?</span>;
     <span class="ident">buffers</span>.<span class="ident">reset</span>()
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">println_char</span>(
-    <span class="ident">buffers</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Buffers</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    <span class="ident">c</span>: <span class="ident">char</span>,
-    <span class="ident">color_spec</span>: <span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">buffers</span>.<span class="ident">set_color</span>(<span class="ident">color_spec</span>)<span class="question-mark">?</span>;
-    <span class="macro">writeln!</span>(<span class="ident">buffers</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">c</span>)<span class="question-mark">?</span>;
-    <span class="ident">buffers</span>.<span class="ident">reset</span>()
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">println</span>(<span class="ident">buffers</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Buffers</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="macro">writeln!</span>(<span class="ident">buffers</span>)
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (52ca603da 2022-04-12)" ></div>

@@ -56,7 +56,7 @@ To get a `Display` trait implementation of `TableStruct`, use `display()` functi
 of `TableDisplay` which implements `Display` trait.
 
 ```rust
-use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+use cli_table::{format::Justify, Cell, Style, Table};
 
 let table = vec![
     vec!["Tom".cell(), 10.cell().justify(Justify::Right)],

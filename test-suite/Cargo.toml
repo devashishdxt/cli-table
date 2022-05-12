@@ -11,4 +11,4 @@ cli-table = { path = "../cli-table" }
 
 [dev-dependencies]
 rustversion = "1.0.6"
-trybuild = { version = "1.0.59", features = ["diff"] }
+trybuild = { version = "1.0.61", features = ["diff"] }

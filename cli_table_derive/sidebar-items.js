@@ -1,1 +1,1 @@
-initSidebarItems({"derive":[["Table","Derive macro to implementing `cli_table` traits"]]});
+window.SIDEBAR_ITEMS = {"derive":[["Table","Derive macro to implementing `cli_table` traits"]]};

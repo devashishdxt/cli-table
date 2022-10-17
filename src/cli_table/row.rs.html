@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/row.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>row.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/row.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>row.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -150,152 +144,151 @@
 <span id="144">144</span>
 <span id="145">145</span>
 <span id="146">146</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::io::Result</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::io::Result;
 
-<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Buffer</span>, <span class="ident">BufferWriter</span>, <span class="ident">ColorSpec</span>};
+<span class="kw">use </span>termcolor::{Buffer, BufferWriter, ColorSpec};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">buffers::Buffers</span>,
-    <span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">CellStruct</span>, <span class="ident">Dimension</span> <span class="kw">as</span> <span class="ident">CellDimension</span>},
-    <span class="ident">table</span>::{<span class="ident">Dimension</span> <span class="kw">as</span> <span class="ident">TableDimension</span>, <span class="ident">TableFormat</span>},
-    <span class="ident">utils</span>::{<span class="ident">print_char</span>, <span class="ident">print_vertical_line</span>, <span class="ident">println</span>, <span class="ident">transpose</span>},
+<span class="kw">use crate</span>::{
+    buffers::Buffers,
+    cell::{Cell, CellStruct, Dimension <span class="kw">as </span>CellDimension},
+    table::{Dimension <span class="kw">as </span>TableDimension, TableFormat},
+    utils::{print_char, print_vertical_line, println, transpose},
 };
 
-<span class="doccomment">/// Concrete row of a table</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RowStruct</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">cells</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CellStruct</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Concrete row of a table
+</span><span class="kw">pub struct </span>RowStruct {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) cells: Vec&lt;CellStruct&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">RowStruct</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Dimension</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">widths</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="self">self</span>.<span class="ident">cells</span>.<span class="ident">len</span>());
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">height</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">impl </span>RowStruct {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>required_dimension(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Dimension {
+        <span class="kw">let </span><span class="kw-2">mut </span>widths = Vec::with_capacity(<span class="self">self</span>.cells.len());
+        <span class="kw">let </span><span class="kw-2">mut </span>height = <span class="number">0</span>;
 
-        <span class="kw">for</span> <span class="ident">cell</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">cells</span>.<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="ident">cell_dimension</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">required_dimension</span>();
+        <span class="kw">for </span>cell <span class="kw">in </span><span class="self">self</span>.cells.iter() {
+            <span class="kw">let </span>cell_dimension = cell.required_dimension();
 
-            <span class="ident">widths</span>.<span class="ident">push</span>(<span class="ident">cell_dimension</span>.<span class="ident">width</span>);
+            widths.push(cell_dimension.width);
 
-            <span class="ident">height</span> <span class="op">=</span> <span class="ident">std::cmp::max</span>(<span class="ident">cell_dimension</span>.<span class="ident">height</span>, <span class="ident">height</span>);
+            height = std::cmp::max(cell_dimension.height, height);
         }
 
-        <span class="ident">Dimension</span> { <span class="ident">widths</span>, <span class="ident">height</span> }
+        Dimension { widths, height }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">buffers</span>(
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>buffers(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>,
-        <span class="ident">available_dimension</span>: <span class="ident">Dimension</span>,
-        <span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="ident">TableFormat</span>,
-        <span class="ident">color_spec</span>: <span class="kw-2">&amp;</span><span class="ident">ColorSpec</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Buffer</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">available_cell_dimensions</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CellDimension</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">available_dimension</span>.<span class="ident">into</span>();
+        writer: <span class="kw-2">&amp;</span>BufferWriter,
+        available_dimension: Dimension,
+        format: <span class="kw-2">&amp;</span>TableFormat,
+        color_spec: <span class="kw-2">&amp;</span>ColorSpec,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Buffer&gt;&gt; {
+        <span class="kw">let </span>available_cell_dimensions: Vec&lt;CellDimension&gt; = available_dimension.into();
 
-        <span class="kw">let</span> <span class="ident">cell_buffers</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">cells</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">zip</span>(<span class="ident">available_cell_dimensions</span>.<span class="ident">into_iter</span>())
-            .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">cell</span>, <span class="ident">available_dimension</span>)<span class="op">|</span> <span class="ident">cell</span>.<span class="ident">buffers</span>(<span class="ident">writer</span>, <span class="ident">available_dimension</span>))
-            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Buffer</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+        <span class="kw">let </span>cell_buffers = <span class="self">self
+            </span>.cells
+            .iter()
+            .zip(available_cell_dimensions.into_iter())
+            .map(|(cell, available_dimension)| cell.buffers(writer, available_dimension))
+            .collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;Buffer&gt;&gt;&gt;&gt;()<span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="ident">cell_buffers</span> <span class="op">=</span> <span class="ident">transpose</span>(<span class="ident">cell_buffers</span>);
+        <span class="kw">let </span>cell_buffers = transpose(cell_buffers);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffers</span> <span class="op">=</span> <span class="ident">Buffers::new</span>(<span class="ident">writer</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>buffers = Buffers::new(writer);
 
-        <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="ident">cell_buffers</span> {
-            <span class="ident">print_vertical_line</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>, <span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">left</span>.<span class="ident">as_ref</span>(), <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+        <span class="kw">for </span>line <span class="kw">in </span>cell_buffers {
+            print_vertical_line(<span class="kw-2">&amp;mut </span>buffers, format.border.left.as_ref(), color_spec)<span class="question-mark">?</span>;
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">line_buffers</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">into_iter</span>().<span class="ident">peekable</span>();
+            <span class="kw">let </span><span class="kw-2">mut </span>line_buffers = line.into_iter().peekable();
 
-            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">line_buffer</span>) <span class="op">=</span> <span class="ident">line_buffers</span>.<span class="ident">next</span>() {
-                <span class="ident">print_char</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>, <span class="string">&#39; &#39;</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
-                <span class="ident">buffers</span>.<span class="ident">push</span>(<span class="ident">line_buffer</span>)<span class="question-mark">?</span>;
-                <span class="ident">print_char</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>, <span class="string">&#39; &#39;</span>, <span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+            <span class="kw">while let </span><span class="prelude-val">Some</span>(line_buffer) = line_buffers.next() {
+                print_char(<span class="kw-2">&amp;mut </span>buffers, <span class="string">&#39; &#39;</span>, color_spec)<span class="question-mark">?</span>;
+                buffers.push(line_buffer)<span class="question-mark">?</span>;
+                print_char(<span class="kw-2">&amp;mut </span>buffers, <span class="string">&#39; &#39;</span>, color_spec)<span class="question-mark">?</span>;
 
-                <span class="kw">match</span> <span class="ident">line_buffers</span>.<span class="ident">peek</span>() {
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="ident">print_vertical_line</span>(
-                        <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-                        <span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">column</span>.<span class="ident">as_ref</span>(),
-                        <span class="ident">color_spec</span>,
+                <span class="kw">match </span>line_buffers.peek() {
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; print_vertical_line(
+                        <span class="kw-2">&amp;mut </span>buffers,
+                        format.separator.column.as_ref(),
+                        color_spec,
                     )<span class="question-mark">?</span>,
-                    <span class="prelude-val">None</span> =&gt; {
-                        <span class="ident">print_vertical_line</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>, <span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">right</span>.<span class="ident">as_ref</span>(), <span class="ident">color_spec</span>)<span class="question-mark">?</span>
-                    }
+                    <span class="prelude-val">None </span>=&gt; {
+                        print_vertical_line(<span class="kw-2">&amp;mut </span>buffers, format.border.right.as_ref(), color_spec)<span class="question-mark">?
+                    </span>}
                 }
             }
 
-            <span class="ident">println</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>)<span class="question-mark">?</span>;
+            println(<span class="kw-2">&amp;mut </span>buffers)<span class="question-mark">?</span>;
         }
 
-        <span class="ident">buffers</span>.<span class="ident">into_vec</span>()
+        buffers.into_vec()
     }
 }
 
-<span class="doccomment">/// Trait to convert raw types into rows</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Row</span> {
-    <span class="doccomment">/// Converts raw type to rows of a table</span>
-    <span class="kw">fn</span> <span class="ident">row</span>(<span class="self">self</span>) -&gt; <span class="ident">RowStruct</span>;
+<span class="doccomment">/// Trait to convert raw types into rows
+</span><span class="kw">pub trait </span>Row {
+    <span class="doccomment">/// Converts raw type to rows of a table
+    </span><span class="kw">fn </span>row(<span class="self">self</span>) -&gt; RowStruct;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">Row</span> <span class="kw">for</span> <span class="ident">T</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="ident">C</span>: <span class="ident">Cell</span>,
+<span class="kw">impl</span>&lt;T, C&gt; Row <span class="kw">for </span>T
+<span class="kw">where
+    </span>T: IntoIterator&lt;Item = C&gt;,
+    C: Cell,
 {
-    <span class="kw">fn</span> <span class="ident">row</span>(<span class="self">self</span>) -&gt; <span class="ident">RowStruct</span> {
-        <span class="kw">let</span> <span class="ident">cells</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">cell</span><span class="op">|</span> <span class="ident">cell</span>.<span class="ident">cell</span>()).<span class="ident">collect</span>();
-        <span class="ident">RowStruct</span> { <span class="ident">cells</span> }
+    <span class="kw">fn </span>row(<span class="self">self</span>) -&gt; RowStruct {
+        <span class="kw">let </span>cells = <span class="self">self</span>.into_iter().map(|cell| cell.cell()).collect();
+        RowStruct { cells }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Row</span> <span class="kw">for</span> <span class="ident">RowStruct</span> {
-    <span class="kw">fn</span> <span class="ident">row</span>(<span class="self">self</span>) -&gt; <span class="ident">RowStruct</span> {
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>Row <span class="kw">for </span>RowStruct {
+    <span class="kw">fn </span>row(<span class="self">self</span>) -&gt; RowStruct {
+        <span class="self">self
+    </span>}
 }
 
-<span class="doccomment">/// Dimensions of a row</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Dimension</span> {
-    <span class="doccomment">/// Widths of each cell of row</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">widths</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Height of row</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">height</span>: <span class="ident">usize</span>,
+<span class="doccomment">/// Dimensions of a row
+</span><span class="attribute">#[derive(Debug, Default, Clone, Eq, PartialEq)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Dimension {
+    <span class="doccomment">/// Widths of each cell of row
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) widths: Vec&lt;usize&gt;,
+    <span class="doccomment">/// Height of row
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) height: usize,
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TableDimension</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">table_dimension</span>: <span class="ident">TableDimension</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">heights</span> <span class="op">=</span> <span class="ident">table_dimension</span>.<span class="ident">heights</span>;
-        <span class="kw">let</span> <span class="ident">widths</span> <span class="op">=</span> <span class="ident">table_dimension</span>.<span class="ident">widths</span>;
+<span class="kw">impl </span>From&lt;TableDimension&gt; <span class="kw">for </span>Vec&lt;Dimension&gt; {
+    <span class="kw">fn </span>from(table_dimension: TableDimension) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>heights = table_dimension.heights;
+        <span class="kw">let </span>widths = table_dimension.widths;
 
-        <span class="ident">heights</span>
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">height</span><span class="op">|</span> <span class="ident">Dimension</span> {
-                <span class="ident">widths</span>: <span class="ident">widths</span>.<span class="ident">clone</span>(),
-                <span class="ident">height</span>,
+        heights
+            .into_iter()
+            .map(|height| Dimension {
+                widths: widths.clone(),
+                height,
             })
-            .<span class="ident">collect</span>()
+            .collect()
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::style::Style</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span><span class="kw">crate</span>::style::Style;
 
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_into_row_with_style</span>() {
-        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;Hello&quot;</span>.<span class="ident">cell</span>().<span class="ident">bold</span>(<span class="bool-val">true</span>), <span class="string">&quot;World&quot;</span>.<span class="ident">cell</span>()].<span class="ident">row</span>();
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, <span class="ident">row</span>.<span class="ident">cells</span>.<span class="ident">len</span>());
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_into_row_with_style() {
+        <span class="kw">let </span>row = <span class="macro">vec!</span>[<span class="string">&quot;Hello&quot;</span>.cell().bold(<span class="bool-val">true</span>), <span class="string">&quot;World&quot;</span>.cell()].row();
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, row.cells.len());
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_into_row</span>() {
-        <span class="kw">let</span> <span class="ident">row</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>].<span class="ident">row</span>();
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, <span class="ident">row</span>.<span class="ident">cells</span>.<span class="ident">len</span>());
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_into_row() {
+        <span class="kw">let </span>row = <span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>].row();
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, row.cells.len());
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

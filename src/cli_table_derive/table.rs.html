@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table-derive/src/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table_derive/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table-derive/src/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table_derive/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -119,121 +113,120 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">quote</span>, <span class="ident">quote_spanned</span>};
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">DeriveInput</span>, <span class="prelude-ty">Result</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{quote, quote_spanned};
+<span class="kw">use </span>syn::{DeriveInput, <span class="prelude-ty">Result</span>};
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::context::Context</span>;
+<span class="kw">use </span><span class="kw">crate</span>::context::Context;
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">table</span>(<span class="ident">input</span>: <span class="ident">DeriveInput</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> {
-    <span class="comment">// Create context for generating expressions</span>
-    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">Context::new</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>)<span class="question-mark">?</span>;
+<span class="kw">pub fn </span>table(input: DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream&gt; {
+    <span class="comment">// Create context for generating expressions
+    </span><span class="kw">let </span>context = Context::new(<span class="kw-2">&amp;</span>input)<span class="question-mark">?</span>;
 
-    <span class="comment">// Used in the quasi-quotation below as `#name`</span>
-    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">container</span>.<span class="ident">name</span>;
+    <span class="comment">// Used in the quasi-quotation below as `#name`
+    </span><span class="kw">let </span>name = context.container.name;
 
-    <span class="comment">// Fetch cli_table crate name</span>
-    <span class="kw">let</span> <span class="ident">cli_table</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">container</span>.<span class="ident">crate_name</span>;
+    <span class="comment">// Fetch cli_table crate name
+    </span><span class="kw">let </span>cli_table = <span class="kw-2">&amp;</span>context.container.crate_name;
 
-    <span class="comment">// Split a type&#39;s generics into the pieces required for implementing a trait for that type</span>
-    <span class="kw">let</span> (<span class="ident">impl_generics</span>, <span class="ident">ty_generics</span>, <span class="ident">where_clause</span>) <span class="op">=</span> <span class="ident">input</span>.<span class="ident">generics</span>.<span class="ident">split_for_impl</span>();
+    <span class="comment">// Split a type&#39;s generics into the pieces required for implementing a trait for that type
+    </span><span class="kw">let </span>(impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field_titles</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field_rows</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">let </span><span class="kw-2">mut </span>field_titles = Vec::new();
+    <span class="kw">let </span><span class="kw-2">mut </span>field_rows = Vec::new();
 
-    <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="ident">context</span>.<span class="ident">fields</span>.<span class="ident">into_iter</span>() {
-        <span class="ident">field_titles</span>.<span class="ident">push</span>(<span class="ident">field</span>.<span class="ident">title</span>);
+    <span class="kw">for </span>field <span class="kw">in </span>context.fields.into_iter() {
+        field_titles.push(field.title);
 
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ident</span>;
-        <span class="kw">let</span> <span class="ident">justify</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">justify</span>;
-        <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">align</span>;
-        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">color</span>;
-        <span class="kw">let</span> <span class="ident">bold</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">bold</span>;
-        <span class="kw">let</span> <span class="ident">display_fn</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">display_fn</span>;
-        <span class="kw">let</span> <span class="ident">customize_fn</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">customize_fn</span>;
-        <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">span</span>;
+        <span class="kw">let </span>ident = field.ident;
+        <span class="kw">let </span>justify = field.justify;
+        <span class="kw">let </span>align = field.align;
+        <span class="kw">let </span>color = field.color;
+        <span class="kw">let </span>bold = field.bold;
+        <span class="kw">let </span>display_fn = field.display_fn;
+        <span class="kw">let </span>customize_fn = field.customize_fn;
+        <span class="kw">let </span>span = field.span;
 
-        <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">display_fn</span> {
-            <span class="prelude-val">None</span> =&gt; <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                <span class="kw-2">&amp;</span><span class="self">self</span>. #<span class="ident">ident</span>
+        <span class="kw">let </span>cell = <span class="kw">match </span>display_fn {
+            <span class="prelude-val">None </span>=&gt; <span class="macro">quote_spanned! </span>{span=&gt;
+                <span class="kw-2">&amp;</span><span class="self">self</span>. #ident
             },
-            <span class="prelude-val">Some</span>(<span class="ident">display_fn</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">display_fn</span>.<span class="ident">span</span>();
-                <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                    #<span class="ident">display_fn</span> (<span class="kw-2">&amp;</span><span class="self">self</span>. #<span class="ident">ident</span>)
+            <span class="prelude-val">Some</span>(display_fn) =&gt; {
+                <span class="kw">let </span>span = display_fn.span();
+                <span class="macro">quote_spanned! </span>{span=&gt;
+                    #display_fn (<span class="kw-2">&amp;</span><span class="self">self</span>. #ident)
                 }
             }
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-            #<span class="ident">cli_table</span> <span class="ident">::Cell::cell</span>(#<span class="ident">cell</span>)
+        <span class="kw">let </span><span class="kw-2">mut </span>row = <span class="macro">quote_spanned! </span>{span=&gt;
+            #cli_table ::Cell::cell(#cell)
         };
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">justify</span>) <span class="op">=</span> <span class="ident">justify</span> {
-            <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                #<span class="ident">row</span> .<span class="ident">justify</span>(#<span class="ident">justify</span>)
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(justify) = justify {
+            row = <span class="macro">quote_spanned! </span>{span=&gt;
+                #row .justify(#justify)
             };
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>) <span class="op">=</span> <span class="ident">align</span> {
-            <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                #<span class="ident">row</span> .<span class="ident">align</span>(#<span class="ident">align</span>)
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(align) = align {
+            row = <span class="macro">quote_spanned! </span>{span=&gt;
+                #row .align(#align)
             };
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">color</span> {
-            <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                #<span class="ident">cli_table</span> <span class="ident">::Style::foreground_color</span>(#<span class="ident">row</span>, <span class="ident">::core::convert::From::from</span>(#<span class="ident">color</span>))
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(color) = color {
+            row = <span class="macro">quote_spanned! </span>{span=&gt;
+                #cli_table ::Style::foreground_color(#row, ::core::convert::From::from(#color))
             };
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bold</span>) <span class="op">=</span> <span class="ident">bold</span> {
-            <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                #<span class="ident">cli_table</span> <span class="ident">::Style::bold</span>(#<span class="ident">row</span>, #<span class="ident">bold</span>)
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(bold) = bold {
+            row = <span class="macro">quote_spanned! </span>{span=&gt;
+                #cli_table ::Style::bold(#row, #bold)
             };
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">customize_fn</span>) <span class="op">=</span> <span class="ident">customize_fn</span> {
-            <span class="ident">row</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">span</span>=&gt;
-                #<span class="ident">customize_fn</span> (#<span class="ident">row</span>, <span class="kw-2">&amp;</span><span class="self">self</span>. #<span class="ident">ident</span>)
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(customize_fn) = customize_fn {
+            row = <span class="macro">quote_spanned! </span>{span=&gt;
+                #customize_fn (#row, <span class="kw-2">&amp;</span><span class="self">self</span>. #ident)
             };
         }
 
-        <span class="ident">field_rows</span>.<span class="ident">push</span>(<span class="ident">row</span>);
+        field_rows.push(row);
     }
 
-    <span class="comment">// Build the output, possibly using quasi-quotation</span>
-    <span class="prelude-val">Ok</span>(<span class="macro">quote!</span> {
-        <span class="attribute">#[<span class="ident">automatically_derived</span>]</span>
-        <span class="kw">impl</span> #<span class="ident">impl_generics</span> #<span class="ident">cli_table</span> <span class="ident">::Title</span> <span class="kw">for</span> #<span class="ident">name</span> #<span class="ident">ty_generics</span> # <span class="ident">where_clause</span>{
-            <span class="kw">fn</span> <span class="ident">title</span>() -&gt; #<span class="ident">cli_table</span> <span class="ident">::RowStruct</span> {
-                <span class="kw">let</span> <span class="ident">title</span>: <span class="ident">::std::vec::Vec</span><span class="op">&lt;</span>#<span class="ident">cli_table</span> <span class="ident">::CellStruct</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">::std::vec!</span>[
-                    #(#<span class="ident">cli_table</span> <span class="ident">::Style::bold</span>(#<span class="ident">cli_table</span> <span class="ident">::Cell::cell</span>(#<span class="ident">field_titles</span>), <span class="bool-val">true</span>),)<span class="op">*</span>
+    <span class="comment">// Build the output, possibly using quasi-quotation
+    </span><span class="prelude-val">Ok</span>(<span class="macro">quote! </span>{
+        <span class="attribute">#[automatically_derived]
+        </span><span class="kw">impl </span>#impl_generics #cli_table ::Title <span class="kw">for </span>#name #ty_generics # where_clause{
+            <span class="kw">fn </span>title() -&gt; #cli_table ::RowStruct {
+                <span class="kw">let </span>title: ::std::vec::Vec&lt;#cli_table ::CellStruct&gt; = <span class="macro">::std::vec!</span>[
+                    #(#cli_table ::Style::bold(#cli_table ::Cell::cell(#field_titles), <span class="bool-val">true</span>),)*
                 ];
 
-                #<span class="ident">cli_table</span> <span class="ident">::Row::row</span>(<span class="ident">title</span>)
+                #cli_table ::Row::row(title)
             }
         }
 
-        <span class="attribute">#[<span class="ident">automatically_derived</span>]</span>
-        <span class="kw">impl</span> #<span class="ident">impl_generics</span> #<span class="ident">cli_table</span> <span class="ident">::Row</span> <span class="kw">for</span> <span class="op">&amp;</span> #<span class="ident">name</span> #<span class="ident">ty_generics</span> # <span class="ident">where_clause</span>{
-            <span class="kw">fn</span> <span class="ident">row</span>(<span class="self">self</span>) -&gt; #<span class="ident">cli_table</span> <span class="ident">::RowStruct</span> {
-                <span class="kw">let</span> <span class="ident">row</span>: <span class="ident">::std::vec::Vec</span><span class="op">&lt;</span>#<span class="ident">cli_table</span> <span class="ident">::CellStruct</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">::std::vec!</span>[
-                    #(#<span class="ident">field_rows</span>,)<span class="op">*</span>
+        <span class="attribute">#[automatically_derived]
+        </span><span class="kw">impl </span>#impl_generics #cli_table ::Row <span class="kw">for </span>&amp; #name #ty_generics # where_clause{
+            <span class="kw">fn </span>row(<span class="self">self</span>) -&gt; #cli_table ::RowStruct {
+                <span class="kw">let </span>row: ::std::vec::Vec&lt;#cli_table ::CellStruct&gt; = <span class="macro">::std::vec!</span>[
+                    #(#field_rows,)*
                 ];
 
-                #<span class="ident">cli_table</span> <span class="ident">::Row::row</span>(<span class="ident">row</span>)
+                #cli_table ::Row::row(row)
             }
         }
 
-        <span class="attribute">#[<span class="ident">automatically_derived</span>]</span>
-        <span class="kw">impl</span> #<span class="ident">impl_generics</span> #<span class="ident">cli_table</span> <span class="ident">::Row</span> <span class="kw">for</span> #<span class="ident">name</span> #<span class="ident">ty_generics</span> # <span class="ident">where_clause</span>{
-            <span class="kw">fn</span> <span class="ident">row</span>(<span class="self">self</span>) -&gt; #<span class="ident">cli_table</span> <span class="ident">::RowStruct</span> {
-                #<span class="ident">cli_table</span> <span class="ident">::Row::row</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
+        <span class="attribute">#[automatically_derived]
+        </span><span class="kw">impl </span>#impl_generics #cli_table ::Row <span class="kw">for </span>#name #ty_generics # where_clause{
+            <span class="kw">fn </span>row(<span class="self">self</span>) -&gt; #cli_table ::RowStruct {
+                #cli_table ::Row::row(<span class="kw-2">&amp;</span><span class="self">self</span>)
             }
         }
     })
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table_derive" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table_derive" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

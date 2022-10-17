@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/cell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -337,339 +331,338 @@
 <span id="331">331</span>
 <span id="332">332</span>
 <span id="333">333</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">fmt::Display</span>,
-    <span class="ident">io</span>::{<span class="prelude-ty">Result</span>, <span class="ident">Write</span>},
+</pre><pre class="rust"><code><span class="kw">use </span>std::{
+    fmt::Display,
+    io::{<span class="prelude-ty">Result</span>, Write},
 };
 
-<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Buffer</span>, <span class="ident">BufferWriter</span>, <span class="ident">Color</span>, <span class="ident">ColorSpec</span>, <span class="ident">WriteColor</span>};
+<span class="kw">use </span>termcolor::{Buffer, BufferWriter, Color, ColorSpec, WriteColor};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">row::Dimension</span> <span class="kw">as</span> <span class="ident">RowDimension</span>,
-    <span class="ident">style</span>::{<span class="ident">Style</span>, <span class="ident">StyleStruct</span>},
-    <span class="ident">utils::display_width</span>,
+<span class="kw">use crate</span>::{
+    row::Dimension <span class="kw">as </span>RowDimension,
+    style::{Style, StyleStruct},
+    utils::display_width,
 };
 
-<span class="doccomment">/// Concrete cell of a table</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellStruct</span> {
-    <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">format</span>: <span class="ident">CellFormat</span>,
-    <span class="ident">style</span>: <span class="ident">StyleStruct</span>,
+<span class="doccomment">/// Concrete cell of a table
+</span><span class="kw">pub struct </span>CellStruct {
+    data: Vec&lt;String&gt;,
+    format: CellFormat,
+    style: StyleStruct,
 }
 
-<span class="kw">impl</span> <span class="ident">CellStruct</span> {
-    <span class="doccomment">/// Used to horizontally justify contents of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">justify</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justify</span>: <span class="ident">Justify</span>) -&gt; <span class="ident">CellStruct</span> {
-        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">justify</span> <span class="op">=</span> <span class="ident">justify</span>;
-        <span class="self">self</span>
+<span class="kw">impl </span>CellStruct {
+    <span class="doccomment">/// Used to horizontally justify contents of a cell
+    </span><span class="kw">pub fn </span>justify(<span class="kw-2">mut </span><span class="self">self</span>, justify: Justify) -&gt; CellStruct {
+        <span class="self">self</span>.format.justify = justify;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Used to vertically align the contents of a cell
+    </span><span class="kw">pub fn </span>align(<span class="kw-2">mut </span><span class="self">self</span>, align: Align) -&gt; CellStruct {
+        <span class="self">self</span>.format.align = align;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Used to add padding to the contents of a cell
+    </span><span class="kw">pub fn </span>padding(<span class="kw-2">mut </span><span class="self">self</span>, padding: Padding) -&gt; CellStruct {
+        <span class="self">self</span>.format.padding = padding;
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>color_spec(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ColorSpec {
+        <span class="self">self</span>.style.color_spec()
     }
 
-    <span class="doccomment">/// Used to vertically align the contents of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">align</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Align</span>) -&gt; <span class="ident">CellStruct</span> {
-        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">align</span> <span class="op">=</span> <span class="ident">align</span>;
-        <span class="self">self</span>
+    <span class="doccomment">/// Returns the minimum dimensions required by the cell
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>required_dimension(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Dimension {
+        <span class="kw">let </span>height = <span class="self">self</span>.data.len() + <span class="self">self</span>.format.padding.top + <span class="self">self</span>.format.padding.bottom;
+        <span class="kw">let </span>width = <span class="self">self
+            </span>.data
+            .iter()
+            .map(|x| display_width(x))
+            .max()
+            .unwrap_or_default()
+            + <span class="self">self</span>.format.padding.left
+            + <span class="self">self</span>.format.padding.right;
+
+        Dimension { width, height }
     }
 
-    <span class="doccomment">/// Used to add padding to the contents of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">padding</span>: <span class="ident">Padding</span>) -&gt; <span class="ident">CellStruct</span> {
-        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span> <span class="op">=</span> <span class="ident">padding</span>;
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ColorSpec</span> {
-        <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">color_spec</span>()
-    }
-
-    <span class="doccomment">/// Returns the minimum dimensions required by the cell</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">required_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Dimension</span> {
-        <span class="kw">let</span> <span class="ident">height</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">top</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">bottom</span>;
-        <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">data</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">display_width</span>(<span class="ident">x</span>))
-            .<span class="ident">max</span>()
-            .<span class="ident">unwrap_or_default</span>()
-            <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">left</span>
-            <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">right</span>;
-
-        <span class="ident">Dimension</span> { <span class="ident">width</span>, <span class="ident">height</span> }
-    }
-
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">buffers</span>(
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>buffers(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>,
-        <span class="ident">available_dimension</span>: <span class="ident">Dimension</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Buffer</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">required_dimension</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required_dimension</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffers</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">available_dimension</span>.<span class="ident">height</span>);
+        writer: <span class="kw-2">&amp;</span>BufferWriter,
+        available_dimension: Dimension,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Buffer&gt;&gt; {
+        <span class="kw">let </span>required_dimension = <span class="self">self</span>.required_dimension();
+        <span class="kw">let </span><span class="kw-2">mut </span>buffers = Vec::with_capacity(available_dimension.height);
 
         <span class="macro">assert!</span>(
-            <span class="ident">available_dimension</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">required_dimension</span>,
-            <span class="string">&quot;Available dimensions for a cell are smaller than required. Please create an issue in https://github.com/devashishdxt/cli-table&quot;</span>
-        );
+            available_dimension &gt;= required_dimension,
+            <span class="string">&quot;Available dimensions for a cell are smaller than required. Please create an issue in https://github.com/devashishdxt/cli-table&quot;
+        </span>);
 
-        <span class="kw">let</span> <span class="ident">top_blank_lines</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">top_blank_lines</span>(<span class="ident">available_dimension</span>, <span class="ident">required_dimension</span>);
+        <span class="kw">let </span>top_blank_lines = <span class="self">self</span>.top_blank_lines(available_dimension, required_dimension);
 
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">top_blank_lines</span> {
-            <span class="ident">buffers</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">buffer</span>(<span class="ident">writer</span>, <span class="ident">available_dimension</span>, <span class="ident">required_dimension</span>, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>);
+        <span class="kw">for _ in </span><span class="number">0</span>..top_blank_lines {
+            buffers.push(<span class="self">self</span>.buffer(writer, available_dimension, required_dimension, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>);
         }
 
-        <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">clone</span>().<span class="ident">iter</span>() {
-            <span class="ident">buffers</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">buffer</span>(<span class="ident">writer</span>, <span class="ident">available_dimension</span>, <span class="ident">required_dimension</span>, <span class="ident">line</span>)<span class="question-mark">?</span>);
+        <span class="kw">for </span>line <span class="kw">in </span><span class="self">self</span>.data.clone().iter() {
+            buffers.push(<span class="self">self</span>.buffer(writer, available_dimension, required_dimension, line)<span class="question-mark">?</span>);
         }
 
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">available_dimension</span>.<span class="ident">height</span> <span class="op">-</span> (<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="ident">top_blank_lines</span>)) {
-            <span class="ident">buffers</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">buffer</span>(<span class="ident">writer</span>, <span class="ident">available_dimension</span>, <span class="ident">required_dimension</span>, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>);
+        <span class="kw">for _ in </span><span class="number">0</span>..(available_dimension.height - (<span class="self">self</span>.data.len() + top_blank_lines)) {
+            buffers.push(<span class="self">self</span>.buffer(writer, available_dimension, required_dimension, <span class="string">&quot;&quot;</span>)<span class="question-mark">?</span>);
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">buffers</span>)
+        <span class="prelude-val">Ok</span>(buffers)
     }
 
-    <span class="kw">fn</span> <span class="ident">buffer</span>(
+    <span class="kw">fn </span>buffer(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>,
-        <span class="ident">available_dimension</span>: <span class="ident">Dimension</span>,
-        <span class="ident">required_dimension</span>: <span class="ident">Dimension</span>,
-        <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Buffer</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">empty_chars</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">justify</span> {
-            <span class="ident">Justify::Left</span> =&gt; <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">left</span>,
-            <span class="ident">Justify::Right</span> =&gt; {
-                (<span class="ident">available_dimension</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">required_dimension</span>.<span class="ident">width</span>) <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">left</span>
+        writer: <span class="kw-2">&amp;</span>BufferWriter,
+        available_dimension: Dimension,
+        required_dimension: Dimension,
+        data: <span class="kw-2">&amp;</span>str,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Buffer&gt; {
+        <span class="kw">let </span>empty_chars = <span class="kw">match </span><span class="self">self</span>.format.justify {
+            Justify::Left =&gt; <span class="self">self</span>.format.padding.left,
+            Justify::Right =&gt; {
+                (available_dimension.width - required_dimension.width) + <span class="self">self</span>.format.padding.left
             }
-            <span class="ident">Justify::Center</span> =&gt; {
-                ((<span class="ident">available_dimension</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">required_dimension</span>.<span class="ident">width</span>) <span class="op">/</span> <span class="number">2</span>)
-                    <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">left</span>
+            Justify::Center =&gt; {
+                ((available_dimension.width - required_dimension.width) / <span class="number">2</span>)
+                    + <span class="self">self</span>.format.padding.left
             }
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">buffer</span>();
-        <span class="ident">buffer</span>.<span class="ident">set_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">color_spec</span>())<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer = writer.buffer();
+        buffer.set_color(<span class="kw-2">&amp;</span><span class="self">self</span>.color_spec())<span class="question-mark">?</span>;
 
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">empty_chars</span> {
-            <span class="macro">write!</span>(<span class="ident">buffer</span>, <span class="string">&quot; &quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">for _ in </span><span class="number">0</span>..empty_chars {
+            <span class="macro">write!</span>(buffer, <span class="string">&quot; &quot;</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="macro">write!</span>(<span class="ident">buffer</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">data</span>)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(buffer, <span class="string">&quot;{}&quot;</span>, data)<span class="question-mark">?</span>;
 
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">available_dimension</span>.<span class="ident">width</span> <span class="op">-</span> (<span class="ident">display_width</span>(<span class="ident">data</span>) <span class="op">+</span> <span class="ident">empty_chars</span>)) {
-            <span class="macro">write!</span>(<span class="ident">buffer</span>, <span class="string">&quot; &quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">for _ in </span><span class="number">0</span>..(available_dimension.width - (display_width(data) + empty_chars)) {
+            <span class="macro">write!</span>(buffer, <span class="string">&quot; &quot;</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">buffer</span>)
+        <span class="prelude-val">Ok</span>(buffer)
     }
 
-    <span class="kw">fn</span> <span class="ident">top_blank_lines</span>(
+    <span class="kw">fn </span>top_blank_lines(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">available_dimension</span>: <span class="ident">Dimension</span>,
-        <span class="ident">required_dimension</span>: <span class="ident">Dimension</span>,
-    ) -&gt; <span class="ident">usize</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">align</span> {
-            <span class="ident">Align::Top</span> =&gt; <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">top</span>,
-            <span class="ident">Align::Bottom</span> =&gt; {
-                (<span class="ident">available_dimension</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">required_dimension</span>.<span class="ident">height</span>) <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">top</span>
+        available_dimension: Dimension,
+        required_dimension: Dimension,
+    ) -&gt; usize {
+        <span class="kw">match </span><span class="self">self</span>.format.align {
+            Align::Top =&gt; <span class="self">self</span>.format.padding.top,
+            Align::Bottom =&gt; {
+                (available_dimension.height - required_dimension.height) + <span class="self">self</span>.format.padding.top
             }
-            <span class="ident">Align::Center</span> =&gt; {
-                ((<span class="ident">available_dimension</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">required_dimension</span>.<span class="ident">height</span>) <span class="op">/</span> <span class="number">2</span>)
-                    <span class="op">+</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">padding</span>.<span class="ident">top</span>
+            Align::Center =&gt; {
+                ((available_dimension.height - required_dimension.height) / <span class="number">2</span>)
+                    + <span class="self">self</span>.format.padding.top
             }
         }
     }
 }
 
-<span class="doccomment">/// Trait to convert raw types into cells</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cell</span> {
-    <span class="doccomment">/// Converts raw type to cell of a table</span>
-    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) -&gt; <span class="ident">CellStruct</span>;
+<span class="doccomment">/// Trait to convert raw types into cells
+</span><span class="kw">pub trait </span>Cell {
+    <span class="doccomment">/// Converts raw type to cell of a table
+    </span><span class="kw">fn </span>cell(<span class="self">self</span>) -&gt; CellStruct;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Cell</span> <span class="kw">for</span> <span class="ident">T</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Display</span>,
+<span class="kw">impl</span>&lt;T&gt; Cell <span class="kw">for </span>T
+<span class="kw">where
+    </span>T: Display,
 {
-    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) -&gt; <span class="ident">CellStruct</span> {
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">lines</span>().<span class="ident">map</span>(<span class="ident">ToString::to_string</span>).<span class="ident">collect</span>();
+    <span class="kw">fn </span>cell(<span class="self">self</span>) -&gt; CellStruct {
+        <span class="kw">let </span>data = <span class="self">self</span>.to_string().lines().map(ToString::to_string).collect();
 
-        <span class="ident">CellStruct</span> {
-            <span class="ident">data</span>,
-            <span class="ident">format</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">style</span>: <span class="ident">Default::default</span>(),
+        CellStruct {
+            data,
+            format: Default::default(),
+            style: Default::default(),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Cell</span> <span class="kw">for</span> <span class="ident">CellStruct</span> {
-    <span class="kw">fn</span> <span class="ident">cell</span>(<span class="self">self</span>) -&gt; <span class="ident">CellStruct</span> {
-        <span class="self">self</span>
+<span class="kw">impl </span>Cell <span class="kw">for </span>CellStruct {
+    <span class="kw">fn </span>cell(<span class="self">self</span>) -&gt; CellStruct {
+        <span class="self">self
+    </span>}
+}
+
+<span class="kw">impl </span>Style <span class="kw">for </span>CellStruct {
+    <span class="kw">fn </span>foreground_color(<span class="kw-2">mut </span><span class="self">self</span>, foreground_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.foreground_color(foreground_color);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>background_color(<span class="kw-2">mut </span><span class="self">self</span>, background_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.background_color(background_color);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>bold(<span class="kw-2">mut </span><span class="self">self</span>, bold: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.bold(bold);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>underline(<span class="kw-2">mut </span><span class="self">self</span>, underline: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.underline(underline);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>italic(<span class="kw-2">mut </span><span class="self">self</span>, italic: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.italic(italic);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>intense(<span class="kw-2">mut </span><span class="self">self</span>, intense: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.intense(intense);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>dimmed(<span class="kw-2">mut </span><span class="self">self</span>, dimmed: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.dimmed(dimmed);
+        <span class="self">self
+    </span>}
+}
+
+<span class="doccomment">/// Struct for configuring a cell&#39;s format
+</span><span class="attribute">#[derive(Debug, Clone, Copy, Default)]
+</span><span class="kw">struct </span>CellFormat {
+    justify: Justify,
+    align: Align,
+    padding: Padding,
+}
+
+<span class="doccomment">/// Used to horizontally justify contents of a cell
+</span><span class="attribute">#[derive(Debug, Clone, Copy)]
+</span><span class="kw">pub enum </span>Justify {
+    <span class="doccomment">/// Justifies contents to left
+    </span>Left,
+    <span class="doccomment">/// Justifies contents to right
+    </span>Right,
+    <span class="doccomment">/// Justifies contents to center
+    </span>Center,
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>Justify {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Left
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Style</span> <span class="kw">for</span> <span class="ident">CellStruct</span> {
-    <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">foreground_color</span>(<span class="ident">foreground_color</span>);
-        <span class="self">self</span>
-    }
+<span class="doccomment">/// Used to vertically align contents of a cell
+</span><span class="attribute">#[derive(Debug, Clone, Copy)]
+</span><span class="kw">pub enum </span>Align {
+    <span class="doccomment">/// Aligns contents to top
+    </span>Top,
+    <span class="doccomment">/// Aligns contents to bottom
+    </span>Bottom,
+    <span class="doccomment">/// Aligns contents to center
+    </span>Center,
+}
 
-    <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">background_color</span>(<span class="ident">background_color</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">bold</span>(<span class="ident">bold</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">underline</span>(<span class="ident">underline</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">italic</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">italic</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">italic</span>(<span class="ident">italic</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">intense</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">intense</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">intense</span>(<span class="ident">intense</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">dimmed</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dimmed</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">dimmed</span>(<span class="ident">dimmed</span>);
-        <span class="self">self</span>
+<span class="kw">impl </span>Default <span class="kw">for </span>Align {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Top
     }
 }
 
-<span class="doccomment">/// Struct for configuring a cell&#39;s format</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CellFormat</span> {
-    <span class="ident">justify</span>: <span class="ident">Justify</span>,
-    <span class="ident">align</span>: <span class="ident">Align</span>,
-    <span class="ident">padding</span>: <span class="ident">Padding</span>,
+<span class="doccomment">/// Used to add padding to the contents of a cell
+</span><span class="attribute">#[derive(Debug, Clone, Copy, Default)]
+</span><span class="kw">pub struct </span>Padding {
+    <span class="doccomment">/// Left padding
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) left: usize,
+    <span class="doccomment">/// Right padding
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) right: usize,
+    <span class="doccomment">/// Top padding
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) top: usize,
+    <span class="doccomment">/// Bottom padding
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) bottom: usize,
 }
 
-<span class="doccomment">/// Used to horizontally justify contents of a cell</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Justify</span> {
-    <span class="doccomment">/// Justifies contents to left</span>
-    <span class="ident">Left</span>,
-    <span class="doccomment">/// Justifies contents to right</span>
-    <span class="ident">Right</span>,
-    <span class="doccomment">/// Justifies contents to center</span>
-    <span class="ident">Center</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Justify</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::Left</span>
+<span class="kw">impl </span>Padding {
+    <span class="doccomment">/// Creates a new builder for padding
+    </span><span class="kw">pub fn </span>builder() -&gt; PaddingBuilder {
+        Default::default()
     }
 }
 
-<span class="doccomment">/// Used to vertically align contents of a cell</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Align</span> {
-    <span class="doccomment">/// Aligns contents to top</span>
-    <span class="ident">Top</span>,
-    <span class="doccomment">/// Aligns contents to bottom</span>
-    <span class="ident">Bottom</span>,
-    <span class="doccomment">/// Aligns contents to center</span>
-    <span class="ident">Center</span>,
+<span class="doccomment">/// Builder for padding
+</span><span class="attribute">#[derive(Debug, Default)]
+</span><span class="kw">pub struct </span>PaddingBuilder(Padding);
+
+<span class="kw">impl </span>PaddingBuilder {
+    <span class="doccomment">/// Sets left padding of a cell
+    </span><span class="kw">pub fn </span>left(<span class="kw-2">mut </span><span class="self">self</span>, left_padding: usize) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.left = left_padding;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Sets right padding of a cell
+    </span><span class="kw">pub fn </span>right(<span class="kw-2">mut </span><span class="self">self</span>, right_padding: usize) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.right = right_padding;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Sets top padding of a cell
+    </span><span class="kw">pub fn </span>top(<span class="kw-2">mut </span><span class="self">self</span>, top_padding: usize) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.top = top_padding;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Sets bottom padding of a cell
+    </span><span class="kw">pub fn </span>bottom(<span class="kw-2">mut </span><span class="self">self</span>, bottom_padding: usize) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.bottom = bottom_padding;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Build padding
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Padding {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Align</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::Top</span>
-    }
+<span class="doccomment">/// Dimensions of a cell
+</span><span class="attribute">#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Dimension {
+    <span class="doccomment">/// Width of a cell
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) width: usize,
+    <span class="doccomment">/// Height of a cell
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) height: usize,
 }
 
-<span class="doccomment">/// Used to add padding to the contents of a cell</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Padding</span> {
-    <span class="doccomment">/// Left padding</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">left</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Right padding</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">right</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Top padding</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">top</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Bottom padding</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">bottom</span>: <span class="ident">usize</span>,
-}
+<span class="kw">impl </span>From&lt;RowDimension&gt; <span class="kw">for </span>Vec&lt;Dimension&gt; {
+    <span class="kw">fn </span>from(row_dimension: RowDimension) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>height = row_dimension.height;
 
-<span class="kw">impl</span> <span class="ident">Padding</span> {
-    <span class="doccomment">/// Creates a new builder for padding</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">PaddingBuilder</span> {
-        <span class="ident">Default::default</span>()
-    }
-}
-
-<span class="doccomment">/// Builder for padding</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PaddingBuilder</span>(<span class="ident">Padding</span>);
-
-<span class="kw">impl</span> <span class="ident">PaddingBuilder</span> {
-    <span class="doccomment">/// Sets left padding of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_padding</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">left</span> <span class="op">=</span> <span class="ident">left_padding</span>;
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets right padding of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_padding</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">right</span> <span class="op">=</span> <span class="ident">right_padding</span>;
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets top padding of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">top_padding</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">top</span> <span class="op">=</span> <span class="ident">top_padding</span>;
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets bottom padding of a cell</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bottom_padding</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bottom</span> <span class="op">=</span> <span class="ident">bottom_padding</span>;
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Build padding</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Padding</span> {
-        <span class="self">self</span>.<span class="number">0</span>
+        row_dimension
+            .widths
+            .into_iter()
+            .map(|width| Dimension { width, height })
+            .collect()
     }
 }
 
-<span class="doccomment">/// Dimensions of a cell</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Dimension</span> {
-    <span class="doccomment">/// Width of a cell</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">width</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Height of a cell</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">height</span>: <span class="ident">usize</span>,
-}
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">RowDimension</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">row_dimension</span>: <span class="ident">RowDimension</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">height</span> <span class="op">=</span> <span class="ident">row_dimension</span>.<span class="ident">height</span>;
-
-        <span class="ident">row_dimension</span>
-            .<span class="ident">widths</span>
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">width</span><span class="op">|</span> <span class="ident">Dimension</span> { <span class="ident">width</span>, <span class="ident">height</span> })
-            .<span class="ident">collect</span>()
-    }
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_into_cell</span>() {
-        <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="string">&quot;Hello&quot;</span>.<span class="ident">cell</span>();
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, <span class="ident">cell</span>.<span class="ident">data</span>.<span class="ident">len</span>());
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Hello&quot;</span>, <span class="ident">cell</span>.<span class="ident">data</span>[<span class="number">0</span>]);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_into_cell() {
+        <span class="kw">let </span>cell = <span class="string">&quot;Hello&quot;</span>.cell();
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, cell.data.len());
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;Hello&quot;</span>, cell.data[<span class="number">0</span>]);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -476,478 +470,477 @@
 <span id="470">470</span>
 <span id="471">471</span>
 <span id="472">472</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::io::Result</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::io::Result;
 
-<span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Buffer</span>, <span class="ident">BufferWriter</span>, <span class="ident">Color</span>, <span class="ident">ColorChoice</span>, <span class="ident">ColorSpec</span>};
+<span class="kw">use </span>termcolor::{Buffer, BufferWriter, Color, ColorChoice, ColorSpec};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">buffers::Buffers</span>,
-    <span class="ident">display::TableDisplay</span>,
-    <span class="ident">row</span>::{<span class="ident">Dimension</span> <span class="kw">as</span> <span class="ident">RowDimension</span>, <span class="ident">Row</span>, <span class="ident">RowStruct</span>},
-    <span class="ident">style</span>::{<span class="ident">Style</span>, <span class="ident">StyleStruct</span>},
-    <span class="ident">utils</span>::<span class="kw-2">*</span>,
+<span class="kw">use crate</span>::{
+    buffers::Buffers,
+    display::TableDisplay,
+    row::{Dimension <span class="kw">as </span>RowDimension, Row, RowStruct},
+    style::{Style, StyleStruct},
+    utils::<span class="kw-2">*</span>,
 };
 
-<span class="doccomment">/// Struct for building a table on command line</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableStruct</span> {
-    <span class="doccomment">/// Title row of the table</span>
-    <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RowStruct</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Rows in the table</span>
-    <span class="ident">rows</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RowStruct</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Format of the table</span>
-    <span class="ident">format</span>: <span class="ident">TableFormat</span>,
-    <span class="doccomment">/// Style of the table</span>
-    <span class="ident">style</span>: <span class="ident">StyleStruct</span>,
-    <span class="doccomment">/// Color preferences for printing the table</span>
-    <span class="ident">color_choice</span>: <span class="ident">ColorChoice</span>,
+<span class="doccomment">/// Struct for building a table on command line
+</span><span class="kw">pub struct </span>TableStruct {
+    <span class="doccomment">/// Title row of the table
+    </span>title: <span class="prelude-ty">Option</span>&lt;RowStruct&gt;,
+    <span class="doccomment">/// Rows in the table
+    </span>rows: Vec&lt;RowStruct&gt;,
+    <span class="doccomment">/// Format of the table
+    </span>format: TableFormat,
+    <span class="doccomment">/// Style of the table
+    </span>style: StyleStruct,
+    <span class="doccomment">/// Color preferences for printing the table
+    </span>color_choice: ColorChoice,
 }
 
-<span class="kw">impl</span> <span class="ident">TableStruct</span> {
-    <span class="doccomment">/// Used to add a title row of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Row</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>.<span class="ident">row</span>());
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>TableStruct {
+    <span class="doccomment">/// Used to add a title row of a table
+    </span><span class="kw">pub fn </span>title&lt;T: Row&gt;(<span class="kw-2">mut </span><span class="self">self</span>, title: T) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.title = <span class="prelude-val">Some</span>(title.row());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Used to set border of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">border</span>: <span class="ident">Border</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">border</span> <span class="op">=</span> <span class="ident">border</span>;
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Used to set border of a table
+    </span><span class="kw">pub fn </span>border(<span class="kw-2">mut </span><span class="self">self</span>, border: Border) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.format.border = border;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Used to set column/row separators of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">separator</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">separator</span>: <span class="ident">Separator</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span> <span class="op">=</span> <span class="ident">separator</span>;
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Used to set column/row separators of a table
+    </span><span class="kw">pub fn </span>separator(<span class="kw-2">mut </span><span class="self">self</span>, separator: Separator) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.format.separator = separator;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Used to set the color preferences for printing the table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">color_choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">color_choice</span>: <span class="ident">ColorChoice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">color_choice</span> <span class="op">=</span> <span class="ident">color_choice</span>;
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Used to set the color preferences for printing the table
+    </span><span class="kw">pub fn </span>color_choice(<span class="kw-2">mut </span><span class="self">self</span>, color_choice: ColorChoice) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.color_choice = color_choice;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Returns a struct which implements the `Display` trait</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TableDisplay</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">writer</span> <span class="op">=</span> <span class="ident">BufferWriter::stdout</span>(<span class="self">self</span>.<span class="ident">color_choice</span>);
-        <span class="kw">let</span> <span class="ident">buffers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffers</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>)<span class="question-mark">?</span>;
+    <span class="doccomment">/// Returns a struct which implements the `Display` trait
+    </span><span class="kw">pub fn </span>display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;TableDisplay&gt; {
+        <span class="kw">let </span>writer = BufferWriter::stdout(<span class="self">self</span>.color_choice);
+        <span class="kw">let </span>buffers = <span class="self">self</span>.buffers(<span class="kw-2">&amp;</span>writer)<span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
 
-        <span class="kw">for</span> <span class="ident">buffer</span> <span class="kw">in</span> <span class="ident">buffers</span> {
-            <span class="ident">output</span>.<span class="ident">append</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffer</span>.<span class="ident">into_inner</span>());
+        <span class="kw">for </span>buffer <span class="kw">in </span>buffers {
+            output.append(<span class="kw-2">&amp;mut </span>buffer.into_inner());
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">TableDisplay::new</span>(<span class="ident">output</span>))
+        <span class="prelude-val">Ok</span>(TableDisplay::new(output))
     }
 
-    <span class="doccomment">/// Prints current table to `stdout`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">print_stdout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">print_writer</span>(<span class="ident">BufferWriter::stdout</span>(<span class="self">self</span>.<span class="ident">color_choice</span>))
+    <span class="doccomment">/// Prints current table to `stdout`
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>print_stdout(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="self">self</span>.print_writer(BufferWriter::stdout(<span class="self">self</span>.color_choice))
     }
 
-    <span class="doccomment">/// Prints current table to `stderr`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">print_stderr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">print_writer</span>(<span class="ident">BufferWriter::stderr</span>(<span class="self">self</span>.<span class="ident">color_choice</span>))
+    <span class="doccomment">/// Prints current table to `stderr`
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>print_stderr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="self">self</span>.print_writer(BufferWriter::stderr(<span class="self">self</span>.color_choice))
     }
 
-    <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ColorSpec</span> {
-        <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">color_spec</span>()
+    <span class="kw">fn </span>color_spec(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ColorSpec {
+        <span class="self">self</span>.style.color_spec()
     }
 
-    <span class="kw">fn</span> <span class="ident">required_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Dimension</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">heights</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">widths</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">fn </span>required_dimension(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Dimension {
+        <span class="kw">let </span><span class="kw-2">mut </span>heights = Vec::with_capacity(<span class="self">self</span>.rows.len() + <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>widths = Vec::new();
 
-        <span class="kw">let</span> <span class="ident">title_dimension</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">title</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">RowStruct::required_dimension</span>);
+        <span class="kw">let </span>title_dimension = <span class="self">self</span>.title.as_ref().map(RowStruct::required_dimension);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">title_dimension</span>) <span class="op">=</span> <span class="ident">title_dimension</span> {
-            <span class="ident">widths</span> <span class="op">=</span> <span class="ident">title_dimension</span>.<span class="ident">widths</span>;
-            <span class="ident">heights</span>.<span class="ident">push</span>(<span class="ident">title_dimension</span>.<span class="ident">height</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(title_dimension) = title_dimension {
+            widths = title_dimension.widths;
+            heights.push(title_dimension.height);
         }
 
-        <span class="kw">for</span> <span class="ident">row</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="ident">row_dimension</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">required_dimension</span>();
+        <span class="kw">for </span>row <span class="kw">in </span><span class="self">self</span>.rows.iter() {
+            <span class="kw">let </span>row_dimension = row.required_dimension();
 
-            <span class="ident">heights</span>.<span class="ident">push</span>(<span class="ident">row_dimension</span>.<span class="ident">height</span>);
+            heights.push(row_dimension.height);
 
-            <span class="kw">let</span> <span class="ident">new_widths</span> <span class="op">=</span> <span class="ident">row_dimension</span>.<span class="ident">widths</span>;
+            <span class="kw">let </span>new_widths = row_dimension.widths;
 
-            <span class="kw">if</span> <span class="ident">widths</span>.<span class="ident">is_empty</span>() {
-                <span class="ident">widths</span> <span class="op">=</span> <span class="ident">new_widths</span>;
-            } <span class="kw">else</span> {
-                <span class="kw">for</span> (<span class="ident">width</span>, <span class="ident">new_width</span>) <span class="kw">in</span> <span class="ident">widths</span>.<span class="ident">iter_mut</span>().<span class="ident">zip</span>(<span class="ident">new_widths</span>.<span class="ident">into_iter</span>()) {
-                    <span class="kw-2">*</span><span class="ident">width</span> <span class="op">=</span> <span class="ident">std::cmp::max</span>(<span class="ident">new_width</span>, <span class="kw-2">*</span><span class="ident">width</span>);
+            <span class="kw">if </span>widths.is_empty() {
+                widths = new_widths;
+            } <span class="kw">else </span>{
+                <span class="kw">for </span>(width, new_width) <span class="kw">in </span>widths.iter_mut().zip(new_widths.into_iter()) {
+                    <span class="kw-2">*</span>width = std::cmp::max(new_width, <span class="kw-2">*</span>width);
                 }
             }
         }
 
-        <span class="ident">Dimension</span> { <span class="ident">widths</span>, <span class="ident">heights</span> }
+        Dimension { widths, heights }
     }
 
-    <span class="kw">fn</span> <span class="ident">buffers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="ident">BufferWriter</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Buffer</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">table_dimension</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required_dimension</span>();
-        <span class="kw">let</span> <span class="ident">row_dimensions</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RowDimension</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">table_dimension</span>.<span class="ident">clone</span>().<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">row_dimensions</span> <span class="op">=</span> <span class="ident">row_dimensions</span>.<span class="ident">into_iter</span>();
-        <span class="kw">let</span> <span class="ident">color_spec</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">color_spec</span>();
+    <span class="kw">fn </span>buffers(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;</span>BufferWriter) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Buffer&gt;&gt; {
+        <span class="kw">let </span>table_dimension = <span class="self">self</span>.required_dimension();
+        <span class="kw">let </span>row_dimensions: Vec&lt;RowDimension&gt; = table_dimension.clone().into();
+        <span class="kw">let </span><span class="kw-2">mut </span>row_dimensions = row_dimensions.into_iter();
+        <span class="kw">let </span>color_spec = <span class="self">self</span>.color_spec();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffers</span> <span class="op">=</span> <span class="ident">Buffers::new</span>(<span class="ident">writer</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>buffers = Buffers::new(writer);
 
-        <span class="ident">print_horizontal_line</span>(
-            <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-            <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">top</span>.<span class="ident">as_ref</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">table_dimension</span>,
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>,
-            <span class="kw-2">&amp;</span><span class="ident">color_spec</span>,
+        print_horizontal_line(
+            <span class="kw-2">&amp;mut </span>buffers,
+            <span class="self">self</span>.format.border.top.as_ref(),
+            <span class="kw-2">&amp;</span>table_dimension,
+            <span class="kw-2">&amp;</span><span class="self">self</span>.format,
+            <span class="kw-2">&amp;</span>color_spec,
         )<span class="question-mark">?</span>;
-        <span class="ident">println</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>)<span class="question-mark">?</span>;
+        println(<span class="kw-2">&amp;mut </span>buffers)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">title</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">title</span> {
-            <span class="kw">let</span> <span class="ident">title_dimension</span> <span class="op">=</span> <span class="ident">row_dimensions</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">title_buffers</span> <span class="op">=</span>
-                <span class="ident">title</span>.<span class="ident">buffers</span>(<span class="ident">writer</span>, <span class="ident">title_dimension</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>title) = <span class="self">self</span>.title {
+            <span class="kw">let </span>title_dimension = row_dimensions.next().unwrap();
+            <span class="kw">let </span><span class="kw-2">mut </span>title_buffers =
+                title.buffers(writer, title_dimension, <span class="kw-2">&amp;</span><span class="self">self</span>.format, <span class="kw-2">&amp;</span>color_spec)<span class="question-mark">?</span>;
 
-            <span class="ident">buffers</span>.<span class="ident">append</span>(<span class="kw-2">&amp;mut</span> <span class="ident">title_buffers</span>)<span class="question-mark">?</span>;
+            buffers.append(<span class="kw-2">&amp;mut </span>title_buffers)<span class="question-mark">?</span>;
 
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">title</span>.<span class="ident">is_some</span>() {
-                <span class="ident">print_horizontal_line</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-                    <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">title</span>.<span class="ident">as_ref</span>(),
-                    <span class="kw-2">&amp;</span><span class="ident">table_dimension</span>,
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>,
-                    <span class="kw-2">&amp;</span><span class="ident">color_spec</span>,
-                )<span class="question-mark">?</span>
-            } <span class="kw">else</span> {
-                <span class="ident">print_horizontal_line</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-                    <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">row</span>.<span class="ident">as_ref</span>(),
-                    <span class="kw-2">&amp;</span><span class="ident">table_dimension</span>,
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>,
-                    <span class="kw-2">&amp;</span><span class="ident">color_spec</span>,
-                )<span class="question-mark">?</span>
-            }
+            <span class="kw">if </span><span class="self">self</span>.format.separator.title.is_some() {
+                print_horizontal_line(
+                    <span class="kw-2">&amp;mut </span>buffers,
+                    <span class="self">self</span>.format.separator.title.as_ref(),
+                    <span class="kw-2">&amp;</span>table_dimension,
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.format,
+                    <span class="kw-2">&amp;</span>color_spec,
+                )<span class="question-mark">?
+            </span>} <span class="kw">else </span>{
+                print_horizontal_line(
+                    <span class="kw-2">&amp;mut </span>buffers,
+                    <span class="self">self</span>.format.separator.row.as_ref(),
+                    <span class="kw-2">&amp;</span>table_dimension,
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.format,
+                    <span class="kw-2">&amp;</span>color_spec,
+                )<span class="question-mark">?
+            </span>}
 
-            <span class="ident">println</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>)<span class="question-mark">?</span>;
+            println(<span class="kw-2">&amp;mut </span>buffers)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rows</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rows</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">row_dimensions</span>).<span class="ident">peekable</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>rows = <span class="self">self</span>.rows.iter().zip(row_dimensions).peekable();
 
-        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">row</span>, <span class="ident">row_dimension</span>)) <span class="op">=</span> <span class="ident">rows</span>.<span class="ident">next</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">row_buffers</span> <span class="op">=</span> <span class="ident">row</span>.<span class="ident">buffers</span>(<span class="ident">writer</span>, <span class="ident">row_dimension</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="ident">color_spec</span>)<span class="question-mark">?</span>;
+        <span class="kw">while let </span><span class="prelude-val">Some</span>((row, row_dimension)) = rows.next() {
+            <span class="kw">let </span><span class="kw-2">mut </span>row_buffers = row.buffers(writer, row_dimension, <span class="kw-2">&amp;</span><span class="self">self</span>.format, <span class="kw-2">&amp;</span>color_spec)<span class="question-mark">?</span>;
 
-            <span class="ident">buffers</span>.<span class="ident">append</span>(<span class="kw-2">&amp;mut</span> <span class="ident">row_buffers</span>)<span class="question-mark">?</span>;
+            buffers.append(<span class="kw-2">&amp;mut </span>row_buffers)<span class="question-mark">?</span>;
 
-            <span class="kw">match</span> <span class="ident">rows</span>.<span class="ident">peek</span>() {
-                <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="ident">print_horizontal_line</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-                    <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">separator</span>.<span class="ident">row</span>.<span class="ident">as_ref</span>(),
-                    <span class="kw-2">&amp;</span><span class="ident">table_dimension</span>,
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>,
-                    <span class="kw-2">&amp;</span><span class="ident">color_spec</span>,
+            <span class="kw">match </span>rows.peek() {
+                <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; print_horizontal_line(
+                    <span class="kw-2">&amp;mut </span>buffers,
+                    <span class="self">self</span>.format.separator.row.as_ref(),
+                    <span class="kw-2">&amp;</span>table_dimension,
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.format,
+                    <span class="kw-2">&amp;</span>color_spec,
                 )<span class="question-mark">?</span>,
-                <span class="prelude-val">None</span> =&gt; <span class="ident">print_horizontal_line</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>,
-                    <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">border</span>.<span class="ident">bottom</span>.<span class="ident">as_ref</span>(),
-                    <span class="kw-2">&amp;</span><span class="ident">table_dimension</span>,
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">format</span>,
-                    <span class="kw-2">&amp;</span><span class="ident">color_spec</span>,
+                <span class="prelude-val">None </span>=&gt; print_horizontal_line(
+                    <span class="kw-2">&amp;mut </span>buffers,
+                    <span class="self">self</span>.format.border.bottom.as_ref(),
+                    <span class="kw-2">&amp;</span>table_dimension,
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.format,
+                    <span class="kw-2">&amp;</span>color_spec,
                 )<span class="question-mark">?</span>,
             }
 
-            <span class="kw">if</span> <span class="ident">rows</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
-                <span class="ident">println</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffers</span>)<span class="question-mark">?</span>;
+            <span class="kw">if </span>rows.peek().is_some() {
+                println(<span class="kw-2">&amp;mut </span>buffers)<span class="question-mark">?</span>;
             }
         }
 
-        <span class="ident">buffers</span>.<span class="ident">into_vec</span>()
+        buffers.into_vec()
     }
 
-    <span class="kw">fn</span> <span class="ident">print_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="ident">BufferWriter</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">buffers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffers</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn </span>print_writer(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: BufferWriter) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>buffers = <span class="self">self</span>.buffers(<span class="kw-2">&amp;</span>writer)<span class="question-mark">?</span>;
 
-        <span class="kw">for</span> <span class="ident">buffer</span> <span class="kw">in</span> <span class="ident">buffers</span>.<span class="ident">iter</span>() {
-            <span class="ident">writer</span>.<span class="ident">print</span>(<span class="ident">buffer</span>)<span class="question-mark">?</span>;
+        <span class="kw">for </span>buffer <span class="kw">in </span>buffers.iter() {
+            writer.print(buffer)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="doccomment">/// Trait to convert raw type into table</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Table</span> {
-    <span class="doccomment">/// Converts raw type to a table</span>
-    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) -&gt; <span class="ident">TableStruct</span>;
+<span class="doccomment">/// Trait to convert raw type into table
+</span><span class="kw">pub trait </span>Table {
+    <span class="doccomment">/// Converts raw type to a table
+    </span><span class="kw">fn </span>table(<span class="self">self</span>) -&gt; TableStruct;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Table</span> <span class="kw">for</span> <span class="ident">T</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">R</span><span class="op">&gt;</span>,
-    <span class="ident">R</span>: <span class="ident">Row</span>,
+<span class="kw">impl</span>&lt;T, R&gt; Table <span class="kw">for </span>T
+<span class="kw">where
+    </span>T: IntoIterator&lt;Item = R&gt;,
+    R: Row,
 {
-    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) -&gt; <span class="ident">TableStruct</span> {
-        <span class="kw">let</span> <span class="ident">rows</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Row::row</span>).<span class="ident">collect</span>();
+    <span class="kw">fn </span>table(<span class="self">self</span>) -&gt; TableStruct {
+        <span class="kw">let </span>rows = <span class="self">self</span>.into_iter().map(Row::row).collect();
 
-        <span class="ident">TableStruct</span> {
-            <span class="ident">title</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">rows</span>,
-            <span class="ident">format</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">style</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">color_choice</span>: <span class="ident">ColorChoice::Always</span>,
+        TableStruct {
+            title: Default::default(),
+            rows,
+            format: Default::default(),
+            style: Default::default(),
+            color_choice: ColorChoice::Always,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Table</span> <span class="kw">for</span> <span class="ident">TableStruct</span> {
-    <span class="kw">fn</span> <span class="ident">table</span>(<span class="self">self</span>) -&gt; <span class="ident">TableStruct</span> {
-        <span class="self">self</span>
+<span class="kw">impl </span>Table <span class="kw">for </span>TableStruct {
+    <span class="kw">fn </span>table(<span class="self">self</span>) -&gt; TableStruct {
+        <span class="self">self
+    </span>}
+}
+
+<span class="kw">impl </span>Style <span class="kw">for </span>TableStruct {
+    <span class="kw">fn </span>foreground_color(<span class="kw-2">mut </span><span class="self">self</span>, foreground_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.foreground_color(foreground_color);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>background_color(<span class="kw-2">mut </span><span class="self">self</span>, background_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.background_color(background_color);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>bold(<span class="kw-2">mut </span><span class="self">self</span>, bold: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.bold(bold);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>underline(<span class="kw-2">mut </span><span class="self">self</span>, underline: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.underline(underline);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>italic(<span class="kw-2">mut </span><span class="self">self</span>, italic: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.italic(italic);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>intense(<span class="kw-2">mut </span><span class="self">self</span>, intense: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.intense(intense);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">fn </span>dimmed(<span class="kw-2">mut </span><span class="self">self</span>, dimmed: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.style = <span class="self">self</span>.style.dimmed(dimmed);
+        <span class="self">self
+    </span>}
+}
+
+<span class="doccomment">/// A vertical line in a table (border or column separator)
+</span><span class="attribute">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>VerticalLine {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) filler: char,
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>VerticalLine {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ filler: <span class="string">&#39;|&#39; </span>}
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Style</span> <span class="kw">for</span> <span class="ident">TableStruct</span> {
-    <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">foreground_color</span>(<span class="ident">foreground_color</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">background_color</span>(<span class="ident">background_color</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">bold</span>(<span class="ident">bold</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">underline</span>(<span class="ident">underline</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">italic</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">italic</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">italic</span>(<span class="ident">italic</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">intense</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">intense</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">intense</span>(<span class="ident">intense</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">dimmed</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dimmed</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">style</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">style</span>.<span class="ident">dimmed</span>(<span class="ident">dimmed</span>);
-        <span class="self">self</span>
+<span class="kw">impl </span>VerticalLine {
+    <span class="doccomment">/// Creates a new instance of vertical line
+    </span><span class="kw">pub fn </span>new(filler: char) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ filler }
     }
 }
 
-<span class="doccomment">/// A vertical line in a table (border or column separator)</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VerticalLine</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">filler</span>: <span class="ident">char</span>,
+<span class="doccomment">/// A horizontal line in a table (border or row separator)
+</span><span class="attribute">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>HorizontalLine {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) left_end: char,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) right_end: char,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) junction: char,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) filler: char,
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">VerticalLine</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">filler</span>: <span class="string">&#39;|&#39;</span> }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">VerticalLine</span> {
-    <span class="doccomment">/// Creates a new instance of vertical line</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">filler</span>: <span class="ident">char</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">filler</span> }
-    }
-}
-
-<span class="doccomment">/// A horizontal line in a table (border or row separator)</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HorizontalLine</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">left_end</span>: <span class="ident">char</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">right_end</span>: <span class="ident">char</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">junction</span>: <span class="ident">char</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">filler</span>: <span class="ident">char</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">HorizontalLine</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">left_end</span>: <span class="string">&#39;+&#39;</span>,
-            <span class="ident">right_end</span>: <span class="string">&#39;+&#39;</span>,
-            <span class="ident">junction</span>: <span class="string">&#39;+&#39;</span>,
-            <span class="ident">filler</span>: <span class="string">&#39;-&#39;</span>,
+<span class="kw">impl </span>Default <span class="kw">for </span>HorizontalLine {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            left_end: <span class="string">&#39;+&#39;</span>,
+            right_end: <span class="string">&#39;+&#39;</span>,
+            junction: <span class="string">&#39;+&#39;</span>,
+            filler: <span class="string">&#39;-&#39;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">HorizontalLine</span> {
-    <span class="doccomment">/// Creates a new instance of horizontal line</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">left_end</span>: <span class="ident">char</span>, <span class="ident">right_end</span>: <span class="ident">char</span>, <span class="ident">junction</span>: <span class="ident">char</span>, <span class="ident">filler</span>: <span class="ident">char</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">left_end</span>,
-            <span class="ident">right_end</span>,
-            <span class="ident">junction</span>,
-            <span class="ident">filler</span>,
+<span class="kw">impl </span>HorizontalLine {
+    <span class="doccomment">/// Creates a new instance of horizontal line
+    </span><span class="kw">pub fn </span>new(left_end: char, right_end: char, junction: char, filler: char) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            left_end,
+            right_end,
+            junction,
+            filler,
         }
     }
 }
 
-<span class="doccomment">/// Borders of a table</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Border</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">top</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">bottom</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">left</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">right</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Borders of a table
+</span><span class="attribute">#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Border {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) top: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) bottom: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) left: <span class="prelude-ty">Option</span>&lt;VerticalLine&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) right: <span class="prelude-ty">Option</span>&lt;VerticalLine&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Border</span> {
-    <span class="doccomment">/// Creates a new builder for border</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">BorderBuilder</span> {
-        <span class="ident">BorderBuilder</span>(<span class="ident">Border</span> {
-            <span class="ident">top</span>: <span class="prelude-val">None</span>,
-            <span class="ident">bottom</span>: <span class="prelude-val">None</span>,
-            <span class="ident">left</span>: <span class="prelude-val">None</span>,
-            <span class="ident">right</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl </span>Border {
+    <span class="doccomment">/// Creates a new builder for border
+    </span><span class="kw">pub fn </span>builder() -&gt; BorderBuilder {
+        BorderBuilder(Border {
+            top: <span class="prelude-val">None</span>,
+            bottom: <span class="prelude-val">None</span>,
+            left: <span class="prelude-val">None</span>,
+            right: <span class="prelude-val">None</span>,
         })
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Border</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">top</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
-            <span class="ident">bottom</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
-            <span class="ident">left</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
-            <span class="ident">right</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
+<span class="kw">impl </span>Default <span class="kw">for </span>Border {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            top: <span class="prelude-val">Some</span>(Default::default()),
+            bottom: <span class="prelude-val">Some</span>(Default::default()),
+            left: <span class="prelude-val">Some</span>(Default::default()),
+            right: <span class="prelude-val">Some</span>(Default::default()),
         }
     }
 }
 
-<span class="doccomment">/// Builder for border</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BorderBuilder</span>(<span class="ident">Border</span>);
+<span class="doccomment">/// Builder for border
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>BorderBuilder(Border);
 
-<span class="kw">impl</span> <span class="ident">BorderBuilder</span> {
-    <span class="doccomment">/// Set top border of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">top</span>: <span class="ident">HorizontalLine</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">top</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">top</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>BorderBuilder {
+    <span class="doccomment">/// Set top border of a table
+    </span><span class="kw">pub fn </span>top(<span class="kw-2">mut </span><span class="self">self</span>, top: HorizontalLine) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.top = <span class="prelude-val">Some</span>(top);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set bottom border of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bottom</span>: <span class="ident">HorizontalLine</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">bottom</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bottom</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set bottom border of a table
+    </span><span class="kw">pub fn </span>bottom(<span class="kw-2">mut </span><span class="self">self</span>, bottom: HorizontalLine) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.bottom = <span class="prelude-val">Some</span>(bottom);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set left border of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left</span>: <span class="ident">VerticalLine</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">left</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">left</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set left border of a table
+    </span><span class="kw">pub fn </span>left(<span class="kw-2">mut </span><span class="self">self</span>, left: VerticalLine) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.left = <span class="prelude-val">Some</span>(left);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set right border of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right</span>: <span class="ident">VerticalLine</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">right</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">right</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set right border of a table
+    </span><span class="kw">pub fn </span>right(<span class="kw-2">mut </span><span class="self">self</span>, right: VerticalLine) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.right = <span class="prelude-val">Some</span>(right);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Build border</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Border</span> {
-        <span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Build border
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Border {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
 }
 
-<span class="doccomment">/// Inner (column/row) separators of a table</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Separator</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">row</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Inner (column/row) separators of a table
+</span><span class="attribute">#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Separator {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) column: <span class="prelude-ty">Option</span>&lt;VerticalLine&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) row: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) title: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Separator</span> {
-    <span class="doccomment">/// Creates a new builder for separator</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">SeparatorBuilder</span> {
-        <span class="ident">SeparatorBuilder</span>(<span class="ident">Separator</span> {
-            <span class="ident">column</span>: <span class="prelude-val">None</span>,
-            <span class="ident">row</span>: <span class="prelude-val">None</span>,
-            <span class="ident">title</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl </span>Separator {
+    <span class="doccomment">/// Creates a new builder for separator
+    </span><span class="kw">pub fn </span>builder() -&gt; SeparatorBuilder {
+        SeparatorBuilder(Separator {
+            column: <span class="prelude-val">None</span>,
+            row: <span class="prelude-val">None</span>,
+            title: <span class="prelude-val">None</span>,
         })
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Separator</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">column</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
-            <span class="ident">row</span>: <span class="prelude-val">Some</span>(<span class="ident">Default::default</span>()),
-            <span class="ident">title</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl </span>Default <span class="kw">for </span>Separator {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            column: <span class="prelude-val">Some</span>(Default::default()),
+            row: <span class="prelude-val">Some</span>(Default::default()),
+            title: <span class="prelude-val">None</span>,
         }
     }
 }
 
-<span class="doccomment">/// Builder for separator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SeparatorBuilder</span>(<span class="ident">Separator</span>);
+<span class="doccomment">/// Builder for separator
+</span><span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub struct </span>SeparatorBuilder(Separator);
 
-<span class="kw">impl</span> <span class="ident">SeparatorBuilder</span> {
-    <span class="doccomment">/// Set column separators of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerticalLine</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">column</span> <span class="op">=</span> <span class="ident">column</span>;
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>SeparatorBuilder {
+    <span class="doccomment">/// Set column separators of a table
+    </span><span class="kw">pub fn </span>column(<span class="kw-2">mut </span><span class="self">self</span>, column: <span class="prelude-ty">Option</span>&lt;VerticalLine&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.column = column;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set column separators of a table</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">row</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">row</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">row</span> <span class="op">=</span> <span class="ident">row</span>;
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set column separators of a table
+    </span><span class="kw">pub fn </span>row(<span class="kw-2">mut </span><span class="self">self</span>, row: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.row = row;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set title of a table</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # None</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When title separator is not preset (i.e., it is `None`), row separator is displayed in place of title separator.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HorizontalLine</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>;
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set title of a table
+    ///
+    /// # None
+    ///
+    /// When title separator is not preset (i.e., it is `None`), row separator is displayed in place of title separator.
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="prelude-ty">Option</span>&lt;HorizontalLine&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">0</span>.title = title;
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Build separator</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Separator</span> {
-        <span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Build separator
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Separator {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
 }
 
-<span class="doccomment">/// Struct for configuring a table&#39;s format</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">TableFormat</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">border</span>: <span class="ident">Border</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">separator</span>: <span class="ident">Separator</span>,
+<span class="doccomment">/// Struct for configuring a table&#39;s format
+</span><span class="attribute">#[derive(Debug, Default, Copy, Clone)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>TableFormat {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) border: Border,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) separator: Separator,
 }
 
-<span class="doccomment">/// Dimensions of a table</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Dimension</span> {
-    <span class="doccomment">/// Widths of each column of table</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">widths</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Height of each row of table</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">heights</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Dimensions of a table
+</span><span class="attribute">#[derive(Debug, Clone, Eq, PartialEq, Default)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Dimension {
+    <span class="doccomment">/// Widths of each column of table
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) widths: Vec&lt;usize&gt;,
+    <span class="doccomment">/// Height of each row of table
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) heights: Vec&lt;usize&gt;,
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_row_from_str_arr</span>() {
-        <span class="kw">let</span> <span class="ident">table</span>: <span class="ident">TableStruct</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;Scooby&quot;</span>, <span class="string">&quot;Doo&quot;</span>]].<span class="ident">table</span>();
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>.<span class="ident">len</span>());
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>[<span class="number">0</span>].<span class="ident">cells</span>.<span class="ident">len</span>());
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, <span class="ident">table</span>.<span class="ident">rows</span>[<span class="number">1</span>].<span class="ident">cells</span>.<span class="ident">len</span>());
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_row_from_str_arr() {
+        <span class="kw">let </span>table: TableStruct = <span class="macro">vec!</span>[<span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>], <span class="kw-2">&amp;</span>[<span class="string">&quot;Scooby&quot;</span>, <span class="string">&quot;Doo&quot;</span>]].table();
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, table.rows.len());
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, table.rows[<span class="number">0</span>].cells.len());
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, table.rows[<span class="number">1</span>].cells.len());
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

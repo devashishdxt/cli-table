@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table-derive/src/context/fields.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fields.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../cli_table_derive/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table-derive/src/context/fields.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fields.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../cli_table_derive/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../cli_table_derive/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -299,301 +293,300 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
-<span class="kw">use</span> <span class="ident">quote::ToTokens</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{
-    <span class="ident">spanned::Spanned</span>, <span class="ident">Data</span>, <span class="ident">DeriveInput</span>, <span class="ident">Error</span>, <span class="ident">Expr</span>, <span class="ident">Field</span> <span class="kw">as</span> <span class="ident">SynField</span>, <span class="ident">Fields</span> <span class="kw">as</span> <span class="ident">SynFields</span>,
-    <span class="ident">Ident</span>, <span class="ident">Index</span>, <span class="ident">Lit</span>, <span class="ident">LitBool</span>, <span class="ident">LitStr</span>, <span class="prelude-ty">Result</span>,
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::{Span, TokenStream};
+<span class="kw">use </span>quote::ToTokens;
+<span class="kw">use </span>syn::{
+    spanned::Spanned, Data, DeriveInput, Error, Expr, Field <span class="kw">as </span>SynField, Fields <span class="kw">as </span>SynFields,
+    Ident, Index, Lit, LitBool, LitStr, <span class="prelude-ty">Result</span>,
 };
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::get_attributes</span>;
+<span class="kw">use </span><span class="kw">crate</span>::utils::get_attributes;
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Fields</span> {
-    <span class="ident">fields</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Field</span><span class="op">&gt;</span>,
+<span class="kw">pub struct </span>Fields {
+    fields: Vec&lt;Field&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Fields</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">DeriveInput</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">input</span>.<span class="ident">data</span> {
-            <span class="ident">Data::Struct</span>(<span class="kw-2">ref</span> <span class="ident">data_struct</span>) =&gt; <span class="ident"><span class="self">Self</span>::from_fields</span>(<span class="kw-2">&amp;</span><span class="ident">data_struct</span>.<span class="ident">fields</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                <span class="ident">input</span>,
+<span class="kw">impl </span>Fields {
+    <span class="kw">pub fn </span>new(input: <span class="kw-2">&amp;</span>DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">match </span>input.data {
+            Data::Struct(<span class="kw-2">ref </span>data_struct) =&gt; <span class="self">Self</span>::from_fields(<span class="kw-2">&amp;</span>data_struct.fields),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                input,
                 <span class="string">&quot;`cli_table` derive macros can only be used on structs&quot;</span>,
             )),
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Field</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">fields</span>.<span class="ident">into_iter</span>()
+    <span class="kw">pub fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = Field&gt; {
+        <span class="self">self</span>.fields.into_iter()
     }
 
-    <span class="kw">fn</span> <span class="ident">from_fields</span>(<span class="ident">syn_fields</span>: <span class="kw-2">&amp;</span><span class="ident">SynFields</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fields</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">fn </span>from_fields(syn_fields: <span class="kw-2">&amp;</span>SynFields) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>fields = Vec::new();
 
-        <span class="kw">for</span> (<span class="ident">index</span>, <span class="ident">syn_field</span>) <span class="kw">in</span> <span class="ident">syn_fields</span>.<span class="ident">into_iter</span>().<span class="ident">enumerate</span>() {
-            <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="ident">Field::new</span>(<span class="ident">syn_field</span>, <span class="ident">index</span>)<span class="question-mark">?</span>;
+        <span class="kw">for </span>(index, syn_field) <span class="kw">in </span>syn_fields.into_iter().enumerate() {
+            <span class="kw">let </span>field = Field::new(syn_field, index)<span class="question-mark">?</span>;
 
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">field</span>) <span class="op">=</span> <span class="ident">field</span> {
-                <span class="ident">fields</span>.<span class="ident">push</span>(<span class="ident">field</span>);
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(field) = field {
+                fields.push(field);
             }
         }
 
-        <span class="ident">fields</span>.<span class="ident">sort_by</span>(<span class="op">|</span><span class="ident">left</span>, <span class="ident">right</span><span class="op">|</span> <span class="ident">left</span>.<span class="ident">order</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">right</span>.<span class="ident">order</span>));
+        fields.sort_by(|left, right| left.order.cmp(<span class="kw-2">&amp;</span>right.order));
 
-        <span class="prelude-val">Ok</span>(<span class="ident">Fields</span> { <span class="ident">fields</span> })
+        <span class="prelude-val">Ok</span>(Fields { fields })
     }
 }
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Field</span> {
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
-    <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">LitStr</span>,
-    <span class="kw">pub</span> <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">bold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitBool</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">order</span>: <span class="ident">usize</span>,
-    <span class="kw">pub</span> <span class="ident">display_fn</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">customize_fn</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
+<span class="kw">pub struct </span>Field {
+    <span class="kw">pub </span>ident: TokenStream,
+    <span class="kw">pub </span>title: LitStr,
+    <span class="kw">pub </span>justify: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    <span class="kw">pub </span>align: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    <span class="kw">pub </span>color: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    <span class="kw">pub </span>bold: <span class="prelude-ty">Option</span>&lt;LitBool&gt;,
+    <span class="kw">pub </span>order: usize,
+    <span class="kw">pub </span>display_fn: <span class="prelude-ty">Option</span>&lt;Ident&gt;,
+    <span class="kw">pub </span>customize_fn: <span class="prelude-ty">Option</span>&lt;Ident&gt;,
+    <span class="kw">pub </span>span: Span,
 }
 
-<span class="kw">impl</span> <span class="ident">Field</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">SynField</span>, <span class="ident">index</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">field</span>
-            .<span class="ident">ident</span>
-            .<span class="ident">as_ref</span>()
-            .<span class="ident">map</span>(<span class="ident">ToTokens::into_token_stream</span>)
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Index::from</span>(<span class="ident">index</span>).<span class="ident">into_token_stream</span>());
-        <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">span</span>();
+<span class="kw">impl </span>Field {
+    <span class="kw">pub fn </span>new(field: <span class="kw-2">&amp;</span>SynField, index: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;&gt; {
+        <span class="kw">let </span>ident = field
+            .ident
+            .as_ref()
+            .map(ToTokens::into_token_stream)
+            .unwrap_or_else(|| Index::from(index).into_token_stream());
+        <span class="kw">let </span>span = field.span();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">order</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">display_fn</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">customize_fn</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">skip</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>title = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>justify = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>align = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>color = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>bold = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>order = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>display_fn = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>customize_fn = <span class="prelude-val">None</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>skip = <span class="prelude-val">None</span>;
 
-        <span class="kw">let</span> <span class="ident">field_attributes</span> <span class="op">=</span> <span class="ident">get_attributes</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>field_attributes = get_attributes(<span class="kw-2">&amp;</span>field.attrs)<span class="question-mark">?</span>;
 
-        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">field_attributes</span> {
-            <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;name&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;title&quot;</span>) {
-                <span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">lit_str</span>),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+        <span class="kw">for </span>(key, value) <span class="kw">in </span>field_attributes {
+            <span class="kw">if </span>key.is_ident(<span class="string">&quot;name&quot;</span>) || key.is_ident(<span class="string">&quot;title&quot;</span>) {
+                title = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; <span class="prelude-val">Ok</span>(lit_str),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(title = \&quot;field_name\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;justify&quot;</span>) {
-                <span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;justify&quot;</span>) {
+                justify = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; lit_str.parse::&lt;Expr&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(justify = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;align&quot;</span>) {
-                <span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;align&quot;</span>) {
+                align = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; lit_str.parse::&lt;Expr&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(align = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;color&quot;</span>) {
-                <span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;color&quot;</span>) {
+                color = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; lit_str.parse::&lt;Expr&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(color = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;bold&quot;</span>) {
-                <span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Bool</span>(<span class="ident">lit_bool</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">lit_bool</span>),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(<span class="ident">bad</span>, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;bold&quot;</span>) {
+                bold = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Bool(lit_bool) =&gt; <span class="prelude-val">Ok</span>(lit_bool),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(bad, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;order&quot;</span>) {
-                <span class="ident">order</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Int</span>(<span class="ident">lit_int</span>) =&gt; <span class="ident">lit_int</span>.<span class="ident">base10_parse</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;order&quot;</span>) {
+                order = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Int(lit_int) =&gt; lit_int.base10_parse::&lt;usize&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(order = &lt;usize&gt;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;display_fn&quot;</span>) {
-                <span class="ident">display_fn</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;display_fn&quot;</span>) {
+                display_fn = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; lit_str.parse::&lt;Ident&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(display_fn = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;customize_fn&quot;</span>) {
-                <span class="ident">customize_fn</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Str</span>(<span class="ident">lit_str</span>) =&gt; <span class="ident">lit_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>(),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(
-                        <span class="ident">bad</span>,
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;customize_fn&quot;</span>) {
+                customize_fn = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Str(lit_str) =&gt; lit_str.parse::&lt;Ident&gt;(),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(
+                        bad,
                         <span class="string">&quot;Invalid value for #[table(display_fn = \&quot;value\&quot;)]&quot;</span>,
                     )),
                 }<span class="question-mark">?</span>);
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_ident</span>(<span class="string">&quot;skip&quot;</span>) {
-                <span class="ident">skip</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">Lit::Bool</span>(<span class="ident">lit_bool</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">lit_bool</span>),
-                    <span class="ident">bad</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new_spanned</span>(<span class="ident">bad</span>, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
+            } <span class="kw">else if </span>key.is_ident(<span class="string">&quot;skip&quot;</span>) {
+                skip = <span class="prelude-val">Some</span>(<span class="kw">match </span>value {
+                    Lit::Bool(lit_bool) =&gt; <span class="prelude-val">Ok</span>(lit_bool),
+                    bad =&gt; <span class="prelude-val">Err</span>(Error::new_spanned(bad, <span class="string">&quot;Invalid value for #[table(bold)]&quot;</span>)),
                 }<span class="question-mark">?</span>);
             }
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">skip</span>) <span class="op">=</span> <span class="ident">skip</span> {
-            <span class="kw">if</span> <span class="ident">skip</span>.<span class="ident">value</span> {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(skip) = skip {
+            <span class="kw">if </span>skip.value {
+                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
             }
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field_builder</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::builder</span>(<span class="ident">ident</span>, <span class="ident">span</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>field_builder = <span class="self">Self</span>::builder(ident, span);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>) <span class="op">=</span> <span class="ident">title</span> {
-            <span class="ident">field_builder</span>.<span class="ident">title</span>(<span class="ident">title</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(title) = title {
+            field_builder.title(title);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">justify</span>) <span class="op">=</span> <span class="ident">justify</span> {
-            <span class="ident">field_builder</span>.<span class="ident">justify</span>(<span class="ident">justify</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(justify) = justify {
+            field_builder.justify(justify);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>) <span class="op">=</span> <span class="ident">align</span> {
-            <span class="ident">field_builder</span>.<span class="ident">align</span>(<span class="ident">align</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(align) = align {
+            field_builder.align(align);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">color</span> {
-            <span class="ident">field_builder</span>.<span class="ident">color</span>(<span class="ident">color</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(color) = color {
+            field_builder.color(color);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bold</span>) <span class="op">=</span> <span class="ident">bold</span> {
-            <span class="ident">field_builder</span>.<span class="ident">bold</span>(<span class="ident">bold</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(bold) = bold {
+            field_builder.bold(bold);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">order</span>) <span class="op">=</span> <span class="ident">order</span> {
-            <span class="ident">field_builder</span>.<span class="ident">order</span>(<span class="ident">order</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(order) = order {
+            field_builder.order(order);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">display_fn</span>) <span class="op">=</span> <span class="ident">display_fn</span> {
-            <span class="ident">field_builder</span>.<span class="ident">display_fn</span>(<span class="ident">display_fn</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(display_fn) = display_fn {
+            field_builder.display_fn(display_fn);
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">customize_fn</span>) <span class="op">=</span> <span class="ident">customize_fn</span> {
-            <span class="ident">field_builder</span>.<span class="ident">customize_fn</span>(<span class="ident">customize_fn</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(customize_fn) = customize_fn {
+            field_builder.customize_fn(customize_fn);
         }
 
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">field_builder</span>.<span class="ident">build</span>()))
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(field_builder.build()))
     }
 
-    <span class="kw">fn</span> <span class="ident">builder</span>(<span class="ident">ident</span>: <span class="ident">TokenStream</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="ident">FieldBuilder</span> {
-        <span class="ident">FieldBuilder::new</span>(<span class="ident">ident</span>, <span class="ident">span</span>)
+    <span class="kw">fn </span>builder(ident: TokenStream, span: Span) -&gt; FieldBuilder {
+        FieldBuilder::new(ident, span)
     }
 }
 
-<span class="kw">struct</span> <span class="ident">FieldBuilder</span> {
-    <span class="ident">ident</span>: <span class="ident">TokenStream</span>,
-    <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitStr</span><span class="op">&gt;</span>,
-    <span class="ident">justify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="ident">align</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>,
-    <span class="ident">bold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LitBool</span><span class="op">&gt;</span>,
-    <span class="ident">order</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
-    <span class="ident">display_fn</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>,
-    <span class="ident">customize_fn</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>,
-    <span class="ident">span</span>: <span class="ident">Span</span>,
+<span class="kw">struct </span>FieldBuilder {
+    ident: TokenStream,
+    title: <span class="prelude-ty">Option</span>&lt;LitStr&gt;,
+    justify: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    align: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    color: <span class="prelude-ty">Option</span>&lt;Expr&gt;,
+    bold: <span class="prelude-ty">Option</span>&lt;LitBool&gt;,
+    order: <span class="prelude-ty">Option</span>&lt;usize&gt;,
+    display_fn: <span class="prelude-ty">Option</span>&lt;Ident&gt;,
+    customize_fn: <span class="prelude-ty">Option</span>&lt;Ident&gt;,
+    span: Span,
 }
 
-<span class="kw">impl</span> <span class="ident">FieldBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ident</span>: <span class="ident">TokenStream</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">ident</span>,
-            <span class="ident">title</span>: <span class="prelude-val">None</span>,
-            <span class="ident">justify</span>: <span class="prelude-val">None</span>,
-            <span class="ident">align</span>: <span class="prelude-val">None</span>,
-            <span class="ident">color</span>: <span class="prelude-val">None</span>,
-            <span class="ident">bold</span>: <span class="prelude-val">None</span>,
-            <span class="ident">order</span>: <span class="prelude-val">None</span>,
-            <span class="ident">display_fn</span>: <span class="prelude-val">None</span>,
-            <span class="ident">customize_fn</span>: <span class="prelude-val">None</span>,
-            <span class="ident">span</span>,
+<span class="kw">impl </span>FieldBuilder {
+    <span class="kw">fn </span>new(ident: TokenStream, span: Span) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            ident,
+            title: <span class="prelude-val">None</span>,
+            justify: <span class="prelude-val">None</span>,
+            align: <span class="prelude-val">None</span>,
+            color: <span class="prelude-val">None</span>,
+            bold: <span class="prelude-val">None</span>,
+            order: <span class="prelude-val">None</span>,
+            display_fn: <span class="prelude-val">None</span>,
+            customize_fn: <span class="prelude-val">None</span>,
+            span,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">LitStr</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: LitStr) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.title = <span class="prelude-val">Some</span>(title);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">justify</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">justify</span>: <span class="ident">Expr</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">justify</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">justify</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>justify(<span class="kw-2">&amp;mut </span><span class="self">self</span>, justify: Expr) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.justify = <span class="prelude-val">Some</span>(justify);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">align</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">align</span>: <span class="ident">Expr</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">align</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">align</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>align(<span class="kw-2">&amp;mut </span><span class="self">self</span>, align: Expr) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.align = <span class="prelude-val">Some</span>(align);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">color</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Expr</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">color</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>color(<span class="kw-2">&amp;mut </span><span class="self">self</span>, color: Expr) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.color = <span class="prelude-val">Some</span>(color);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">LitBool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">bold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bold</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>bold(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bold: LitBool) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.bold = <span class="prelude-val">Some</span>(bold);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">order</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">order</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">order</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">order</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>order(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: usize) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.order = <span class="prelude-val">Some</span>(order);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">display_fn</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">display_fn</span>: <span class="ident">Ident</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">display_fn</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">display_fn</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>display_fn(<span class="kw-2">&amp;mut </span><span class="self">self</span>, display_fn: Ident) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.display_fn = <span class="prelude-val">Some</span>(display_fn);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">customize_fn</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">customize_fn</span>: <span class="ident">Ident</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">customize_fn</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">customize_fn</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>customize_fn(<span class="kw-2">&amp;mut </span><span class="self">self</span>, customize_fn: Ident) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.customize_fn = <span class="prelude-val">Some</span>(customize_fn);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Field</span> {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ident</span>;
-        <span class="kw">let</span> <span class="ident">justify</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">justify</span>;
-        <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">align</span>;
-        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">color</span>;
-        <span class="kw">let</span> <span class="ident">bold</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bold</span>;
-        <span class="kw">let</span> <span class="ident">order</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">order</span>.<span class="ident">unwrap_or</span>(<span class="ident">usize::MAX</span>);
-        <span class="kw">let</span> <span class="ident">display_fn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">display_fn</span>;
-        <span class="kw">let</span> <span class="ident">customize_fn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">customize_fn</span>;
-        <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">span</span>;
+    <span class="kw">fn </span>build(<span class="self">self</span>) -&gt; Field {
+        <span class="kw">let </span>ident = <span class="self">self</span>.ident;
+        <span class="kw">let </span>justify = <span class="self">self</span>.justify;
+        <span class="kw">let </span>align = <span class="self">self</span>.align;
+        <span class="kw">let </span>color = <span class="self">self</span>.color;
+        <span class="kw">let </span>bold = <span class="self">self</span>.bold;
+        <span class="kw">let </span>order = <span class="self">self</span>.order.unwrap_or(usize::MAX);
+        <span class="kw">let </span>display_fn = <span class="self">self</span>.display_fn;
+        <span class="kw">let </span>customize_fn = <span class="self">self</span>.customize_fn;
+        <span class="kw">let </span>span = <span class="self">self</span>.span;
 
-        <span class="kw">let</span> <span class="ident">title</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">title</span>
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">LitStr::new</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>.<span class="ident">to_string</span>(), <span class="ident">span</span>));
+        <span class="kw">let </span>title = <span class="self">self
+            </span>.title
+            .unwrap_or_else(|| LitStr::new(<span class="kw-2">&amp;</span>ident.to_string(), span));
 
-        <span class="ident">Field</span> {
-            <span class="ident">ident</span>,
-            <span class="ident">title</span>,
-            <span class="ident">justify</span>,
-            <span class="ident">align</span>,
-            <span class="ident">color</span>,
-            <span class="ident">bold</span>,
-            <span class="ident">order</span>,
-            <span class="ident">display_fn</span>,
-            <span class="ident">customize_fn</span>,
-            <span class="ident">span</span>,
+        Field {
+            ident,
+            title,
+            justify,
+            align,
+            color,
+            bold,
+            order,
+            display_fn,
+            customize_fn,
+            span,
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="cli_table_derive" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="cli_table_derive" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

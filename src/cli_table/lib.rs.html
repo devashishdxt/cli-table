@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -237,239 +231,238 @@
 <span id="231">231</span>
 <span id="232">232</span>
 <span id="233">233</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>), <span class="ident">forbid</span>(<span class="ident">unstable_features</span>))]</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
-<span class="doccomment">//! Rust crate for printing tables on command line.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Usage</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Add `cli-table` in your `Cargo.toms`&#39;s `dependencies` section</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```toml</span>
-<span class="doccomment">//! [dependencies]</span>
-<span class="doccomment">//! cli-table = &quot;0.4&quot;</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Simple usage</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let table = vec![</span>
-<span class="doccomment">//!     vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!     vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!     vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//! ]</span>
-<span class="doccomment">//! .table()</span>
-<span class="doccomment">//! .title(vec![</span>
-<span class="doccomment">//!     &quot;Name&quot;.cell().bold(true),</span>
-<span class="doccomment">//!     &quot;Age (in years)&quot;.cell().bold(true),</span>
-<span class="doccomment">//! ])</span>
-<span class="doccomment">//! .bold(true);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! assert!(print_stdout(table).is_ok());</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Below is the output of the table we created just now:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```markdown</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Name       | Age (in years) |  &lt;-- This row and all the borders/separators</span>
-<span class="doccomment">//! +------------+----------------+      will appear in bold</span>
-<span class="doccomment">//! | Tom        |             10 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Jerry      |             15 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Scooby Doo |             25 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## `Display` trait implementation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! To get a `Display` trait implementation of `TableStruct`, use `display()` function on the struct to get an instance</span>
-<span class="doccomment">//! of `TableDisplay` which implements `Display` trait.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use cli_table::{format::Justify, Cell, Style, Table};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let table = vec![</span>
-<span class="doccomment">//!     vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!     vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!     vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//! ]</span>
-<span class="doccomment">//! .table()</span>
-<span class="doccomment">//! .title(vec![</span>
-<span class="doccomment">//!     &quot;Name&quot;.cell().bold(true),</span>
-<span class="doccomment">//!     &quot;Age (in years)&quot;.cell().bold(true),</span>
-<span class="doccomment">//! ])</span>
-<span class="doccomment">//! .bold(true);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let table_display = table.display().unwrap();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! println!(&quot;{}&quot;, table_display);</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Below is the output of the table we created just now:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```markdown</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Name       | Age (in years) |  &lt;-- This row and all the borders/separators</span>
-<span class="doccomment">//! +------------+----------------+      will appear in bold</span>
-<span class="doccomment">//! | Tom        |             10 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Jerry      |             15 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! | Scooby Doo |             25 |</span>
-<span class="doccomment">//! +------------+----------------+</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Derive macro</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use cli_table::{format::Justify, print_stdout, Table, WithTitle};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! #[derive(Table)]</span>
-<span class="doccomment">//! struct User {</span>
-<span class="doccomment">//!     #[table(title = &quot;ID&quot;, justify = &quot;Justify::Right&quot;)]</span>
-<span class="doccomment">//!     id: u64,</span>
-<span class="doccomment">//!     #[table(title = &quot;First Name&quot;)]</span>
-<span class="doccomment">//!     first_name: &amp;&#39;static str,</span>
-<span class="doccomment">//!     #[table(title = &quot;Last Name&quot;)]</span>
-<span class="doccomment">//!     last_name: &amp;&#39;static str,</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let users = vec![</span>
-<span class="doccomment">//!     User {</span>
-<span class="doccomment">//!         id: 1,</span>
-<span class="doccomment">//!         first_name: &quot;Scooby&quot;,</span>
-<span class="doccomment">//!         last_name: &quot;Doo&quot;,</span>
-<span class="doccomment">//!     },</span>
-<span class="doccomment">//!     User {</span>
-<span class="doccomment">//!         id: 2,</span>
-<span class="doccomment">//!         first_name: &quot;John&quot;,</span>
-<span class="doccomment">//!         last_name: &quot;Cena&quot;,</span>
-<span class="doccomment">//!     },</span>
-<span class="doccomment">//! ];</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! assert!(print_stdout(users.with_title()).is_ok());</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Below is the output of the table we created using derive macro:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```markdown</span>
-<span class="doccomment">//! +----+------------+-----------+</span>
-<span class="doccomment">//! | ID | First Name | Last Name |  &lt;-- This row will appear in bold</span>
-<span class="doccomment">//! +----+------------+-----------+</span>
-<span class="doccomment">//! |  1 | Scooby     | Doo       |</span>
-<span class="doccomment">//! +----+------------+-----------+</span>
-<span class="doccomment">//! |  2 | John       | Cena      |</span>
-<span class="doccomment">//! +----+------------+-----------+</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Field attributes</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - `title` | `name`: Used to specify title of a column. Usage: `#[table(title = &quot;Title&quot;)]`</span>
-<span class="doccomment">//! - `justify`: Used to horizontally justify the contents of a column. Usage: `#[table(justify = &quot;Justify::Right&quot;)]`</span>
-<span class="doccomment">//! - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = &quot;Align::Top&quot;)]`</span>
-<span class="doccomment">//! - `color`: Used to specify color of contents of a column. Usage: `#[table(color = &quot;Color::Red&quot;)]`</span>
-<span class="doccomment">//! - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`</span>
-<span class="doccomment">//! - `order`: Used to order columns in a table while printing. Usage: `#[table(order = &lt;usize&gt;)]`. Here, columns will</span>
-<span class="doccomment">//!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by</span>
-<span class="doccomment">//!   column with `order = 1` and so on.</span>
-<span class="doccomment">//! - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = &quot;&lt;func_name&gt;&quot;)]`.</span>
-<span class="doccomment">//!   Signature of provided function should be `fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display`.</span>
-<span class="doccomment">//! - `customize_fn`: Used to customize style of a cell. Usage `#[table(customize_fn = &quot;&lt;func_name&gt;&quot;)]`. Signature of</span>
-<span class="doccomment">//!   provided function should be `fn &lt;func_name&gt;(cell: CellStruct, value: &amp;&lt;type&gt;) -&gt; CellStruct`. This attribute can</span>
-<span class="doccomment">//!   be used when you want to change the formatting/style of a cell based on its contents. Note that this will</span>
-<span class="doccomment">//!   overwrite all the style settings done by other attributes.</span>
-<span class="doccomment">//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## CSV</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This crate also integrates with [`csv`](https://crates.io/crates/csv) crate. On enabling `&quot;csv&quot;` feature, you can</span>
-<span class="doccomment">//! use `TryFrom&lt;&amp;mut Reader&gt; for TableStruct` trait implementation to convert `csv::Reader` to `TableStruct`.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For more information on handling CSV values, go to `cli-table/examples/csv.rs`.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Styling</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Style of a table/cell can be modified by calling functions of [`Style`] trait. It is implementated by both</span>
-<span class="doccomment">//! [`TableStruct`] and [`CellStruct`].</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For individually formatting each cell of a table, `justify`, `align` and `padding` functions can be used from</span>
-<span class="doccomment">//! `CellStruct`.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! In addition to this, borders and separators of a table can be customized by calling `border` and `separator`</span>
-<span class="doccomment">//! functions in `TableStruct`. For example, to create a borderless table:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use cli_table::{Cell, Table, TableStruct, format::{Justify, Border}, print_stdout};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! fn get_table() -&gt; TableStruct {</span>
-<span class="doccomment">//!     vec![</span>
-<span class="doccomment">//!         vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!         vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!         vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],</span>
-<span class="doccomment">//!     ]</span>
-<span class="doccomment">//!     .table()</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let table = get_table().border(Border::builder().build()); // Attaches an empty border to the table</span>
-<span class="doccomment">//! assert!(print_stdout(table).is_ok());</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Features</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - `derive`: Enables derive macro for creating tables using structs. **Enabled** by default.</span>
-<span class="doccomment">//! - `csv`: Enables support for printing tables using [`csv`](https://crates.io/crates/csv). **Enabled** by default.</span>
-<span class="kw">mod</span> <span class="ident">buffers</span>;
-<span class="kw">mod</span> <span class="ident">cell</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;csv&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">csv</span>;
-<span class="kw">mod</span> <span class="ident">display</span>;
-<span class="kw">mod</span> <span class="ident">row</span>;
-<span class="kw">mod</span> <span class="ident">style</span>;
-<span class="kw">mod</span> <span class="ident">table</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;title&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>))]</span>
-<span class="kw">mod</span> <span class="ident">title</span>;
-<span class="kw">mod</span> <span class="ident">utils</span>;
+</pre><pre class="rust"><code><span class="attribute">#![forbid(unsafe_code)]
+#![cfg_attr(not(feature = <span class="string">&quot;doc&quot;</span>), forbid(unstable_features))]
+#![deny(missing_docs)]
+#![cfg_attr(feature = <span class="string">&quot;doc&quot;</span>, feature(doc_cfg))]
+</span><span class="doccomment">//! Rust crate for printing tables on command line.
+//!
+//! # Usage
+//!
+//! Add `cli-table` in your `Cargo.toms`&#39;s `dependencies` section
+//!
+//! ```toml
+//! [dependencies]
+//! cli-table = &quot;0.4&quot;
+//! ```
+//!
+//! ## Simple usage
+//!
+//! ```rust
+//! use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+//!
+//! let table = vec![
+//!     vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],
+//!     vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],
+//!     vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],
+//! ]
+//! .table()
+//! .title(vec![
+//!     &quot;Name&quot;.cell().bold(true),
+//!     &quot;Age (in years)&quot;.cell().bold(true),
+//! ])
+//! .bold(true);
+//!
+//! assert!(print_stdout(table).is_ok());
+//! ```
+//!
+//! Below is the output of the table we created just now:
+//!
+//! ```markdown
+//! +------------+----------------+
+//! | Name       | Age (in years) |  &lt;-- This row and all the borders/separators
+//! +------------+----------------+      will appear in bold
+//! | Tom        |             10 |
+//! +------------+----------------+
+//! | Jerry      |             15 |
+//! +------------+----------------+
+//! | Scooby Doo |             25 |
+//! +------------+----------------+
+//! ```
+//!
+//! ## `Display` trait implementation
+//!
+//! To get a `Display` trait implementation of `TableStruct`, use `display()` function on the struct to get an instance
+//! of `TableDisplay` which implements `Display` trait.
+//!
+//! ```rust
+//! use cli_table::{format::Justify, Cell, Style, Table};
+//!
+//! let table = vec![
+//!     vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],
+//!     vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],
+//!     vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],
+//! ]
+//! .table()
+//! .title(vec![
+//!     &quot;Name&quot;.cell().bold(true),
+//!     &quot;Age (in years)&quot;.cell().bold(true),
+//! ])
+//! .bold(true);
+//!
+//! let table_display = table.display().unwrap();
+//!
+//! println!(&quot;{}&quot;, table_display);
+//! ```
+//!
+//! Below is the output of the table we created just now:
+//!
+//! ```markdown
+//! +------------+----------------+
+//! | Name       | Age (in years) |  &lt;-- This row and all the borders/separators
+//! +------------+----------------+      will appear in bold
+//! | Tom        |             10 |
+//! +------------+----------------+
+//! | Jerry      |             15 |
+//! +------------+----------------+
+//! | Scooby Doo |             25 |
+//! +------------+----------------+
+//! ```
+//!
+//! ## Derive macro
+//!
+//! `#[derive(Table)]` can also be used to print a `Vec` or slice of `struct`s as table.
+//!
+//! ```rust
+//! use cli_table::{format::Justify, print_stdout, Table, WithTitle};
+//!
+//! #[derive(Table)]
+//! struct User {
+//!     #[table(title = &quot;ID&quot;, justify = &quot;Justify::Right&quot;)]
+//!     id: u64,
+//!     #[table(title = &quot;First Name&quot;)]
+//!     first_name: &amp;&#39;static str,
+//!     #[table(title = &quot;Last Name&quot;)]
+//!     last_name: &amp;&#39;static str,
+//! }
+//!
+//! let users = vec![
+//!     User {
+//!         id: 1,
+//!         first_name: &quot;Scooby&quot;,
+//!         last_name: &quot;Doo&quot;,
+//!     },
+//!     User {
+//!         id: 2,
+//!         first_name: &quot;John&quot;,
+//!         last_name: &quot;Cena&quot;,
+//!     },
+//! ];
+//!
+//! assert!(print_stdout(users.with_title()).is_ok());
+//! ```
+//!
+//! Below is the output of the table we created using derive macro:
+//!
+//! ```markdown
+//! +----+------------+-----------+
+//! | ID | First Name | Last Name |  &lt;-- This row will appear in bold
+//! +----+------------+-----------+
+//! |  1 | Scooby     | Doo       |
+//! +----+------------+-----------+
+//! |  2 | John       | Cena      |
+//! +----+------------+-----------+
+//! ```
+//!
+//! ### Field attributes
+//!
+//! - `title` | `name`: Used to specify title of a column. Usage: `#[table(title = &quot;Title&quot;)]`
+//! - `justify`: Used to horizontally justify the contents of a column. Usage: `#[table(justify = &quot;Justify::Right&quot;)]`
+//! - `align`: Used to vertically align the contents of a column. Usage: `#[table(align = &quot;Align::Top&quot;)]`
+//! - `color`: Used to specify color of contents of a column. Usage: `#[table(color = &quot;Color::Red&quot;)]`
+//! - `bold`: Used to specify boldness of contents of a column. Usage: `#[table(bold)]`
+//! - `order`: Used to order columns in a table while printing. Usage: `#[table(order = &lt;usize&gt;)]`. Here, columns will
+//!   be sorted based on their order. For e.g., column with `order = 0` will be displayed on the left followed by
+//!   column with `order = 1` and so on.
+//! - `display_fn`: Used to print types which do not implement `Display` trait. Usage `#[table(display_fn = &quot;&lt;func_name&gt;&quot;)]`.
+//!   Signature of provided function should be `fn &lt;func_name&gt;(value: &amp;&lt;type&gt;) -&gt; impl Display`.
+//! - `customize_fn`: Used to customize style of a cell. Usage `#[table(customize_fn = &quot;&lt;func_name&gt;&quot;)]`. Signature of
+//!   provided function should be `fn &lt;func_name&gt;(cell: CellStruct, value: &amp;&lt;type&gt;) -&gt; CellStruct`. This attribute can
+//!   be used when you want to change the formatting/style of a cell based on its contents. Note that this will
+//!   overwrite all the style settings done by other attributes.
+//! - `skip`: Used to skip a field from table. Usage: `#[table(skip)]`
+//!
+//! For more information on configurations available on derive macro, go to `cli-table/examples/struct.rs`.
+//!
+//! ## CSV
+//!
+//! This crate also integrates with [`csv`](https://crates.io/crates/csv) crate. On enabling `&quot;csv&quot;` feature, you can
+//! use `TryFrom&lt;&amp;mut Reader&gt; for TableStruct` trait implementation to convert `csv::Reader` to `TableStruct`.
+//!
+//! For more information on handling CSV values, go to `cli-table/examples/csv.rs`.
+//!
+//! # Styling
+//!
+//! Style of a table/cell can be modified by calling functions of [`Style`] trait. It is implementated by both
+//! [`TableStruct`] and [`CellStruct`].
+//!
+//! For individually formatting each cell of a table, `justify`, `align` and `padding` functions can be used from
+//! `CellStruct`.
+//!
+//! In addition to this, borders and separators of a table can be customized by calling `border` and `separator`
+//! functions in `TableStruct`. For example, to create a borderless table:
+//!
+//! ```rust
+//! use cli_table::{Cell, Table, TableStruct, format::{Justify, Border}, print_stdout};
+//!
+//! fn get_table() -&gt; TableStruct {
+//!     vec![
+//!         vec![&quot;Tom&quot;.cell(), 10.cell().justify(Justify::Right)],
+//!         vec![&quot;Jerry&quot;.cell(), 15.cell().justify(Justify::Right)],
+//!         vec![&quot;Scooby Doo&quot;.cell(), 20.cell().justify(Justify::Right)],
+//!     ]
+//!     .table()
+//! }
+//!
+//! let table = get_table().border(Border::builder().build()); // Attaches an empty border to the table
+//! assert!(print_stdout(table).is_ok());
+//! ```
+//!
+//! # Features
+//!
+//! - `derive`: Enables derive macro for creating tables using structs. **Enabled** by default.
+//! - `csv`: Enables support for printing tables using [`csv`](https://crates.io/crates/csv). **Enabled** by default.
+</span><span class="kw">mod </span>buffers;
+<span class="kw">mod </span>cell;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;csv&quot;</span>)]
+</span><span class="kw">mod </span>csv;
+<span class="kw">mod </span>display;
+<span class="kw">mod </span>row;
+<span class="kw">mod </span>style;
+<span class="kw">mod </span>table;
+<span class="attribute">#[cfg(any(feature = <span class="string">&quot;title&quot;</span>, feature = <span class="string">&quot;derive&quot;</span>))]
+</span><span class="kw">mod </span>title;
+<span class="kw">mod </span>utils;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">format</span>;
+<span class="kw">pub mod </span>format;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Color</span>, <span class="ident">ColorChoice</span>};
+<span class="kw">pub use </span>termcolor::{Color, ColorChoice};
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;doc&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cli_table_derive::Table</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;derive&quot;</span>)]
+#[cfg_attr(feature = <span class="string">&quot;doc&quot;</span>, doc(cfg(feature = <span class="string">&quot;derive&quot;</span>)))]
+</span><span class="kw">pub use </span>cli_table_derive::Table;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{
-    <span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">CellStruct</span>},
-    <span class="ident">display::TableDisplay</span>,
-    <span class="ident">row</span>::{<span class="ident">Row</span>, <span class="ident">RowStruct</span>},
-    <span class="ident">style::Style</span>,
-    <span class="ident">table</span>::{<span class="ident">Table</span>, <span class="ident">TableStruct</span>},
+<span class="kw">pub use </span><span class="self">self</span>::{
+    cell::{Cell, CellStruct},
+    display::TableDisplay,
+    row::{Row, RowStruct},
+    style::Style,
+    table::{Table, TableStruct},
 };
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;title&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive&quot;</span>))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::title</span>::{<span class="ident">Title</span>, <span class="ident">WithTitle</span>};
+<span class="attribute">#[cfg(any(feature = <span class="string">&quot;title&quot;</span>, feature = <span class="string">&quot;derive&quot;</span>))]
+</span><span class="kw">pub use </span><span class="self">self</span>::title::{Title, WithTitle};
 
-<span class="kw">use</span> <span class="ident">std::io::Result</span>;
+<span class="kw">use </span>std::io::Result;
 
-<span class="doccomment">/// Prints a table to `stdout`</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_stdout</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Table</span><span class="op">&gt;</span>(<span class="ident">table</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">table</span>.<span class="ident">table</span>().<span class="ident">print_stdout</span>()
+<span class="doccomment">/// Prints a table to `stdout`
+</span><span class="kw">pub fn </span>print_stdout&lt;T: Table&gt;(table: T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    table.table().print_stdout()
 }
 
-<span class="doccomment">/// Prints a table to `stderr`</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_stderr</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Table</span><span class="op">&gt;</span>(<span class="ident">table</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">table</span>.<span class="ident">table</span>().<span class="ident">print_stderr</span>()
+<span class="doccomment">/// Prints a table to `stderr`
+</span><span class="kw">pub fn </span>print_stderr&lt;T: Table&gt;(table: T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    table.table().print_stderr()
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

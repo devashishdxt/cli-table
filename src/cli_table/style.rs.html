@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/style.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>style.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cli-table/src/style.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>style.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../cli_table/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cli_table/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -87,89 +81,88 @@
 <span id="81">81</span>
 <span id="82">82</span>
 <span id="83">83</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">termcolor</span>::{<span class="ident">Color</span>, <span class="ident">ColorSpec</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>termcolor::{Color, ColorSpec};
 
-<span class="doccomment">/// Trait for modifying style of table and cells</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Style</span> {
-    <span class="doccomment">/// Used to set foreground color</span>
-    <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set background color</span>
-    <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set contents to be bold</span>
-    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set contents to be underlined</span>
-    <span class="kw">fn</span> <span class="ident">underline</span>(<span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set contents to be italic</span>
-    <span class="kw">fn</span> <span class="ident">italic</span>(<span class="self">self</span>, <span class="ident">italic</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set high intensity version of a color specified</span>
-    <span class="kw">fn</span> <span class="ident">intense</span>(<span class="self">self</span>, <span class="ident">intense</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span>;
-    <span class="doccomment">/// Used to set contents to be dimmed</span>
-    <span class="kw">fn</span> <span class="ident">dimmed</span>(<span class="self">self</span>, <span class="ident">dimmed</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span>;
+<span class="doccomment">/// Trait for modifying style of table and cells
+</span><span class="kw">pub trait </span>Style {
+    <span class="doccomment">/// Used to set foreground color
+    </span><span class="kw">fn </span>foreground_color(<span class="self">self</span>, foreground_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set background color
+    </span><span class="kw">fn </span>background_color(<span class="self">self</span>, background_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set contents to be bold
+    </span><span class="kw">fn </span>bold(<span class="self">self</span>, bold: bool) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set contents to be underlined
+    </span><span class="kw">fn </span>underline(<span class="self">self</span>, underline: bool) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set contents to be italic
+    </span><span class="kw">fn </span>italic(<span class="self">self</span>, italic: bool) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set high intensity version of a color specified
+    </span><span class="kw">fn </span>intense(<span class="self">self</span>, intense: bool) -&gt; <span class="self">Self</span>;
+    <span class="doccomment">/// Used to set contents to be dimmed
+    </span><span class="kw">fn </span>dimmed(<span class="self">self</span>, dimmed: bool) -&gt; <span class="self">Self</span>;
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">StyleStruct</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">bold</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">underline</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">italic</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">intense</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">dimmed</span>: <span class="ident">bool</span>,
+<span class="attribute">#[derive(Debug, Clone, Copy, Default)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>StyleStruct {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) foreground_color: <span class="prelude-ty">Option</span>&lt;Color&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) background_color: <span class="prelude-ty">Option</span>&lt;Color&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) bold: bool,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) underline: bool,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) italic: bool,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) intense: bool,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) dimmed: bool,
 }
 
-<span class="kw">impl</span> <span class="ident">StyleStruct</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">color_spec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ColorSpec</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color_spec</span> <span class="op">=</span> <span class="ident">ColorSpec::new</span>();
+<span class="kw">impl </span>StyleStruct {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>color_spec(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ColorSpec {
+        <span class="kw">let </span><span class="kw-2">mut </span>color_spec = ColorSpec::new();
 
-        <span class="ident">color_spec</span>.<span class="ident">set_fg</span>(<span class="self">self</span>.<span class="ident">foreground_color</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_bg</span>(<span class="self">self</span>.<span class="ident">background_color</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_bold</span>(<span class="self">self</span>.<span class="ident">bold</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_underline</span>(<span class="self">self</span>.<span class="ident">underline</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_italic</span>(<span class="self">self</span>.<span class="ident">italic</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_intense</span>(<span class="self">self</span>.<span class="ident">intense</span>);
-        <span class="ident">color_spec</span>.<span class="ident">set_dimmed</span>(<span class="self">self</span>.<span class="ident">dimmed</span>);
+        color_spec.set_fg(<span class="self">self</span>.foreground_color);
+        color_spec.set_bg(<span class="self">self</span>.background_color);
+        color_spec.set_bold(<span class="self">self</span>.bold);
+        color_spec.set_underline(<span class="self">self</span>.underline);
+        color_spec.set_italic(<span class="self">self</span>.italic);
+        color_spec.set_intense(<span class="self">self</span>.intense);
+        color_spec.set_dimmed(<span class="self">self</span>.dimmed);
 
-        <span class="ident">color_spec</span>
+        color_spec
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Style</span> <span class="kw">for</span> <span class="ident">StyleStruct</span> {
-    <span class="kw">fn</span> <span class="ident">foreground_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">foreground_color</span> <span class="op">=</span> <span class="ident">foreground_color</span>;
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>Style <span class="kw">for </span>StyleStruct {
+    <span class="kw">fn </span>foreground_color(<span class="kw-2">mut </span><span class="self">self</span>, foreground_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.foreground_color = foreground_color;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">background_color</span> <span class="op">=</span> <span class="ident">background_color</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>background_color(<span class="kw-2">mut </span><span class="self">self</span>, background_color: <span class="prelude-ty">Option</span>&lt;Color&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.background_color = background_color;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">bold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bold</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">bold</span> <span class="op">=</span> <span class="ident">bold</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>bold(<span class="kw-2">mut </span><span class="self">self</span>, bold: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.bold = bold;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">underline</span> <span class="op">=</span> <span class="ident">underline</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>underline(<span class="kw-2">mut </span><span class="self">self</span>, underline: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.underline = underline;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">italic</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">italic</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">italic</span> <span class="op">=</span> <span class="ident">italic</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>italic(<span class="kw-2">mut </span><span class="self">self</span>, italic: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.italic = italic;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">intense</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">intense</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">intense</span> <span class="op">=</span> <span class="ident">intense</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>intense(<span class="kw-2">mut </span><span class="self">self</span>, intense: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.intense = intense;
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">dimmed</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dimmed</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">dimmed</span> <span class="op">=</span> <span class="ident">dimmed</span>;
-        <span class="self">self</span>
-    }
+    <span class="kw">fn </span>dimmed(<span class="kw-2">mut </span><span class="self">self</span>, dimmed: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.dimmed = dimmed;
+        <span class="self">self
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (2643b1646 2022-07-27)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cli_table" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (b8b5caee0 2022-10-16)" ></div></body></html>

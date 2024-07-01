@@ -1,13 +1,11 @@
-use proc_macro2::Span;
 use quote::quote;
-use syn::{spanned::Spanned, DeriveInput, Error, Ident, Lit, Path, Result};
+use syn::{DeriveInput, Error, Ident, Lit, Path, Result};
 
 use crate::utils::get_attributes;
 
 pub struct Container<'a> {
     pub crate_name: Path,
     pub name: &'a Ident,
-    pub span: Span,
 }
 
 impl<'a> Container<'a> {
@@ -28,7 +26,7 @@ impl<'a> Container<'a> {
             }
         }
 
-        let mut container_builder = Container::builder(&input.ident, input.span());
+        let mut container_builder = Container::builder(&input.ident);
 
         if let Some(crate_name) = crate_name {
             container_builder.crate_name(crate_name);
@@ -37,23 +35,21 @@ impl<'a> Container<'a> {
         Ok(container_builder.build())
     }
 
-    fn builder(name: &'a Ident, span: Span) -> ContainerBuilder<'a> {
-        ContainerBuilder::new(name, span)
+    fn builder(name: &'a Ident) -> ContainerBuilder<'a> {
+        ContainerBuilder::new(name)
     }
 }
 
 struct ContainerBuilder<'a> {
     crate_name: Option<Path>,
     name: &'a Ident,
-    span: Span,
 }
 
 impl<'a> ContainerBuilder<'a> {
-    pub fn new(name: &'a Ident, span: Span) -> Self {
+    pub fn new(name: &'a Ident) -> Self {
         Self {
             crate_name: None,
             name,
-            span,
         }
     }
 
@@ -68,7 +64,6 @@ impl<'a> ContainerBuilder<'a> {
                 .crate_name
                 .unwrap_or_else(|| syn::parse2(quote!(::cli_table)).unwrap()),
             name: self.name,
-            span: self.span,
         }
     }
 }

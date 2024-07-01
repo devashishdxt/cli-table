@@ -1,12 +1,13 @@
-error[E0277]: `Vec<u8>` doesn't implement `std::fmt::Display`
- --> $DIR/non-display-member.rs:6:5
+error[E0277]: the trait bound `&Vec<u8>: cli_table::Cell` is not satisfied
+ --> tests/ui/non-display-member.rs:6:5
   |
+4 |   #[derive(Table)]
+  |            ----- required by a bound introduced by this call
+5 |   struct Test {
 6 | /     #[table(title = "a")]
 7 | |     a: Vec<u8>,
-  | |______________^ `Vec<u8>` cannot be formatted with the default formatter
+  | |_____^ the trait `std::fmt::Display` is not implemented for `&Vec<u8>`, which is required by `&Vec<u8>: cli_table::Cell`
   |
-  = help: the trait `std::fmt::Display` is not implemented for `Vec<u8>`
-  = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
-  = note: required because of the requirements on the impl of `std::fmt::Display` for `&Vec<u8>`
-  = note: required because of the requirements on the impl of `cli_table::Cell` for `&Vec<u8>`
-  = note: required by `cell`
+  = help: the trait `cli_table::Cell` is implemented for `CellStruct`
+  = note: required for `&Vec<u8>` to implement `std::fmt::Display`
+  = note: required for `&Vec<u8>` to implement `cli_table::Cell`

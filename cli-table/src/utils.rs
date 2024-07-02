@@ -1,44 +1,64 @@
 use std::io::{Result, Write};
 
 use termcolor::{ColorSpec, WriteColor};
-use unicode_width::UnicodeWidthStr;
 
 use crate::{
     buffers::Buffers,
     table::{Dimension as TableDimension, HorizontalLine, TableFormat, VerticalLine},
 };
 
-/// NOTE: `display_width()` is ported from https://github.com/phsym/prettytable-rs
+const ESC: char = '\x1b';
+
+/// NOTE: `display_width()` is ported from https://docs.rs/ansi-width/0.1.0/src/ansi_width/lib.rs.html#9-55
 ///
 /// Return the display width of a unicode string.
 /// This functions takes ANSI-escaped color codes into account.
 pub(crate) fn display_width(text: &str) -> usize {
-    let width = UnicodeWidthStr::width(text);
+    let mut width = 0;
+    let mut chars = text.chars();
 
-    let mut state = 0;
-    let mut hidden = 0;
-
-    for c in text.chars() {
-        state = match (state, c) {
-            (0, '\u{1b}') => 1,
-            (1, '[') => 2,
-            (1, _) => 0,
-            (2, 'm') => 3,
-            _ => state,
-        };
-
-        // We don't count escape characters as hidden as
-        // UnicodeWidthStr::width already considers them.
-        if state > 1 {
-            hidden += 1;
-        }
-
-        if state == 3 {
-            state = 0;
+    // This lint is a false positive, because we use the iterator later, leading to
+    // ownership issues if we follow the lint.
+    #[allow(clippy::while_let_on_iterator)]
+    while let Some(c) = chars.next() {
+        // ESC starts escape sequences, so we need to take characters until the
+        // end of the escape sequence.
+        if c == ESC {
+            let Some(c) = chars.next() else {
+                break;
+            };
+            match c {
+                // String terminator character: ends other sequences
+                // We probably won't encounter this but it's here for completeness.
+                // Or for if we get passed invalid codes.
+                '\\' => {
+                    // ignore
+                }
+                // Control Sequence Introducer: continue until `\x40-\x7C`
+                '[' => while !matches!(chars.next(), Some('\x40'..='\x7C') | None) {},
+                // Operating System Command: continue until ST
+                ']' => {
+                    let mut last = c;
+                    while let Some(new) = chars.next() {
+                        if new == '\x07' || (new == '\\' && last == ESC) {
+                            break;
+                        }
+                        last = new;
+                    }
+                }
+                // We don't know what character it is, best bet is to fall back to unicode width
+                // The ESC is assumed to have 0 width in this case.
+                _ => {
+                    width += unicode_width::UnicodeWidthChar::width(c).unwrap_or(0);
+                }
+            }
+        } else {
+            // If it's a normal character outside an escape sequence, use the
+            // unicode width.
+            width += unicode_width::UnicodeWidthChar::width(c).unwrap_or(0);
         }
     }
-
-    width - hidden
+    width
 }
 
 pub fn transpose<T>(v: Vec<Vec<T>>) -> Vec<Vec<T>> {
@@ -104,6 +124,8 @@ pub(crate) fn print_horizontal_line(
                 }
             }
         }
+
+        println(buffers)?;
     }
 
     Ok(())

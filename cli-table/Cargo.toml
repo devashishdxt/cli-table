@@ -1,6 +1,6 @@
 [package]
 name = "cli-table"
-version = "0.4.8"
+version = "0.4.9"
 authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
 license = "MIT/Apache-2.0"
 description = "A crate for printing tables on command line"

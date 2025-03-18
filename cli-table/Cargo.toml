@@ -10,7 +10,7 @@ categories = ["command-line-interface"]
 keywords = ["table", "cli", "format"]
 readme = "README.md"
 include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-*"]
-edition = "2018"
+edition = "2024"
 
 [lib]
 name = "cli_table"

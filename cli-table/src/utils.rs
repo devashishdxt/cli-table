@@ -104,9 +104,7 @@ pub(crate) fn print_horizontal_line(
         let mut widths = table_dimension.widths.iter().peekable();
 
         while let Some(width) = widths.next() {
-            let s = std::iter::repeat(line.filler)
-                .take(width + 2)
-                .collect::<String>();
+            let s = std::iter::repeat_n(line.filler, width + 2).collect::<String>();
             print_str(buffers, &s, color_spec)?;
 
             match widths.peek() {

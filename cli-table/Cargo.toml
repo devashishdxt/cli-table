@@ -19,7 +19,7 @@ path = "src/lib.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cli-table-derive = { version = "0.4.6", path = "../cli-table-derive", optional = true }
+cli-table-derive = { version = "0.5.0", path = "../cli-table-derive", optional = true }
 csv = { version = "1.3.1", optional = true }
 termcolor = "1.4.1"
 unicode-width = "0.2.0"

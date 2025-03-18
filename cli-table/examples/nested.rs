@@ -1,6 +1,6 @@
 use std::io::Result;
 
-use cli_table::{format::Justify, Cell, Style, Table};
+use cli_table::{Cell, Style, Table, format::Justify};
 
 fn main() -> Result<()> {
     let nested_table = vec![vec![20.cell()]].table();

@@ -1,8 +1,9 @@
 use std::io::Result;
 
 use cli_table::{
+    Table, WithTitle,
     format::{HorizontalLine, Justify::Right, Separator},
-    print_stdout, Table, WithTitle,
+    print_stdout,
 };
 
 #[derive(Debug, Table)]

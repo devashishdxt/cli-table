@@ -1,8 +1,8 @@
 use proc_macro2::{Span, TokenStream};
 use quote::ToTokens;
 use syn::{
-    spanned::Spanned, Data, DeriveInput, Error, Expr, Field as SynField, Fields as SynFields,
-    Ident, Index, Lit, LitBool, LitStr, Result,
+    Data, DeriveInput, Error, Expr, Field as SynField, Fields as SynFields, Ident, Index, Lit,
+    LitBool, LitStr, Result, spanned::Spanned,
 };
 
 use crate::utils::get_attributes;

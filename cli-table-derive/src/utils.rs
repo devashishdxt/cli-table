@@ -1,4 +1,4 @@
-use syn::{spanned::Spanned, Attribute, Error, Lit, LitBool, Path, Result};
+use syn::{Attribute, Error, Lit, LitBool, Path, Result, spanned::Spanned};
 
 pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
     let mut attributes = Vec::new();

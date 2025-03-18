@@ -8,22 +8,25 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
             continue;
         }
 
-        if let Err(_) = attribute.parse_nested_meta(|meta| {
-            let path = meta.path.clone();
-            let lit = meta
-                .value()
-                .ok()
-                .map(|v| v.parse())
-                .transpose()?
-                .unwrap_or(Lit::from(LitBool {
-                    value: true,
-                    span: path.span(),
-                }));
+        if attribute
+            .parse_nested_meta(|meta| {
+                let path = meta.path.clone();
+                let lit = meta
+                    .value()
+                    .ok()
+                    .map(|v| v.parse())
+                    .transpose()?
+                    .unwrap_or(Lit::from(LitBool {
+                        value: true,
+                        span: path.span(),
+                    }));
 
-            attributes.push((path, lit));
+                attributes.push((path, lit));
 
-            Ok(())
-        }) {
+                Ok(())
+            })
+            .is_err()
+        {
             return Err(Error::new_spanned(
                 attribute,
                 "Attributes should be of type: #[table(key = \"value\", ..)] or #[table(bool)]",

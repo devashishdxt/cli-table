@@ -9,11 +9,11 @@ Rust crate for printing tables on command line.
 
 ## Usage
 
-Add `cli-table` in your `Cargo.toms`'s `dependencies` section
+Add `cli-table` in your `Cargo.toml`'s `dependencies` section
 
 ```toml
 [dependencies]
-cli-table = "0.4"
+cli-table = "0.5"
 ```
 
 ### Simple usage

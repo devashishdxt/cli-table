@@ -1,49 +1,33 @@
-use syn::{spanned::Spanned, Attribute, Error, Lit, LitBool, Meta, NestedMeta, Path, Result};
+use syn::{spanned::Spanned, Attribute, Error, Lit, LitBool, Path, Result};
 
 pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
     let mut attributes = Vec::new();
 
     for attribute in attrs {
-        if !attribute.path.is_ident("table") {
+        if !attribute.path().is_ident("table") {
             continue;
         }
 
-        let meta = attribute.parse_meta()?;
+        if let Err(_) = attribute.parse_nested_meta(|meta| {
+            let path = meta.path.clone();
+            let lit = meta
+                .value()
+                .ok()
+                .map(|v| v.parse())
+                .transpose()?
+                .unwrap_or(Lit::from(LitBool {
+                    value: true,
+                    span: path.span(),
+                }));
 
-        let meta_list = match meta {
-            Meta::List(meta_list) => Ok(meta_list),
-            bad => Err(Error::new_spanned(
-                bad,
-                "Attributes should be of type: #[table(key = \"value\", ..)]",
-            )),
-        }?;
+            attributes.push((path, lit));
 
-        for nested_meta in meta_list.nested.into_iter() {
-            let meta = match nested_meta {
-                NestedMeta::Meta(meta) => Ok(meta),
-                bad => Err(Error::new_spanned(
-                    bad,
-                    "Attributes should be of type: #[table(key = \"value\", ..)]",
-                )),
-            }?;
-
-            match meta {
-                Meta::Path(path) => {
-                    let lit = LitBool {
-                        value: true,
-                        span: path.span(),
-                    }
-                    .into();
-                    attributes.push((path, lit));
-                }
-                Meta::NameValue(meta_name_value) => {
-                    attributes.push((meta_name_value.path, meta_name_value.lit));
-                }
-                bad => return Err(Error::new_spanned(
-                    bad,
-                    "Attributes should be of type: #[table(key = \"value\", ..)] or #[table(bool)]",
-                )),
-            }
+            Ok(())
+        }) {
+            return Err(Error::new_spanned(
+                attribute,
+                "Attributes should be of type: #[table(key = \"value\", ..)] or #[table(bool)]",
+            ));
         }
     }
 

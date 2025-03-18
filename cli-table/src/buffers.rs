@@ -51,7 +51,7 @@ impl<'a> Buffers<'a> {
     }
 }
 
-impl<'a> Write for Buffers<'a> {
+impl Write for Buffers<'_> {
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
         if let Some(ref mut current_buffer) = self.current_buffer {
             current_buffer.write(buf)
@@ -73,7 +73,7 @@ impl<'a> Write for Buffers<'a> {
     }
 }
 
-impl<'a> WriteColor for Buffers<'a> {
+impl WriteColor for Buffers<'_> {
     fn supports_color(&self) -> bool {
         match self.current_buffer {
             Some(ref buffer) => buffer.supports_color(),

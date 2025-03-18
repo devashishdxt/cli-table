@@ -1,6 +1,6 @@
 use std::{convert::TryFrom, io::Result};
 
-use cli_table::{print_stdout, TableStruct};
+use cli_table::{TableStruct, print_stdout};
 use csv::ReaderBuilder;
 
 fn main() -> Result<()> {

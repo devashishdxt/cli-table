@@ -1,6 +1,6 @@
 use std::io::Result;
 
-use cli_table::{format::Justify, print_stdout, Cell, Style, Table};
+use cli_table::{Cell, Style, Table, format::Justify, print_stdout};
 
 fn main() -> Result<()> {
     let table = vec![

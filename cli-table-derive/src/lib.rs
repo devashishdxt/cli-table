@@ -10,7 +10,7 @@ mod table;
 mod utils;
 
 use proc_macro::TokenStream;
-use syn::{parse_macro_input, DeriveInput};
+use syn::{DeriveInput, parse_macro_input};
 
 #[proc_macro_derive(Table, attributes(table))]
 /// Derive macro to implementing `cli_table` traits

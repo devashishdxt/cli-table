@@ -1,8 +1,8 @@
 [package]
 name = "test-suite"
 version = "0.1.0"
-authors = ["devashishdixit"]
-edition = "2018"
+authors = ["Devashish Dixit <devashishdxt@gmail.com>"]
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -10,5 +10,5 @@ edition = "2018"
 cli-table = { path = "../cli-table" }
 
 [dev-dependencies]
-rustversion = "1.0.9"
-trybuild = { version = "1.0.71", features = ["diff"] }
+rustversion = "1.0.20"
+trybuild = { version = "1.0.104", features = ["diff"] }

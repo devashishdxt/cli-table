@@ -10,14 +10,18 @@ categories = ["command-line-interface"]
 keywords = ["table", "cli", "format"]
 readme = "README.md"
 include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-*"]
-edition = "2018"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = []
+doc = []
+
 [dependencies]
-proc-macro2 = "1.0.86"
-syn = "1.0.109"
-quote = "1.0.36"
+proc-macro2 = "1.0.94"
+syn = "2.0.100"
+quote = "1.0.40"
 
 [lib]
 proc-macro = true

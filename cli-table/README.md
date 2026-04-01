@@ -5,7 +5,7 @@
 [![Documentation](https://docs.rs/cli-table/badge.svg)](https://docs.rs/cli-table)
 [![License](https://img.shields.io/crates/l/cli-table)](https://github.com/devashishdxt/cli-table/blob/master/LICENSE-MIT)
 
-Rust crate for printing tables on command line.
+A Rust crate for printing tables on the command line.
 
 ## Usage
 

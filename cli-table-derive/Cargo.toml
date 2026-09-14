@@ -20,7 +20,7 @@ doc = []
 
 [dependencies]
 proc-macro2 = "1.0.94"
-syn = "2.0.100"
+syn = "3.0"
 quote = "1.0.40"
 
 [lib]

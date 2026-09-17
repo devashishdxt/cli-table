@@ -16,7 +16,7 @@ pub fn get_attributes(attrs: &[Attribute]) -> Result<Vec<(Path, Lit)>> {
                     .ok()
                     .map(|v| v.parse())
                     .transpose()?
-                    .unwrap_or(Lit::from(LitBool {
+                    .unwrap_or(Lit::Bool(LitBool {
                         value: true,
                         span: path.span(),
                     }));

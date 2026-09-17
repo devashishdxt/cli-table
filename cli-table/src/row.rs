@@ -42,7 +42,7 @@ impl RowStruct {
         let cell_buffers = self
             .cells
             .iter()
-            .zip(available_cell_dimensions.into_iter())
+            .zip(available_cell_dimensions)
             .map(|(cell, available_dimension)| cell.buffers(writer, available_dimension))
             .collect::<Result<Vec<Vec<Buffer>>>>()?;
 

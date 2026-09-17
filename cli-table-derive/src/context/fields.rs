@@ -37,7 +37,7 @@ impl Fields {
             }
         }
 
-        fields.sort_by(|left, right| left.order.cmp(&right.order));
+        fields.sort_by_key(|left| left.order);
 
         Ok(Fields { fields })
     }
@@ -147,10 +147,10 @@ impl Field {
             }
         }
 
-        if let Some(skip) = skip {
-            if skip.value {
-                return Ok(None);
-            }
+        if let Some(skip) = skip
+            && skip.value
+        {
+            return Ok(None);
         }
 
         let mut field_builder = Self::builder(ident, span);

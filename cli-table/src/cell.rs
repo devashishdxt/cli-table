@@ -211,9 +211,10 @@ struct CellFormat {
 }
 
 /// Used to horizontally justify contents of a cell
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub enum Justify {
     /// Justifies contents to left
+    #[default]
     Left,
     /// Justifies contents to right
     Right,
@@ -221,27 +222,16 @@ pub enum Justify {
     Center,
 }
 
-impl Default for Justify {
-    fn default() -> Self {
-        Self::Left
-    }
-}
-
 /// Used to vertically align contents of a cell
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub enum Align {
     /// Aligns contents to top
+    #[default]
     Top,
     /// Aligns contents to bottom
     Bottom,
     /// Aligns contents to center
     Center,
-}
-
-impl Default for Align {
-    fn default() -> Self {
-        Self::Top
-    }
 }
 
 /// Used to add padding to the contents of a cell

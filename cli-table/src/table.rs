@@ -98,7 +98,7 @@ impl TableStruct {
             if widths.is_empty() {
                 widths = new_widths;
             } else {
-                for (width, new_width) in widths.iter_mut().zip(new_widths.into_iter()) {
+                for (width, new_width) in widths.iter_mut().zip(new_widths) {
                     *width = std::cmp::max(new_width, *width);
                 }
             }

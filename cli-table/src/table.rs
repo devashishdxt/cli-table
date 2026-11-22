@@ -43,6 +43,12 @@ impl TableStruct {
         self
     }
 
+    /// Used to set the number of spaces printed on each side of a cell's contents (default: 1)
+    pub fn spacing(mut self, spacing: usize) -> Self {
+        self.format.spacing = spacing;
+        self
+    }
+
     /// Used to set the color preferences for printing the table
     pub fn color_choice(mut self, color_choice: ColorChoice) -> Self {
         self.color_choice = color_choice;
@@ -436,10 +442,21 @@ impl SeparatorBuilder {
 }
 
 /// Struct for configuring a table's format
-#[derive(Debug, Default, Copy, Clone)]
+#[derive(Debug, Copy, Clone)]
 pub(crate) struct TableFormat {
     pub(crate) border: Border,
     pub(crate) separator: Separator,
+    pub(crate) spacing: usize,
+}
+
+impl Default for TableFormat {
+    fn default() -> Self {
+        Self {
+            border: Default::default(),
+            separator: Default::default(),
+            spacing: 1,
+        }
+    }
 }
 
 /// Dimensions of a table

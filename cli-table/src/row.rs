@@ -6,7 +6,7 @@ use crate::{
     buffers::Buffers,
     cell::{Cell, CellStruct, Dimension as CellDimension},
     table::{Dimension as TableDimension, TableFormat},
-    utils::{print_str, print_vertical_line, println, transpose},
+    utils::{print_vertical_line, println, transpose},
 };
 
 /// Concrete row of a table
@@ -49,7 +49,6 @@ impl RowStruct {
         let cell_buffers = transpose(cell_buffers);
 
         let mut buffers = Buffers::new(writer);
-        let spacing = " ".repeat(format.spacing);
 
         for line in cell_buffers {
             print_vertical_line(&mut buffers, format.border.left.as_ref(), color_spec)?;
@@ -57,9 +56,7 @@ impl RowStruct {
             let mut line_buffers = line.into_iter().peekable();
 
             while let Some(line_buffer) = line_buffers.next() {
-                print_str(&mut buffers, &spacing, color_spec)?;
                 buffers.push(line_buffer)?;
-                print_str(&mut buffers, &spacing, color_spec)?;
 
                 match line_buffers.peek() {
                     Some(_) => print_vertical_line(

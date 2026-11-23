@@ -164,7 +164,8 @@
 //! [`TableStruct`] and [`CellStruct`].
 //!
 //! For individually formatting each cell of a table, `justify`, `align` and `padding` functions can be used from
-//! `CellStruct`.
+//! `CellStruct`. By default, cells have one space on the left and right and none above or below.
+//! Calling `padding` replaces these defaults; use `Padding::default()` to remove all padding.
 //!
 //! In addition to this, borders and separators of a table can be customized by calling `border` and `separator`
 //! functions in `TableStruct`. For example, to create a borderless table:

@@ -31,7 +31,9 @@ impl CellStruct {
         self
     }
 
-    /// Used to add padding to the contents of a cell
+    /// Sets the padding around the cell's contents, replacing the default of
+    /// one space on the left and right and no padding on the top or bottom.
+    /// Use `Padding::default()` to remove all padding.
     pub fn padding(mut self, padding: Padding) -> CellStruct {
         self.format.padding = padding;
         self
@@ -117,6 +119,7 @@ impl CellStruct {
             write!(buffer, " ")?;
         }
 
+        buffer.reset()?;
         Ok(buffer)
     }
 
@@ -203,11 +206,26 @@ impl Style for CellStruct {
 }
 
 /// Struct for configuring a cell's format
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy)]
 struct CellFormat {
     justify: Justify,
     align: Align,
     padding: Padding,
+}
+
+impl Default for CellFormat {
+    fn default() -> Self {
+        Self {
+            justify: Default::default(),
+            align: Default::default(),
+            padding: Padding {
+                left: 1,
+                right: 1,
+                top: 0,
+                bottom: 0,
+            },
+        }
+    }
 }
 
 /// Used to horizontally justify contents of a cell
@@ -234,7 +252,7 @@ pub enum Align {
     Center,
 }
 
-/// Used to add padding to the contents of a cell
+/// Padding around a cell's contents. Defaults to zero on all sides.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Padding {
     /// Left padding
@@ -248,7 +266,7 @@ pub struct Padding {
 }
 
 impl Padding {
-    /// Creates a new builder for padding
+    /// Creates a padding builder with zero padding on all sides.
     pub fn builder() -> PaddingBuilder {
         Default::default()
     }

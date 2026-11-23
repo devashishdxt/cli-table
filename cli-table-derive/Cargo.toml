@@ -19,9 +19,9 @@ default = []
 doc = []
 
 [dependencies]
-proc-macro2 = "1.0.94"
-syn = "3.0"
-quote = "1.0.40"
+proc-macro2 = "1.0.107"
+syn = "3.0.10"
+quote = "1.0.47"
 
 [lib]
 proc-macro = true

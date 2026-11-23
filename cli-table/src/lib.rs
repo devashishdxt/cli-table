@@ -10,7 +10,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! cli-table = "0.5"
+//! cli-table = "0.6"
 //! ```
 //!
 //! ## Simple usage

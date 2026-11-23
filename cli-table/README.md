@@ -13,7 +13,7 @@ Add `cli-table` in your `Cargo.toml`'s `dependencies` section
 
 ```toml
 [dependencies]
-cli-table = "0.5"
+cli-table = "0.6"
 ```
 
 ### Simple usage
